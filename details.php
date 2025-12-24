@@ -3,20 +3,43 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once __DIR__ . '/controllers/AccommodationController.php';
+require_once __DIR__ . '/config/db.php';
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if (!$id) {
     http_response_code(404);
     $error = 'We could not find that accommodation.';
 } else {
-    $controller = new AccommodationController();
-    $result = $controller->findOne($id);
-    if (!$result['success']) {
+    $record = null;
+    $conn = nearby_db_connect();
+    $sql = 'SELECT a.id, a.title, a.type, a.allowed_for, a.rent, a.location, a.facilities, a.description, a.created_at,
+                   u.name AS owner_name, u.college_email AS owner_email
+            FROM accommodations a
+            INNER JOIN users u ON u.id = a.user_id
+            WHERE a.id = ? LIMIT 1';
+    $stmt = mysqli_prepare($conn, $sql);
+
+    if ($stmt) {
+        mysqli_stmt_bind_param($stmt, 'i', $id);
+        if (mysqli_stmt_execute($stmt)) {
+            $result = mysqli_stmt_get_result($stmt);
+            $record = mysqli_fetch_assoc($result);
+            mysqli_free_result($result);
+        }
+        mysqli_stmt_close($stmt);
+    }
+
+    if (empty($record)) {
         http_response_code(404);
-        $error = $result['message'] ?? 'Accommodation not found';
+        $error = 'Accommodation not found';
     } else {
-        $accommodation = $result['data'];
+        $record['facilities'] = $record['facilities'] !== null && $record['facilities'] !== ''
+            ? explode(',', $record['facilities'])
+            : [];
+        $record['rent'] = (int) $record['rent'];
+        $record['monthly_rent'] = $record['rent'];
+        $record['is_verified'] = true;
+        $accommodation = $record;
     }
 }
 

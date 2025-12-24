@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-require_once __DIR__ . '/../../config/db.php';
+require_once __DIR__ . '/../config/db.php';
 
 $conn = nearby_db_connect();
 
@@ -15,18 +15,16 @@ $maxRent = trim($_GET['max_rent'] ?? $_POST['max_rent'] ?? '');
 $minRent = trim($_GET['min_rent'] ?? $_POST['min_rent'] ?? '');
 $facilities = $_GET['facilities'] ?? $_POST['facilities'] ?? [];
 
-$sql = 'SELECT a.id, a.title, a.type, a.allowed_for, a.rent, a.location, a.facilities, a.description, a.created_at,
-               u.name AS owner_name, u.college_email AS owner_email
+$sql = 'SELECT a.id, a.type, a.allowed_for, a.rent, a.location, a.facilities, a.description, a.created_at, u.name AS owner_name
         FROM accommodations a
         INNER JOIN users u ON u.id = a.user_id';
 
 if ($query !== '') {
-    $conditions[] = '(a.location LIKE ? OR a.title LIKE ? OR a.description LIKE ?)';
+    $conditions[] = '(a.location LIKE ? OR a.description LIKE ?)';
     $like = '%' . $query . '%';
     $params[] = $like;
     $params[] = $like;
-    $params[] = $like;
-    $types .= 'sss';
+    $types .= 'ss';
 }
 
 if ($type !== '') {
@@ -88,6 +86,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         ? explode(',', $row['facilities'])
         : [];
     $row['rent'] = (int) $row['rent'];
+    $row['monthly_rent'] = $row['rent'];
     $row['is_verified'] = true;
     $listings[] = $row;
 }

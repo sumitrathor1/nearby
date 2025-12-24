@@ -77,7 +77,7 @@ a:hover {
 
 
 .hero-slider {
-    margin-top: -2rem;
+    margin-top: 2rem;
 }
 
 .hero-slider .carousel {
@@ -365,7 +365,7 @@ a:hover {
     }
 
     .hero-slider {
-        margin-top: -3.5rem;
+        margin-top: 1.5rem;
     }
 
     .hero-slider .carousel-item {
@@ -384,7 +384,7 @@ a:hover {
     }
 
     .hero-slider {
-        margin-top: -4rem;
+        margin-top: 1rem;
     }
 
     .hero-slider .carousel-item {

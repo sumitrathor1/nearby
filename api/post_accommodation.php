@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-require_once __DIR__ . '/../../config/db.php';
+require_once __DIR__ . '/../config/db.php';
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -12,18 +12,19 @@ if (($_SESSION['user']['role'] ?? '') !== 'senior') {
     exit;
 }
 
-$payload = json_decode(file_get_contents('php://input'), true);
-if (!is_array($payload) || empty($payload)) {
-    $payload = $_POST;
+$raw = file_get_contents('php://input');
+$data = json_decode($raw, true);
+if (!is_array($data) || empty($data)) {
+    $data = $_POST;
 }
 
-$title = trim($payload['title'] ?? '');
-$type = trim($payload['type'] ?? '');
-$allowedFor = trim($payload['allowed_for'] ?? '');
-$rent = $payload['monthly_rent'] ?? $payload['rent'] ?? '';
-$location = trim($payload['location'] ?? '');
-$description = trim($payload['description'] ?? '');
-$facilities = $payload['facilities'] ?? [];
+$title = trim($data['title'] ?? '');
+$type = trim($data['type'] ?? '');
+$allowedFor = trim($data['allowed_for'] ?? '');
+$rent = $data['monthly_rent'] ?? $data['rent'] ?? '';
+$location = trim($data['location'] ?? '');
+$description = trim($data['description'] ?? '');
+$facilities = $data['facilities'] ?? [];
 
 if ($title === '' || $type === '' || $allowedFor === '' || $rent === '' || $location === '' || $description === '') {
     echo json_encode(['success' => false, 'message' => 'All fields are required']);
@@ -35,16 +36,16 @@ if (!is_numeric($rent)) {
     exit;
 }
 
-$validTypes = ['PG', 'Flat', 'Room', 'Hostel'];
-$validAllowedFor = ['Male', 'Female', 'Family'];
+$allowedTypes = ['PG', 'Flat', 'Room', 'Hostel'];
+$allowedForOptions = ['Male', 'Female', 'Family'];
 
-if (!in_array($type, $validTypes, true)) {
+if (!in_array($type, $allowedTypes, true)) {
     echo json_encode(['success' => false, 'message' => 'Invalid accommodation type']);
     exit;
 }
 
-if (!in_array($allowedFor, $validAllowedFor, true)) {
-    echo json_encode(['success' => false, 'message' => 'Invalid allowed for option']);
+if (!in_array($allowedFor, $allowedForOptions, true)) {
+    echo json_encode(['success' => false, 'message' => 'Invalid option for allowed for']);
     exit;
 }
 
@@ -54,12 +55,13 @@ $rentInt = (int) $rent;
 $facilitiesStr = '';
 
 if (!empty($facilities) && is_array($facilities)) {
-    $cleanFacilities = array_map(static fn($fac) => trim($fac), $facilities);
-    $facilitiesStr = implode(',', $cleanFacilities);
+    $sanitizedFacilities = array_map(static fn($fac) => trim($fac), $facilities);
+    $facilitiesStr = implode(',', $sanitizedFacilities);
 }
 
 $sql = 'INSERT INTO accommodations (user_id, title, type, allowed_for, rent, location, facilities, description)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+
 $stmt = mysqli_prepare($conn, $sql);
 mysqli_stmt_bind_param($stmt, 'isssisss', $ownerId, $title, $type, $allowedFor, $rentInt, $location, $facilitiesStr, $description);
 
