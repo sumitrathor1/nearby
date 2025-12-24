@@ -41,5 +41,29 @@ require_once __DIR__ . '/includes/header.php';
             <p class="small text-muted text-center mt-4 mb-0">Already a member? <a href="login.php">Login instead</a></p>
         </div>
     </div>
+    <div class="col-lg-4 mt-4 mt-lg-0">
+        <div class="glass-card h-100 p-4 p-md-5">
+            <h2 class="h4 fw-semibold mb-3">Why Join NearBy?</h2>
+            <ul class="list-unstyled text-muted mb-4">
+                <li class="d-flex gap-3 mb-3">
+                    <i class="bi bi-house-heart text-primary fs-4"></i>
+                    <span>Verified accommodation listings curated for MITS students.</span>
+                </li>
+                <li class="d-flex gap-3 mb-3">
+                    <i class="bi bi-people text-primary fs-4"></i>
+                    <span>Connect with seniors for mentorship and housing guidance.</span>
+                </li>
+                <li class="d-flex gap-3 mb-0">
+                    <i class="bi bi-shield-check text-primary fs-4"></i>
+                    <span>Secure login with your official @mitsgwl.ac.in email.</span>
+                </li>
+            </ul>
+            <div class="border-top border-light pt-4 mt-2">
+                <h3 class="h5 fw-semibold mb-2">Need Help?</h3>
+                <p class="text-muted mb-1">Email: <a href="mailto:24cd3dsu4@mitsgwl.ac.in">24cd3dsu4@mitsgwl.ac.in</a></p>
+                <p class="text-muted mb-0">Phone: +91 7566868709</p>
+            </div>
+        </div>
+    </div>
 </div>
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
