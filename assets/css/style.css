@@ -395,6 +395,42 @@ a:hover {
     border-radius: 999px;
 }
 
+[data-pagination] {
+    gap: 1.5rem;
+}
+
+[data-pagination] .btn-pagination {
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.28);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: var(--nearby-secondary);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding-inline: 1.25rem;
+    transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
+}
+
+[data-pagination] .btn-pagination:hover,
+[data-pagination] .btn-pagination:focus {
+    background: linear-gradient(135deg, rgba(68, 187, 116, 0.22), rgba(47, 154, 99, 0.22));
+    border-color: rgba(68, 187, 116, 0.5);
+    color: var(--nearby-secondary);
+    transform: translateY(-1px);
+}
+
+[data-pagination] .btn-pagination:disabled,
+[data-pagination] .btn-pagination.disabled {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.35);
+    color: rgba(16, 59, 47, 0.4);
+    cursor: not-allowed;
+    transform: none;
+}
+
+[data-pagination] [data-pagination-summary] {
+    color: var(--nearby-muted);
+}
+
 .facility-icon {
     width: 40px;
     height: 40px;

@@ -48,21 +48,84 @@ const initSearchForm = (selector) => {
         return;
     }
 
+    const pageSize = 9;
+    let currentPage = 1;
+    let cachedResults = [];
+    const paginationSelector = form.dataset.paginationTarget || '[data-pagination]';
+    const paginationWrapper = document.querySelector(paginationSelector);
+    const prevBtn = paginationWrapper?.querySelector('[data-pagination-prev]') || null;
+    const nextBtn = paginationWrapper?.querySelector('[data-pagination-next]') || null;
+    const summaryLabel = paginationWrapper?.querySelector('[data-pagination-summary]') || null;
+
+    const updatePagination = (totalPages) => {
+        if (!paginationWrapper) {
+            return;
+        }
+        const shouldHide = totalPages <= 1;
+        paginationWrapper.hidden = shouldHide;
+        if (shouldHide) {
+            return;
+        }
+        if (prevBtn) {
+            prevBtn.disabled = currentPage === 1;
+        }
+        if (nextBtn) {
+            nextBtn.disabled = currentPage === totalPages;
+        }
+        if (summaryLabel) {
+            summaryLabel.textContent = `Page ${currentPage} of ${totalPages}`;
+        }
+    };
+
+    const renderPage = (page = 1) => {
+        const totalPages = Math.ceil(cachedResults.length / pageSize);
+        if (totalPages === 0) {
+            resultsContainer.innerHTML = '<div class="text-center py-5 text-muted">No posts match your filters yet. Try adjusting the criteria.</div>';
+            updatePagination(totalPages);
+            return;
+        }
+
+        currentPage = Math.min(Math.max(page, 1), totalPages);
+        const startIndex = (currentPage - 1) * pageSize;
+        const pageItems = cachedResults.slice(startIndex, startIndex + pageSize).map(buildPostCard);
+        renderResults(resultsContainer, pageItems);
+        updatePagination(totalPages);
+    };
+
     const handleSearch = async () => {
         const params = buildParamsFromForm(form);
         try {
             resultsContainer.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-success" role="status"></div><p class="text-muted small mt-2">Loading fresh posts...</p></div>';
             const results = await fetchPosts(params);
-            if (!results.length) {
-                resultsContainer.innerHTML = '<div class="text-center py-5 text-muted">No posts match your filters yet. Try adjusting the criteria.</div>';
+            cachedResults = results;
+            currentPage = 1;
+            if (!cachedResults.length) {
+                renderPage();
                 return;
             }
-            renderResults(resultsContainer, results.map(buildPostCard));
+            renderPage(currentPage);
         } catch (error) {
             resultsContainer.innerHTML = '';
             NearBy.showMessage(error.message, 'danger');
         }
     };
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                renderPage(currentPage - 1);
+            }
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            const totalPages = Math.ceil(cachedResults.length / pageSize);
+            if (currentPage < totalPages) {
+                renderPage(currentPage + 1);
+            }
+        });
+    }
 
     form.addEventListener('submit', (event) => {
         event.preventDefault();

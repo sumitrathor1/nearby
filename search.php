@@ -32,7 +32,7 @@ require_once __DIR__ . '/includes/header.php';
         </div>
     </div>
 
-    <form id="advancedSearch" class="glass-card p-4 mb-4">
+    <form id="advancedSearch" class="glass-card p-4 mb-4" data-pagination-target="#searchPagination">
         <div class="row g-3">
             <div class="col-md-3">
                 <label class="form-label" for="filterCategory">Post Type</label>
@@ -94,7 +94,19 @@ require_once __DIR__ . '/includes/header.php';
         </div>
     </form>
 
-    <div id="searchResults" class="row g-4 "></div>
+    <div class="border p-3 shadow-sm mb-4" style="border-radius: 20px;">
+        <div id="searchResults" class="row g-4"></div>
+        <div id="searchPagination" class="d-flex justify-content-between align-items-center mt-4" data-pagination
+            hidden>
+            <button class="btn btn-sm btn-pagination" type="button" data-pagination-prev>
+                <i class="bi bi-arrow-left me-1"></i>Previous
+            </button>
+            <span class="small text-muted" data-pagination-summary>Page 1 of 1</span>
+            <button class="btn btn-sm btn-pagination" type="button" data-pagination-next>
+                Next<i class="bi bi-arrow-right ms-1"></i>
+            </button>
+        </div>
+    </div>
 
     <section class="glass-card p-4 p-lg-5 mb-5" data-map-explorer>
         <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-center mb-4">
@@ -105,11 +117,16 @@ require_once __DIR__ . '/includes/header.php';
                     interactive map.</p>
             </div>
             <div class="d-flex flex-wrap gap-2" data-map-chips>
-                <button class="btn btn-outline-light btn-sm text-dark border active" type="button" data-filter="all">All</button>
-                <button class="btn btn-outline-light btn-sm text-dark border" type="button" data-filter="housing">Housing</button>
-                <button class="btn btn-outline-light btn-sm text-dark border" type="button" data-filter="food">Food</button>
-                <button class="btn btn-outline-light btn-sm text-dark border" type="button" data-filter="essential">Essentials</button>
-                <button class="btn btn-outline-light btn-sm text-dark border" type="button" data-filter="college">Campus</button>
+                <button class="btn btn-outline-light btn-sm text-dark border active" type="button"
+                    data-filter="all">All</button>
+                <button class="btn btn-outline-light btn-sm text-dark border" type="button"
+                    data-filter="housing">Housing</button>
+                <button class="btn btn-outline-light btn-sm text-dark border" type="button"
+                    data-filter="food">Food</button>
+                <button class="btn btn-outline-light btn-sm text-dark border" type="button"
+                    data-filter="essential">Essentials</button>
+                <button class="btn btn-outline-light btn-sm text-dark border" type="button"
+                    data-filter="college">Campus</button>
             </div>
         </div>
         <div class="row g-4 align-items-stretch">
