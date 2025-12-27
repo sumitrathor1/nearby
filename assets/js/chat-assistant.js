@@ -103,7 +103,7 @@ if (chatbotRoot) {
             if (!window.NearBy?.fetchJSON) {
                 throw new Error('Chat service is not available right now.');
             }
-            const response = await fetch('api/chatbot_fetch.php', {headers: {'Accept': 'application/json'}});
+            const response = await fetch('api/chat-assistant-history.php', {headers: {'Accept': 'application/json'}});
             if (!response.ok) {
                 throw new Error('Unable to load chat history');
             }
@@ -178,7 +178,7 @@ if (chatbotRoot) {
             const typingIndicator = showTyping();
 
             try {
-                const response = await fetch('api/chatbot_send.php', {
+                const response = await fetch('api/chat-assistant-send.php', {
                     method: 'POST',
                     headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
                     body: JSON.stringify({message: rawValue}),

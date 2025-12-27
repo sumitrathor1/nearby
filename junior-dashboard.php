@@ -8,7 +8,7 @@ if (($_SESSION['user']['role'] ?? null) !== 'junior') {
 }
 
 $pageTitle = 'Junior Dashboard | NearBy';
-$pageScripts = ['assets/js/search.js', 'assets/js/chatbot.js'];
+$pageScripts = ['assets/js/search.js', 'assets/js/chat-assistant.js'];
 $enableChatbot = true;
 require_once __DIR__ . '/includes/header.php';
 ?>

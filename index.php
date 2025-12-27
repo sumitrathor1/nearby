@@ -1,6 +1,6 @@
 <?php
 $pageTitle = 'NearBy | Student Housing Simplified';
-$pageScripts = ['assets/js/chatbot.js'];
+$pageScripts = ['assets/js/chat-assistant.js'];
 $enableChatbot = true;
 require_once __DIR__ . '/includes/header.php';
 ?>
