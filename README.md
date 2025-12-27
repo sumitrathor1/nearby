@@ -39,6 +39,13 @@ The platform is designed **by students, for students**, keeping real-life needs 
 
 ---
 
+
+## 🌐 Flow Diagram
+<img width="798" height="168" alt="image" src="https://github.com/user-attachments/assets/9ef161b7-7013-4412-b823-c8c82a7261ae" />
+
+---
+
+
 ## 🧩 Core Features
 
 ### 🏡 Accommodation Search
