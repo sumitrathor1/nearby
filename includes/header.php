@@ -39,6 +39,7 @@ $pageScripts = $pageScripts ?? [];
                     <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="search.php">Search</a></li>
                     <li class="nav-item"><a class="nav-link" href="guidance.php">Local Guidance</a></li>
+                    <li class="nav-item"><a class="nav-link" href="second-hand-products.php">Second-Hand</a></li>
                     <?php if ($currentUser && $currentUser['role'] === 'junior'): ?>
                         <li class="nav-item"><a class="nav-link" href="junior-dashboard.php">Junior Dashboard</a></li>
                     <?php elseif ($currentUser && $currentUser['role'] === 'senior'): ?>
