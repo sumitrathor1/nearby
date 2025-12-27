@@ -1,6 +1,0 @@
-[2025-12-27 14:52:18] Connected to DB 127.0.0.1 / nearby as root
-[2025-12-27 14:52:18] Import file: C:\xampp\htdocs\nearby\nearby\database\backups\nearby_20251227_145026.sql
-[2025-12-27 14:52:18] Drop existing tables: YES
-[2025-12-27 14:52:18] Foreign key checks disabled.
-[2025-12-27 14:52:18] Foreign key checks re-enabled.
-[2025-12-27 14:52:18] Import completed successfully. Executed statements: 11. File: nearby_20251227_145026.sql
