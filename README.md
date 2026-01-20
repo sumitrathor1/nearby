@@ -142,6 +142,11 @@ Each role can create and manage their own listings.
 
 ### 👤 **Yash Dubey**
 - GitHub: https://github.com/dubeyyash580-ops
+-
+ ### 👤 **Pooja Rana**
+-LinkedIn:https://www.linkedin.com/in/pooja-rana-59423b32a
+- GitHub: https://github.com/RANAPOOJA321
+- 
 
 ---
 
@@ -181,6 +186,9 @@ Thanks to:
 - Open-source community
 - Student testers and feedback
 - Mentors and peers who contributed ideas and reviews
+
+  
+  
 
 ---
 
