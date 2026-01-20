@@ -144,9 +144,9 @@ Each role can create and manage their own listings.
 - GitHub: https://github.com/dubeyyash580-ops
 -
  ### 👤 **Pooja Rana**
--LinkedIn:https://www.linkedin.com/in/pooja-rana-59423b32a
+- LinkedIn:https://www.linkedin.com/in/pooja-rana-59423b32a
 - GitHub: https://github.com/RANAPOOJA321
-- 
+  
 
 ---
 
