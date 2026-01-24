@@ -21,12 +21,18 @@ $sql = 'SELECT a.id, a.title, a.type, a.allowed_for, a.rent, a.location, a.facil
         INNER JOIN users u ON u.id = a.user_id';
 
 if ($query !== '') {
-    $conditions[] = '(a.location LIKE ? OR a.title LIKE ? OR a.description LIKE ?)';
-    $like = '%' . $query . '%';
-    $params[] = $like;
-    $params[] = $like;
-    $params[] = $like;
-    $types .= 'sss';
+    // Sanitize input to prevent SQL injection
+    $query = preg_replace('/[^\w\s\-\.]/u', '', $query);
+    $query = substr($query, 0, 100);
+    
+    if ($query !== '') {
+        $conditions[] = '(a.location LIKE ? OR a.title LIKE ? OR a.description LIKE ?)';
+        $like = '%' . $query . '%';
+        $params[] = $like;
+        $params[] = $like;
+        $params[] = $like;
+        $types .= 'sss';
+    }
 }
 
 if ($type !== '') {
