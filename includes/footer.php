@@ -2,7 +2,7 @@
     </main>
     <footer class="glass-footer py-5 mt-auto">
         <div class="container">
-            <div class="row gy-4 align-items-start footer-top">
+            <div class="row gy-4 gx-4 align-items-start footer-top">
                 <div class="col-lg-3 text-center text-lg-start">
                     <div class="d-inline-flex align-items-center gap-3 mb-3">
                         <img src="assets/images/nearby_image.png" alt="NearBy logo" class="footer-logo">
@@ -12,22 +12,45 @@
                     </p>
                     <p class="footer-maintained small mb-0">Platform managed with care by the NearBy Support Team.</p>
                 </div>
-                <div class="col-sm-6 col-lg-2">
-                    <h6 class="footer-heading">Support</h6>
-                    <ul class="footer-list">
-                        <li><span>24×7 chat support</span></li>
-                        <li><a href="mailto:support@nearbyhousing.com">Send us an email</a></li>
-                        <li><a href="guidance.php">Housing guidance</a></li>
-                        <li><a href="includes/feedback.php">Give Feedback</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-6 col-lg-2">
-                    <h6 class="footer-heading">Quick links</h6>
-                    <ul class="footer-list">
-                        <li><a href="search.php">For renters</a></li>
-                        <li><a href="register.php">Create account</a></li>
-                        <li><a href="login.php">Member login</a></li>
-                    </ul>
+                <div class="col-sm-12 col-lg-4">
+                    <div class="row gy-3">
+
+                        <!-- Support -->
+                        <div class="col-6">
+                            <h6 class="footer-heading">Support</h6>
+                            <ul class="footer-list">
+                                <li><span>24×7 chat support</span></li>
+                                <li><a href="mailto:support@nearbyhousing.com">Send us an email</a></li>
+                                <li><a href="guidance.php">Housing guidance</a></li>
+                                <li><a href="includes/feedback.php">Give Feedback</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Quick Links -->
+                        <div class="col-6">
+                            <h6 class="footer-heading">Quick links</h6>
+                            <ul class="footer-list">
+                                <li><a href="search.php">For renters</a></li>
+                                <li><a href="register.php">Create account</a></li>
+                                <li><a href="login.php">Member login</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Contact Us (Centered below) -->
+                        <div class="col-12 text-center mt-3">
+                            <h6 class="footer-heading">Contact Us</h6>
+                            <ul class="footer-list">
+                                <li><a href="contact.php">Contact Form</a></li>
+                                <li>
+                                    <a href="mailto:support@nearbyhousing.com">
+                                        support@nearbyhousing.com
+                                    </a>
+                                </li>
+                                <li><span>Available 24×7</span></li>
+                            </ul>
+                        </div>
+
+                    </div>
                 </div>
                 <div class="col-sm-6 col-lg-2">
                     <h6 class="footer-heading">Important links</h6>
