@@ -72,7 +72,7 @@ try {
 
     $apiKey = GEMINI_API_KEY;
     if (!$apiKey) {
-        $respond(500, ['success' => false, 'message' => 'Gemini API key is not configured']);
+        $respond(500, ['success' => false, 'message' => 'AI service temporarily unavailable']);
     }
 
     $requestPayload = json_encode([

@@ -13,19 +13,36 @@ if (!is_array($payload) || empty($payload)) {
 	$payload = $_POST;
 }
 
-$name = trim($payload['name'] ?? '');
-$email = trim($payload['email'] ?? '');
-$password = $payload['password'] ?? '';
-$role = $payload['role'] ?? '';
-$userCategory = trim($payload['user_category'] ?? '');
+<?php
+header('Content-Type: application/json');
+require_once __DIR__ . '/../../config/db.php';
+require_once __DIR__ . '/../../includes/helpers/validation.php';
 
-if ($name === '' || $email === '' || $password === '' || $role === '' || $userCategory === '') {
-	echo json_encode(['success' => false, 'message' => 'All fields are required']);
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+	http_response_code(405);
+	echo json_encode(['success' => false, 'message' => 'Method not allowed']);
 	exit;
 }
 
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-	echo json_encode(['success' => false, 'message' => 'Enter a valid email']);
+$payload = json_decode(file_get_contents('php://input'), true);
+if (!is_array($payload) || empty($payload)) {
+	$payload = $_POST;
+}
+
+try {
+	$name = InputValidator::validateName($payload['name'] ?? '');
+	$email = InputValidator::validateEmail($payload['email'] ?? '');
+	$password = InputValidator::validatePassword($payload['password'] ?? '');
+	$role = InputValidator::validateRole($payload['role'] ?? '');
+	$userCategory = InputValidator::validateUserCategory($payload['user_category'] ?? '');
+	
+	if (!$email) {
+		echo json_encode(['success' => false, 'message' => 'Enter a valid email address']);
+		exit;
+	}
+	
+} catch (InvalidArgumentException $e) {
+	echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 	exit;
 }
 
@@ -57,9 +74,21 @@ if ($userType !== 'student') {
 	$role = 'senior';
 }
 
-if (!in_array($role, ['junior', 'senior'], true)) {
-	echo json_encode(['success' => false, 'message' => 'Invalid role']);
+$userType = $categoryMap[strtolower($userCategory)] ?? null;
+if ($userType === null) {
+	echo json_encode(['success' => false, 'message' => 'Select a valid user category']);
 	exit;
+}
+
+$allowedDomain = '@mitsgwl.ac.in';
+$emailLower = strtolower($email);
+if ($userType === 'student' && !str_ends_with($emailLower, $allowedDomain)) {
+	echo json_encode(['success' => false, 'message' => 'Students must use their @mitsgwl.ac.in email']);
+	exit;
+}
+
+if ($userType !== 'student') {
+	$role = 'senior';
 }
 
 $conn = nearby_db_connect();

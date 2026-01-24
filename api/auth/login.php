@@ -1,6 +1,7 @@
 <?php
 header('Content-Type: application/json');
 require_once __DIR__ . '/../../config/db.php';
+require_once __DIR__ . '/../../includes/helpers/validation.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 	http_response_code(405);
@@ -17,22 +18,23 @@ if (!is_array($payload) || empty($payload)) {
 	$payload = $_POST;
 }
 
-$email = trim($payload['email'] ?? '');
-$password = $payload['password'] ?? '';
-$role = $payload['role'] ?? '';
-
-if ($email === '' || $password === '' || $role === '') {
-	echo json_encode(['success' => false, 'message' => 'Email, password, and role are required']);
-	exit;
-}
-
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-	echo json_encode(['success' => false, 'message' => 'Enter a valid email']);
-	exit;
-}
-
-if (!in_array($role, ['junior', 'senior'], true)) {
-	echo json_encode(['success' => false, 'message' => 'Invalid role']);
+try {
+	$email = InputValidator::validateEmail($payload['email'] ?? '');
+	$password = $payload['password'] ?? '';
+	$role = InputValidator::validateRole($payload['role'] ?? '');
+	
+	if (!$email) {
+		echo json_encode(['success' => false, 'message' => 'Enter a valid email address']);
+		exit;
+	}
+	
+	if (empty($password)) {
+		echo json_encode(['success' => false, 'message' => 'Password is required']);
+		exit;
+	}
+	
+} catch (InvalidArgumentException $e) {
+	echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 	exit;
 }
 
