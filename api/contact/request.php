@@ -1,6 +1,7 @@
 <?php
 header('Content-Type: application/json');
 require_once __DIR__ . '/../../config/db.php';
+require_once __DIR__ . '/../../config/security.php';
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -14,26 +15,44 @@ if (!$user) {
     exit;
 }
 
+// Rate limiting for contact requests
+$userId = $user['id'];
+if (!checkRateLimit('contact_' . $userId, 10, 3600)) { // 10 contact requests per hour
+    secureErrorResponse('Too many contact requests. Please wait before sending another request.', 429);
+}
+
 $input = json_decode(file_get_contents('php://input'), true);
 if (!is_array($input) || empty($input)) {
     $input = $_POST;
 }
 
-$accommodationId = $input['accommodation_id'] ?? null;
-$message = trim($input['message'] ?? '');
+// Validate accommodation ID
+$accommodationIdValidation = validateNumeric($input['accommodation_id'] ?? '', 1);
+if (!$accommodationIdValidation['valid']) {
+    secureErrorResponse('Valid accommodation ID is required', 400);
+}
+$accommodationId = $accommodationIdValidation['value'];
 
-if (!$accommodationId || !is_numeric($accommodationId)) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Missing accommodation reference']);
-    exit;
+// Validate and sanitize message
+$message = '';
+if (!empty($input['message'])) {
+    $messageValidation = validateText($input['message'], 0, 500);
+    if (!$messageValidation['valid']) {
+        secureErrorResponse('Message: ' . $messageValidation['error'], 400);
+    }
+    $message = $messageValidation['text'];
 }
 
 $conn = nearby_db_connect();
-$accommodationId = (int) $accommodationId;
 $userId = (int) $user['id'];
 
 $checkSql = 'SELECT id FROM accommodations WHERE id = ? LIMIT 1';
 $checkStmt = mysqli_prepare($conn, $checkSql);
+
+if ($checkStmt === false) {
+    secureErrorResponse('Failed to process request. Please try again.', 500, 'Failed to prepare accommodation check: ' . mysqli_error($conn));
+}
+
 mysqli_stmt_bind_param($checkStmt, 'i', $accommodationId);
 mysqli_stmt_execute($checkStmt);
 $result = mysqli_stmt_get_result($checkStmt);
@@ -48,13 +67,17 @@ if (!$exists) {
 
 $insertSql = 'INSERT INTO contact_requests (accommodation_id, requester_id, message) VALUES (?, ?, ?)';
 $insertStmt = mysqli_prepare($conn, $insertSql);
+
+if ($insertStmt === false) {
+    secureErrorResponse('Failed to send request. Please try again.', 500, 'Failed to prepare contact insert: ' . mysqli_error($conn));
+}
+
 mysqli_stmt_bind_param($insertStmt, 'iis', $accommodationId, $userId, $message);
 
 if (mysqli_stmt_execute($insertStmt)) {
     echo json_encode(['success' => true, 'message' => 'Request sent to the owner']);
 } else {
-    http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Unable to send request']);
+    secureErrorResponse('Unable to send request. Please try again.', 500, 'Failed to execute contact insert: ' . mysqli_stmt_error($insertStmt));
 }
 
 mysqli_stmt_close($insertStmt);

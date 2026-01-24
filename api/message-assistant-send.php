@@ -1,6 +1,7 @@
 <?php
 header('Content-Type: application/json');
 require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../config/security.php';
 
 $respond = static function (int $status, array $payload): void {
     http_response_code($status);
@@ -17,24 +18,42 @@ try {
         $respond(401, ['success' => false, 'message' => 'Login required']);
     }
 
+    $userId = (int) $_SESSION['user']['id'];
+    
+    // Rate limiting for chatbot messages
+    if (!checkRateLimit('chatbot_' . $userId, 30, 300)) { // 30 messages per 5 minutes
+        $respond(429, ['success' => false, 'message' => 'Too many messages. Please wait before sending another message.']);
+    }
+
     $rawInput = file_get_contents('php://input');
     $payload = json_decode($rawInput, true);
     if (!is_array($payload)) {
         $payload = [];
     }
 
-    $message = trim($payload['message'] ?? '');
-    if ($message === '') {
-        $respond(422, ['success' => false, 'message' => 'Message cannot be empty']);
+    // Validate and sanitize message
+    $messageValidation = validateText($payload['message'] ?? '', 1, 1000);
+    if (!$messageValidation['valid']) {
+        $respond(422, ['success' => false, 'message' => $messageValidation['error']]);
     }
+    $message = $messageValidation['text'];
 
-    $message = trim(preg_replace('/\s+/u', ' ', strip_tags($message)));
-    if (mb_strlen($message) > 1000) {
-        $respond(422, ['success' => false, 'message' => 'Please keep your message under 1000 characters']);
+    // Additional security: Check for potential prompt injection
+    $suspiciousPatterns = [
+        '/ignore\s+previous\s+instructions/i',
+        '/system\s*:/i',
+        '/assistant\s*:/i',
+        '/\[INST\]/i',
+        '/\<\|system\|\>/i',
+    ];
+    
+    foreach ($suspiciousPatterns as $pattern) {
+        if (preg_match($pattern, $message)) {
+            $respond(422, ['success' => false, 'message' => 'Message contains invalid content']);
+        }
     }
 
     $conn = nearby_db_connect();
-    $userId = (int) $_SESSION['user']['id'];
 
     $historySql = 'SELECT sender, message FROM chatbot_messages WHERE user_id = ? ORDER BY created_at DESC LIMIT 9';
     $historyStmt = mysqli_prepare($conn, $historySql);
@@ -50,7 +69,7 @@ try {
     while ($row = mysqli_fetch_assoc($historyResult)) {
         $history[] = [
             'sender' => $row['sender'],
-            'message' => trim(preg_replace('/\s+/u', ' ', strip_tags($row['message'] ?? ''))),
+            'message' => sanitizeInput($row['message'] ?? ''),
         ];
     }
     mysqli_stmt_close($historyStmt);
@@ -174,9 +193,15 @@ try {
     }
 
     $botReply = $responseData['candidates'][0]['content']['parts'][0]['text'] ?? '';
-    $botReply = trim($botReply);
+    $botReply = sanitizeInput(trim($botReply));
     if ($botReply === '') {
         $respond(502, ['success' => false, 'message' => 'Gemini did not return a reply']);
+    }
+
+    // Additional security: Validate bot response doesn't contain sensitive info
+    if (preg_match('/password|token|secret|key|api/i', $botReply)) {
+        error_log('[NearBy Security] Potentially sensitive content in bot response: ' . substr($botReply, 0, 100));
+        $botReply = 'I apologize, but I cannot provide that information. Please contact support for assistance.';
     }
 
     $insertSql = 'INSERT INTO chatbot_messages (user_id, sender, message) VALUES (?, ?, ?)';
