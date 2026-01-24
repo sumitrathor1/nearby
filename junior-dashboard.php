@@ -1,7 +1,7 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
-}
+}//s
 if (($_SESSION['user']['role'] ?? null) !== 'junior') {
     header('Location: login.php');
     exit;
