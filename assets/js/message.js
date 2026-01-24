@@ -183,23 +183,21 @@ if (chatbotRoot) {
                     headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
                     body: JSON.stringify({message: rawValue}),
                 });
-                if (!response.ok) {
-                    const text = await response.text();
-                    throw new Error(text || 'Unable to send message right now.');
+                let data;
+                try {
+                    data = await response.json();
+                } catch {
+                    throw new Error('Server returned invalid response');
                 }
-                const data = await response.json().catch(() => ({success: false, message: 'Invalid response'}));
-                if (!data.success) {
-                    throw new Error(data.message || data.error || 'Unable to send message right now.');
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || 'Unable to send message');
                 }
                 typingIndicator.remove();
                 appendMessage('bot', data.reply, data.created_at || new Date());
             } catch (error) {
                 typingIndicator.remove();
-                if (window.NearBy?.showMessage) {
-                    window.NearBy.showMessage(error.message || 'Unable to send message right now.', 'danger');
-                } else {
-                    console.error(error);
-                }
+                const errorMessage = error.message.includes('Server returned invalid response') || error.message.includes('Failed to fetch') ? 'Sorry, I\'m having trouble connecting. Please try again later.' : error.message || 'Sorry, I\'m having trouble responding right now. Please try again later.';
+                appendMessage('bot', errorMessage, new Date());
             } finally {
                 isSending = false;
                 setFormDisabled(false);

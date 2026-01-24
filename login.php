@@ -55,7 +55,7 @@ require_once __DIR__ . '/includes/header.php';
                     <i class="bi bi-telephone text-primary fs-4"></i>
                     <div>
                         <div class="fw-semibold">Call</div>
-                        <span class="text-muted">+91 7566868709 (Mon–Sat, 10 AM – 6 PM)</span>
+                        <span class="text-muted">+91 76****** (Mon–Sat, 10 AM – 6 PM)</span>
                     </div>
                 </div>
                 <div class="d-flex align-items-start gap-3">

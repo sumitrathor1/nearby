@@ -63,11 +63,29 @@
         }
 
         const response = await fetch(url, options);
-        const data = await response.json().catch(() => ({success: false, message: 'Invalid server response'}));
-        if (!response.ok || data.success === false) {
-            const errorMessage = data.message || 'Something went wrong';
-            throw new Error(errorMessage);
+        const rawText = await response.text();
+
+        let data;
+        try {
+            const normalized = rawText.trim();
+            data = normalized ? JSON.parse(normalized) : {};
+        } catch (parseError) {
+            data = null;
         }
+
+        if (!data) {
+            data = {success: false, message: rawText.trim() || 'Invalid server response'};
+        }
+
+        const isSuccess = response.ok && data.success !== false;
+        if (!isSuccess) {
+            const errorMessage = data.message || response.statusText || 'Something went wrong';
+            const error = new Error(errorMessage);
+            error.status = response.status;
+            error.body = rawText;
+            throw error;
+        }
+
         return data;
     };
 

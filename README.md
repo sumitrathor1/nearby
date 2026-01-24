@@ -140,29 +140,6 @@ Each role can create and manage their own listings.
 - FireBase
 
 ---
-## 👨‍💻 Team & Contributors
-
-### 👤 **Sumit Rathor**
-- LinkedIn: https://www.linkedin.com/in/sumitrathor/
-- GitHub: https://github.com/sumitrathor1
-
-### 👤 **Udipt Kushwaha**
-- LinkedIn: https://www.linkedin.com/in/udipt-kushwaha-a91b0a2ba
-- GitHub: https://github.com/Udiptk
-
-### 👤 **Prachi Sharma**
-- LinkedIn: https://www.linkedin.com/in/prachi-sharma-449132252/
-- GitHub: https://github.com/prachisharma1277-eng
-
-### 👤 **Yash Dubey**
-- GitHub: https://github.com/dubeyyash580-ops
--
- ### 👤 **Pooja Rana**
-- LinkedIn:https://www.linkedin.com/in/pooja-rana-59423b32a
-- GitHub: https://github.com/RANAPOOJA321
-  
-
----
 
 ## 🚀 Future Enhancements
 
