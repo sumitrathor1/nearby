@@ -1,35 +1,77 @@
 :root {
-    --nearby-primary: #3bb273;
-    --nearby-secondary: #1f8f5b;
-    --nearby-accent: #88f9d4;
-    --nearby-bg: #e9f7ef;
+    /* ===== Light Mode ===== */
+    --nearby-primary: #3bb273;    /* buttons, main green */
+    --nearby-secondary: #1f8f5b;  /* accents, hover */
+    --nearby-accent: #88f9d4;     /* highlights */
+    --nearby-bg: #e9f7ef;         /* page bg */
     --nearby-card: rgba(255, 255, 255, 0.22);
     --nearby-border: rgba(255, 255, 255, 0.55);
-    --nearby-shadow: 0 20px 40px rgba(45, 74, 52, 0.18);
     --nearby-text: #103b2f;
     --nearby-muted: rgba(16, 59, 47, 0.65);
 }
 
+/* ===== Dark Mode ===== */
+body.dark-mode {
+    --nearby-bg: #0f1612;          /* dark greenish bg */
+    --nearby-card: rgba(16, 41, 28, 0.35);  /* dark green card */
+    --nearby-border: rgba(40, 90, 60, 0.5); /* dark green border */
+    --nearby-text: #cde8d3;        /* soft greenish text */
+    --nearby-muted: rgba(200, 232, 211, 0.6);
+    --nearby-primary: #22613c;     /* dark green button */
+    --nearby-secondary: #225b3c;   /* dark green accent */
+    --nearby-accent: #2e6252;      /* soft highlight in dark */
+}
+
+/* ===== Base Styles ===== */
 * {
     box-sizing: border-box;
 }
 
 body {
     font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: radial-gradient(circle at 20% 20%, rgba(68, 187, 116, 0.25), transparent 35%),
-                radial-gradient(circle at 80% 0%, rgba(136, 249, 212, 0.35), transparent 45%),
+    background: radial-gradient(circle at 20% 20%, rgba(60, 159, 100, 0.25), transparent 35%),
+                radial-gradient(circle at 80% 0%, rgba(125, 210, 182, 0.35), transparent 45%),
                 linear-gradient(180deg, #f5fffa 0%, var(--nearby-bg) 100%);
     color: var(--nearby-text);
     min-height: 100vh;
+    transition: all 0.3s ease;
 }
 
 a {
     color: var(--nearby-secondary);
+    transition: color 0.3s ease;
 }
 
 a:hover {
     color: var(--nearby-primary);
 }
+/* Cards */
+.glass-card {
+    background: var(--nearby-card);
+    border: 1px solid var(--nearby-border);
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(135deg, var(--nearby-primary), var(--nearby-secondary));
+    border-color: var(--nearby-secondary);
+    color: #fff;
+}
+
+.filter-pill,
+.feature-tag,
+.badge-verified,
+.icon-circle {
+    background: rgba(var(--nearby-primary-rgb), 0.15); /* use RGB for alpha */
+    color: var(--nearby-secondary);
+    border: 1px solid rgba(var(--nearby-primary-rgb), 0.35);
+}
+
+/* Links & text accents */
+a, .section-title {
+    color: var(--nearby-secondary);
+}
+
 
 .navbar-brand {
     color: #fff;
