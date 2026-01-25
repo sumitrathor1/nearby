@@ -1,0 +1,96 @@
+(() => {
+    const body = document.body;
+    if (!body) {
+        return;
+    }
+
+    const currentPath = window.location.pathname.split('/').pop() || 'index.php';
+    document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+        if (link.getAttribute('href') === currentPath) {
+            link.classList.add('active');
+        }
+    });
+
+    const buildAlert = (message, type = 'success') => {
+        const wrapper = document.createElement('div');
+        wrapper.innerHTML = `
+            <div class="alert alert-${type} alert-glass alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+        return wrapper.firstElementChild;
+    };
+
+    const showMessage = (message, type = 'success') => {
+        const sweetAlert = window.Swal;
+        if (sweetAlert) {
+            const iconMap = {success: 'success', danger: 'error', warning: 'warning', info: 'info'};
+            const icon = iconMap[type] || 'info';
+            const titleMap = {
+                success: 'Success',
+                error: 'Oops!',
+                warning: 'Please check',
+                info: 'Heads up'
+            };
+            sweetAlert.fire({
+                icon,
+                title: titleMap[icon] || 'Notice',
+                text: message,
+                confirmButtonColor: '#0d6efd'
+            });
+            return;
+        }
+
+        const target = document.querySelector('[data-app-alerts]') || document.querySelector('.container');
+        if (!target) {
+            return;
+        }
+        const alertEl = buildAlert(message, type);
+        target.prepend(alertEl);
+        setTimeout(() => {
+            const alertInstance = bootstrap.Alert.getOrCreateInstance(alertEl);
+            alertInstance.close();
+        }, 6000);
+    };
+
+    const fetchJSON = async (url, options = {}) => {
+        const defaultHeaders = {'Accept': 'application/json'};
+        options.headers = options.headers ? {...defaultHeaders, ...options.headers} : defaultHeaders;
+        if (options.body && !(options.body instanceof FormData)) {
+            options.headers['Content-Type'] = 'application/json';
+            options.body = JSON.stringify(options.body);
+        }
+
+        const response = await fetch(url, options);
+        const rawText = await response.text();
+
+        let data;
+        try {
+            const normalized = rawText.trim();
+            data = normalized ? JSON.parse(normalized) : {};
+        } catch (parseError) {
+            data = null;
+        }
+
+        if (!data) {
+            data = {success: false, message: rawText.trim() || 'Invalid server response'};
+        }
+
+        const isSuccess = response.ok && data.success !== false;
+        if (!isSuccess) {
+            const errorMessage = data.message || response.statusText || 'Something went wrong';
+            const error = new Error(errorMessage);
+            error.status = response.status;
+            error.body = rawText;
+            throw error;
+        }
+
+        return data;
+    };
+
+    window.NearBy = {
+        fetchJSON,
+        showMessage
+    };
+})();

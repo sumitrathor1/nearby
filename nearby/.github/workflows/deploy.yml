@@ -1,0 +1,29 @@
+name: Deploy to InfinityFree mentium folder
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ftp-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: ftpupload.net
+          username: if0_35933629
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /htdocs/nearby/
+          local-dir: ./
+          exclude: |
+            .git/**
+            .git*
+            .github/**
+            .github*
+            node_modules/**
+            **/.DS_Store

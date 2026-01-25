@@ -1,0 +1,15 @@
+# Environment variables (contains sensitive data)
+.env
+config/.env
+
+# IDE
+.vscode/
+.idea/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Backups
+database/backups/*.sql
+!database/backups/.gitkeep
