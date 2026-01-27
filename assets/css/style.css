@@ -1039,28 +1039,6 @@ textarea:focus {
 }
 
 
-/* Mobile Card Spacing Fix */
-@media (max-width: 768px) {
-  .card, .listing-card, .item-card {
-    margin-bottom: 16px;
-    padding: 12px;
-  }
-
-  .card img {
-    width: 100%;
-    height: auto;
-  }
-
-  .card-body {
-    text-align: center;
-  }
-
-  .card-container {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-}
-
 /* ================= MOBILE SPACING & ALIGNMENT FIXES ================= */
 
 @media (max-width: 768px) {
