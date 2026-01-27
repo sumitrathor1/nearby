@@ -1,6 +1,7 @@
 <?php
 header('Content-Type: application/json');
 require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../config/security.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -8,9 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+startSecureSession();
 
 $raw = file_get_contents('php://input');
 $data = json_decode($raw, true);
@@ -22,20 +21,28 @@ $email = trim($data['email'] ?? '');
 $password = $data['password'] ?? '';
 $role = $data['role'] ?? '';
 
-if ($email === '' || $password === '' || $role === '') {
-    echo json_encode(['success' => false, 'message' => 'All fields are required']);
+// Validate email
+$emailValidation = validateEmail($email);
+if (!$emailValidation['valid']) {
+    echo json_encode(['success' => false, 'message' => $emailValidation['error']]);
+    exit;
+}
+$email = $emailValidation['email'];
+
+// Validate password (basic check for login)
+if (empty($password)) {
+    echo json_encode(['success' => false, 'message' => 'Password is required']);
     exit;
 }
 
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    echo json_encode(['success' => false, 'message' => 'Enter a valid email address']);
+// Validate role
+$allowedRoles = ['junior', 'senior'];
+$roleValidation = validateEnum($role, $allowedRoles, 'role');
+if (!$roleValidation['valid']) {
+    echo json_encode(['success' => false, 'message' => $roleValidation['error']]);
     exit;
 }
-
-if (!in_array($role, ['junior', 'senior'], true)) {
-    echo json_encode(['success' => false, 'message' => 'Invalid role']);
-    exit;
-}
+$role = $roleValidation['value'];
 
 $conn = nearby_db_connect();
 $emailLower = strtolower($email);

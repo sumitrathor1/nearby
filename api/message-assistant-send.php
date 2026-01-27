@@ -10,11 +10,9 @@ $respond = static function (int $status, array $payload): void {
 };
 
 try {
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
+    startSecureSession();
 
-    if (empty($_SESSION['user']['id'])) {
+    if (!isSessionValid() || empty($_SESSION['user']['id'])) {
         $respond(401, ['success' => false, 'message' => 'Login required']);
     }
 

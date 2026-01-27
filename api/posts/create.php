@@ -9,18 +9,45 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+startSecureSession();
 
-if (!isset($_SESSION['user']['id'])) {
+if (!isSessionValid() || !isset($_SESSION['user']['id'])) {
     http_response_code(401);
     echo json_encode(['success' => false, 'message' => 'Login required to create a post']);
     exit;
 }
 
-// Rate limiting for post creation
 $userId = $_SESSION['user']['id'];
+$userType = $_SESSION['user']['user_type'] ?? 'student';
+
+// Authorization check: Verify user has permission to create this type of post
+if ($payload['post_category'] === 'room') {
+    // Only owners can create room posts
+    $allowedOwnerTypes = ['home_owner', 'room_owner'];
+    if (!in_array($userType, $allowedOwnerTypes)) {
+        http_response_code(403);
+        echo json_encode(['success' => false, 'message' => 'Only property owners can create room listings']);
+        exit;
+    }
+} elseif ($payload['post_category'] === 'service') {
+    // Only service providers can create service posts
+    $allowedServiceTypes = ['tiffin', 'gas', 'milk', 'sabji', 'other_service'];
+    if (!in_array($userType, $allowedServiceTypes)) {
+        http_response_code(403);
+        echo json_encode(['success' => false, 'message' => 'Only service providers can create service listings']);
+        exit;
+    }
+
+    // Additional check: Service type must match user's service type
+    $serviceType = $payload['service_type'] ?? '';
+    if ($serviceType && $userType !== 'other_service' && $userType !== $serviceType) {
+        http_response_code(403);
+        echo json_encode(['success' => false, 'message' => 'You can only create listings for your service type']);
+        exit;
+    }
+}
+
+// Rate limiting for post creation
 if (!checkRateLimit('post_create_' . $userId, 5, 3600)) { // 5 posts per hour
     secureErrorResponse('Too many posts created. Please wait before creating another post.', 429);
 }

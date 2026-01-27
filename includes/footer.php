@@ -64,9 +64,22 @@
                         <span class="visually-hidden">LinkedIn</span>
                     </a>
 
-                    <a class="social-link" href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                    <a class="social-link" href="https://twitter.com/nearbyhousing" target="_blank"
+                        rel="noopener noreferrer" aria-label="X (Twitter)">
                         <i class="bi bi-twitter-x"></i>
-                        <span class="visually-hidden">Twitter</span>
+                        <span class="visually-hidden">X (Twitter)</span>
+                    </a>
+
+                    <a class="social-link" href="https://instagram.com/nearbyhousing" target="_blank"
+                        rel="noopener noreferrer" aria-label="Instagram">
+                        <i class="bi bi-instagram"></i>
+                        <span class="visually-hidden">Instagram</span>
+                    </a>
+
+                    <a class="social-link" href="https://facebook.com/nearbyhousing" target="_blank"
+                        rel="noopener noreferrer" aria-label="Facebook">
+                        <i class="bi bi-facebook"></i>
+                        <span class="visually-hidden">Facebook</span>
                     </a>
                 </div>
 
@@ -80,6 +93,12 @@
         </div>
     </div>
 </footer>
+
+<!-- Back to Top Button -->
+<button id="backToTopBtn" class="btn btn-primary back-to-top-btn" aria-label="Back to top">
+    <i class="bi bi-chevron-up"></i>
+</button>
+
 <?php if (!empty($enableChatbot)): ?>
     <?php include __DIR__ . '/chatbot-widget.php'; ?>
 <?php endif; ?>

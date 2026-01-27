@@ -1,7 +1,8 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . '/../config/security.php';
+
+startSecureSession();
+
 $pageTitle = $pageTitle ?? 'NearBy Student Housing';
 $currentUser = $_SESSION['user'] ?? null;
 $pageStyles = $pageStyles ?? [];

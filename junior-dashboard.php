@@ -1,8 +1,9 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}//s
-if (($_SESSION['user']['role'] ?? null) !== 'junior') {
+require_once __DIR__ . '/config/security.php';
+
+startSecureSession();
+
+if (!isSessionValid() || ($_SESSION['user']['role'] ?? null) !== 'junior') {
     header('Location: login.php');
     exit;
 }
