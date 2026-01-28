@@ -41,7 +41,7 @@
             </div>
             <div class="col-sm-6 col-lg-3">
                 <h6 class="footer-heading">Download app</h6>
-                <div class="d-flex flex-wrap gap-2 mb-3">
+                <div class="d-flex flex-wrap justify-content-center gap-2 mb-3">
                     <a class="footer-store" href="#" aria-label="Download on Play Store">Play Store</a>
                     <a class="footer-store" href="#" aria-label="Download on App Store">App Store</a>
                 </div>
