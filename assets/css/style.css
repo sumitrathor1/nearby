@@ -52,6 +52,9 @@ a:hover {
 .navbar-toggler {
     border-color: rgba(255, 255, 255, 0.4);
 }
+.nav-item {
+    justify-content: space-between;
+}
 
 .glass-nav {
     background: rgba(40, 89, 60, 0.45);
@@ -60,6 +63,17 @@ a:hover {
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 20px;
     margin: 16px 16px 0;
+    /* Make navbar thinner vertically */
+   padding: 6px 16px;   /* thinner navbar */ /* less vertical padding (was probably bigger before) */
+    height: auto; /* optional: remove fixed height to let padding control thickness */
+
+    /* Position navbar a bit away from top/left */
+    margin: 16px 16px 0;
+
+    display: flex; /* ensure buttons inside align nicely */
+    align-items: center; /* vertically center buttons */
+    justify-content: space-between; /* buttons start from left by default */
+    gap: 16px; /* space between buttons */
 }
 
 .glass-footer {
