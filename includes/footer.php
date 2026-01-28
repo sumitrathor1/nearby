@@ -13,6 +13,7 @@
                 </p>
                 <p class="footer-maintained small mb-0">Platform managed with care by the NearBy Support Team.</p>
             </div>
+
             <div class="col-sm-6 col-lg-2">
                 <h6 class="footer-heading">Support</h6>
                 <ul class="footer-list">
@@ -21,6 +22,7 @@
                     <li><a href="guidance.php">Housing guidance</a></li>
                 </ul>
             </div>
+
             <div class="col-sm-6 col-lg-2">
                 <h6 class="footer-heading">Quick links</h6>
                 <ul class="footer-list">
@@ -29,6 +31,7 @@
                     <li><a href="login.php">Member login</a></li>
                 </ul>
             </div>
+
             <div class="col-sm-6 col-lg-2">
                 <h6 class="footer-heading">Important links</h6>
                 <ul class="footer-list">
@@ -39,47 +42,71 @@
                     <li><a href="register.php">Register</a></li>
                 </ul>
             </div>
+
             <div class="col-sm-6 col-lg-3">
                 <h6 class="footer-heading">Download app</h6>
                 <div class="d-flex flex-wrap gap-2 mb-3">
-                    <a class="footer-store" href="#" aria-label="Download on Play Store">Play Store</a>
-                    <a class="footer-store" href="#" aria-label="Download on App Store">App Store</a>
+         <!-- Play Store (download icon) -->
+<a class="social-link" href="https://play.google.com/store/apps/details?id=com.yourapp" target="_blank" aria-label="Play Store">
+    <i class="bi bi-google"></i> <!-- or bi bi-phone -->
+    <span class="visually-hidden">Play Store</span>
+</a>
+
+<!-- App Store (download icon) -->
+<a class="social-link" href="https://apps.apple.com/app/idYOUR_APP_ID" target="_blank" aria-label="App Store">
+    <i class="bi bi-apple"></i>
+    <span class="visually-hidden">App Store</span>
+</a>
+
                 </div>
+
                 <div class="footer-social d-flex gap-2">
+                    <!-- GitHub -->
                     <a class="social-link" href="https://github.com/sumitrathor1/nearby" target="_blank"
                         rel="noopener noreferrer" aria-label="GitHub">
                         <i class="bi bi-github"></i>
                         <span class="visually-hidden">GitHub</span>
                     </a>
 
+                    <!-- Email -->
                     <a class="social-link" href="mailto:sumitrathor142272@gmail.com" target="_blank"
                         rel="noopener noreferrer" aria-label="Email">
                         <i class="bi bi-envelope-fill"></i>
                         <span class="visually-hidden">Email</span>
                     </a>
 
+                    <!-- LinkedIn -->
                     <a class="social-link" href="https://www.linkedin.com/in/sumitrathor" target="_blank"
                         rel="noopener noreferrer" aria-label="LinkedIn">
                         <i class="bi bi-linkedin"></i>
                         <span class="visually-hidden">LinkedIn</span>
                     </a>
 
+                    <!-- Twitter/X -->
                     <a class="social-link" href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
                         <i class="bi bi-twitter-x"></i>
                         <span class="visually-hidden">Twitter</span>
                     </a>
+
+                    <!-- Instagram (New) -->
+                    <a class="social-link" href="https://www.instagram.com/yourprofile" target="_blank"
+                        rel="noopener noreferrer" aria-label="Instagram">
+                        <i class="bi bi-instagram"></i>
+                        <span class="visually-hidden">Instagram</span>
+                    </a>
                 </div>
-
-
             </div>
         </div>
+
         <div class="footer-divider"></div>
+
         <div class="footer-bottom d-flex flex-column flex-lg-row justify-content-between align-items-center gap-3">
             <span class="small">Website secured and maintained by <strong>NearBy Web &amp; Security</strong></span>
             <span class="small">© <?= date('Y') ?> NearBy Student Housing. All rights reserved.</span>
         </div>
     </div>
 </footer>
+
 <?php if (!empty($enableChatbot)): ?>
     <?php include __DIR__ . '/chatbot-widget.php'; ?>
 <?php endif; ?>
