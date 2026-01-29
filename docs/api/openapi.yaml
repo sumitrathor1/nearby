@@ -1,0 +1,961 @@
+openapi: 3.0.3
+info:
+  title: NearBy API
+  description: |
+    **NearBy** is a comprehensive student housing and local services platform API that connects students, property owners, and service providers.
+    
+    ## Features
+    - **Authentication**: Secure login/registration with role-based access
+    - **Accommodation Management**: Create, search, and manage room listings
+    - **Local Services**: Tiffin, gas, milk, and other service providers
+    - **AI Chatbot**: Intelligent assistance for housing and local guidance
+    - **Contact System**: Secure communication between users
+    - **Map Integration**: Location-based search and discovery
+    
+    ## Security
+    - Rate limiting on all endpoints
+    - Input validation and sanitization
+    - XSS and SQL injection protection
+    - Session-based authentication
+    - CSRF token protection
+    
+    ## Base URL
+    - **Local Development**: `http://localhost/nearby/api/`
+    - **Production**: `https://sumitrathor.rf.gd/nearby/api/`
+  version: 1.0.0
+  contact:
+    name: NearBy Support
+    email: 24cd3dsu4@mitsgwl.ac.in
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost/nearby/api
+    description: Local development server
+  - url: https://sumitrathor.rf.gd/nearby/api
+    description: Production server
+
+security:
+  - SessionAuth: []
+
+paths:
+  # Authentication Endpoints
+  /auth/register.php:
+    post:
+      tags:
+        - Authentication
+      summary: Register a new user
+      description: |
+        Create a new user account with role-based access. Students must use @mitsgwl.ac.in email.
+        
+        **Rate Limit**: 5 registrations per 5 minutes per IP
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+            examples:
+              student:
+                summary: Student Registration
+                value:
+                  name: "Rahul Sharma"
+                  email: "rahul.sharma@mitsgwl.ac.in"
+                  password: "your_secure_password_here"
+                  role: "junior"
+                  user_category: "student"
+              service_provider:
+                summary: Service Provider Registration
+                value:
+                  name: "Amit Tiffin Service"
+                  email: "amit@gmail.com"
+                  password: "your_service_password"
+                  role: "senior"
+                  user_category: "tiffin"
+      responses:
+        '200':
+          description: Registration successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              example:
+                success: true
+                message: "Registration successful. You can login now."
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          description: Email already registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                message: "Email already registered"
+        '429':
+          $ref: '#/components/responses/RateLimit'
+
+  /auth/login.php:
+    post:
+      tags:
+        - Authentication
+      summary: User login
+      description: |
+        Authenticate user and create session. Returns redirect URL based on user role.
+        
+        **Rate Limit**: 10 login attempts per 5 minutes per IP
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            example:
+              email: "rahul.sharma@mitsgwl.ac.in"
+              password: "your_password_here"
+              role: "junior"
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+              example:
+                success: true
+                message: "Login successful"
+                redirect: "junior-dashboard.php"
+                csrf_token: "abc123def456..."
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                message: "Invalid email, password, or role"
+        '429':
+          $ref: '#/components/responses/RateLimit'
+
+  /auth/google-login.php:
+    post:
+      tags:
+        - Authentication
+      summary: Google OAuth login
+      description: Authenticate using Google OAuth token
+      operationId: googleLogin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                  description: Google OAuth token
+              required:
+                - token
+      responses:
+        '200':
+          description: Google login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # Posts Management
+  /posts/create.php:
+    post:
+      tags:
+        - Posts
+      summary: Create a new post
+      description: |
+        Create accommodation or service listing. Requires authentication.
+        
+        **Rate Limit**: 5 posts per hour per user
+      operationId: createPost
+      security:
+        - SessionAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/RoomPostRequest'
+                - $ref: '#/components/schemas/ServicePostRequest'
+            examples:
+              room_post:
+                summary: Room Listing
+                value:
+                  post_category: "room"
+                  accommodation_type: "PG"
+                  allowed_for: "Male"
+                  rent_or_price: 8500
+                  location: "Bank Colony, Near MITS Gate"
+                  facilities: ["Wi-Fi", "Meals", "Laundry", "Power Backup"]
+                  description: "Comfortable PG accommodation with all amenities"
+                  contact_phone: "+91 9876543210"
+              service_post:
+                summary: Tiffin Service
+                value:
+                  post_category: "service"
+                  service_type: "tiffin"
+                  rent_or_price: 150
+                  location: "Thatipur, Gwalior"
+                  availability_time: "7:00 AM - 9:00 PM"
+                  description: "Homemade vegetarian meals delivered daily"
+                  contact_phone: "+91 9876543210"
+      responses:
+        '200':
+          description: Post created successfully
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/SuccessResponse'
+                  - type: object
+                    properties:
+                      post_id:
+                        type: integer
+                        description: ID of the created post
+              example:
+                success: true
+                message: "Post created successfully"
+                post_id: 123
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimit'
+
+  /posts/list.php:
+    get:
+      tags:
+        - Posts
+      summary: Search and list posts
+      description: |
+        Search accommodation and service listings with advanced filters.
+        Contact information is only visible to authenticated users.
+      operationId: listPosts
+      parameters:
+        - name: post_category
+          in: query
+          description: Filter by post type
+          schema:
+            type: string
+            enum: [room, service]
+        - name: service_type
+          in: query
+          description: Filter by service type (for service posts)
+          schema:
+            type: string
+            enum: [tiffin, gas, milk, sabji, other]
+        - name: accommodation_type
+          in: query
+          description: Filter by accommodation type (for room posts)
+          schema:
+            type: string
+            enum: [PG, Flat, Room, Hostel]
+        - name: allowed_for
+          in: query
+          description: Filter by who can stay
+          schema:
+            type: string
+            enum: [Male, Female, Family]
+        - name: location
+          in: query
+          description: Search by location or keywords
+          schema:
+            type: string
+        - name: min_price
+          in: query
+          description: Minimum price filter
+          schema:
+            type: integer
+            minimum: 0
+        - name: max_price
+          in: query
+          description: Maximum price filter
+          schema:
+            type: integer
+            minimum: 0
+      responses:
+        '200':
+          description: Posts retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Post'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  # Contact System
+  /contact/request.php:
+    post:
+      tags:
+        - Contact
+      summary: Send contact request
+      description: Send a contact request to accommodation owner
+      operationId: sendContactRequest
+      security:
+        - SessionAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactRequest'
+            example:
+              accommodation_id: 123
+              message: "Hi, I'm interested in this accommodation. Is it still available?"
+      responses:
+        '200':
+          description: Contact request sent successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              example:
+                success: true
+                message: "Request sent to the owner"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Accommodation not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # AI Chatbot
+  /message-assistant-send.php:
+    post:
+      tags:
+        - AI Chatbot
+      summary: Send message to AI assistant
+      description: |
+        Send a message to the AI chatbot for housing and local service guidance.
+        
+        **Rate Limit**: 30 messages per 5 minutes per user
+      operationId: sendChatMessage
+      security:
+        - SessionAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatMessageRequest'
+            example:
+              message: "I'm looking for a PG near MITS with Wi-Fi and meals. What are my options?"
+      responses:
+        '200':
+          description: AI response received
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatMessageResponse'
+              example:
+                success: true
+                reply: "Based on your requirements, I'd recommend checking PGs in Bank Colony and Thatipur areas. These locations are close to MITS and typically offer Wi-Fi and meal facilities. Would you like me to help you with specific price ranges?"
+                created_at: "2024-01-15 10:30:00"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          description: Invalid message content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          $ref: '#/components/responses/RateLimit'
+
+  /message-assistant-history.php:
+    get:
+      tags:
+        - AI Chatbot
+      summary: Get chat history
+      description: Retrieve user's chat history with the AI assistant
+      operationId: getChatHistory
+      security:
+        - SessionAuth: []
+      parameters:
+        - name: limit
+          in: query
+          description: Number of messages to retrieve
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+      responses:
+        '200':
+          description: Chat history retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ChatMessage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # Map and Location
+  /map/locations.php:
+    get:
+      tags:
+        - Map & Location
+      summary: Get map locations
+      description: Retrieve accommodation and service locations for map display
+      operationId: getMapLocations
+      parameters:
+        - name: type
+          in: query
+          description: Filter by location type
+          schema:
+            type: string
+            enum: [housing, food, essential, college]
+        - name: max_price
+          in: query
+          description: Maximum price filter
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Locations retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MapLocation'
+
+  # Accommodations (Legacy)
+  /accommodations/search.php:
+    get:
+      tags:
+        - Accommodations (Legacy)
+      summary: Search accommodations (Legacy)
+      description: Legacy endpoint for accommodation search
+      operationId: searchAccommodations
+      deprecated: true
+      parameters:
+        - name: type
+          in: query
+          schema:
+            type: string
+        - name: location
+          in: query
+          schema:
+            type: string
+        - name: min_rent
+          in: query
+          schema:
+            type: integer
+        - name: max_rent
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Accommodations found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Accommodation'
+
+  /accommodations/create.php:
+    post:
+      tags:
+        - Accommodations (Legacy)
+      summary: Create accommodation (Legacy)
+      description: Legacy endpoint for creating accommodations
+      operationId: createAccommodation
+      deprecated: true
+      security:
+        - SessionAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccommodationRequest'
+      responses:
+        '200':
+          description: Accommodation created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+components:
+  securitySchemes:
+    SessionAuth:
+      type: apiKey
+      in: cookie
+      name: PHPSESSID
+      description: PHP session-based authentication
+
+  schemas:
+    # Request Schemas
+    RegisterRequest:
+      type: object
+      required:
+        - name
+        - email
+        - password
+        - role
+        - user_category
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 120
+          description: Full name of the user
+          example: "Rahul Sharma"
+        email:
+          type: string
+          format: email
+          maxLength: 160
+          description: Email address (students must use @mitsgwl.ac.in)
+          example: "rahul.sharma@mitsgwl.ac.in"
+        password:
+          type: string
+          minLength: 6
+          description: Password (must contain at least one letter and one number)
+          example: "your_secure_password"
+        role:
+          type: string
+          enum: [junior, senior]
+          description: User role in the platform
+        user_category:
+          type: string
+          enum: [student, home_owner, room_owner, tiffin, gas, milk, sabji, other_service]
+          description: User category defining their purpose on the platform
+
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+        - role
+      properties:
+        email:
+          type: string
+          format: email
+          description: User's email address
+        password:
+          type: string
+          description: User's password
+        role:
+          type: string
+          enum: [junior, senior]
+          description: User role
+
+    RoomPostRequest:
+      type: object
+      required:
+        - post_category
+        - accommodation_type
+        - allowed_for
+        - rent_or_price
+        - location
+        - description
+        - contact_phone
+      properties:
+        post_category:
+          type: string
+          enum: [room]
+        accommodation_type:
+          type: string
+          enum: [PG, Flat, Room, Hostel]
+        allowed_for:
+          type: string
+          enum: [Male, Female, Family]
+        rent_or_price:
+          type: integer
+          minimum: 1
+          maximum: 100000
+          description: Monthly rent in INR
+        location:
+          type: string
+          minLength: 3
+          maxLength: 255
+          description: Location of the accommodation
+        facilities:
+          type: array
+          items:
+            type: string
+            maxLength: 50
+          maxItems: 20
+          description: Available facilities
+          example: ["Wi-Fi", "Meals", "Laundry", "Power Backup"]
+        description:
+          type: string
+          minLength: 10
+          maxLength: 2000
+          description: Detailed description of the accommodation
+        contact_phone:
+          type: string
+          pattern: '^[0-9+][0-9\-\s]{6,}$'
+          description: Contact phone number
+
+    ServicePostRequest:
+      type: object
+      required:
+        - post_category
+        - service_type
+        - location
+        - availability_time
+        - description
+        - contact_phone
+      properties:
+        post_category:
+          type: string
+          enum: [service]
+        service_type:
+          type: string
+          enum: [tiffin, gas, milk, sabji, other]
+        rent_or_price:
+          type: integer
+          minimum: 0
+          maximum: 50000
+          description: Service price in INR
+        location:
+          type: string
+          minLength: 3
+          maxLength: 255
+        availability_time:
+          type: string
+          maxLength: 120
+          description: Service availability hours
+          example: "7:00 AM - 9:00 PM"
+        description:
+          type: string
+          minLength: 10
+          maxLength: 2000
+        contact_phone:
+          type: string
+          pattern: '^[0-9+][0-9\-\s]{6,}$'
+
+    ContactRequest:
+      type: object
+      required:
+        - accommodation_id
+      properties:
+        accommodation_id:
+          type: integer
+          description: ID of the accommodation to contact about
+        message:
+          type: string
+          maxLength: 500
+          description: Optional message to the owner
+
+    ChatMessageRequest:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          minLength: 1
+          maxLength: 1000
+          description: Message to send to the AI assistant
+
+    AccommodationRequest:
+      type: object
+      description: Legacy accommodation creation request
+      required:
+        - title
+        - type
+        - allowed_for
+        - rent
+        - location
+        - description
+      properties:
+        title:
+          type: string
+          maxLength: 180
+        type:
+          type: string
+          enum: [PG, Flat, Room, Hostel]
+        allowed_for:
+          type: string
+          enum: [Male, Female, Family]
+        rent:
+          type: integer
+          minimum: 0
+        location:
+          type: string
+          maxLength: 255
+        facilities:
+          type: string
+          description: Comma-separated facilities
+        description:
+          type: string
+
+    # Response Schemas
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          description: Success message
+
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+          description: Error message
+        timestamp:
+          type: string
+          format: date-time
+          description: Error timestamp
+
+    LoginResponse:
+      allOf:
+        - $ref: '#/components/schemas/SuccessResponse'
+        - type: object
+          properties:
+            redirect:
+              type: string
+              description: URL to redirect after login
+            csrf_token:
+              type: string
+              description: CSRF token for future requests
+
+    ChatMessageResponse:
+      allOf:
+        - $ref: '#/components/schemas/SuccessResponse'
+        - type: object
+          properties:
+            reply:
+              type: string
+              description: AI assistant's response
+            created_at:
+              type: string
+              format: date-time
+              description: Response timestamp
+
+    # Data Models
+    Post:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Post ID
+        post_category:
+          type: string
+          enum: [room, service]
+        service_type:
+          type: string
+          enum: [tiffin, gas, milk, sabji, other]
+          nullable: true
+        accommodation_type:
+          type: string
+          enum: [PG, Flat, Room, Hostel]
+          nullable: true
+        allowed_for:
+          type: string
+          enum: [Male, Female, Family]
+          nullable: true
+        rent_or_price:
+          type: integer
+          nullable: true
+          description: Price in INR
+        location:
+          type: string
+        facilities:
+          type: array
+          items:
+            type: string
+          description: Available facilities (for room posts)
+        availability_time:
+          type: string
+          nullable: true
+          description: Service hours (for service posts)
+        description:
+          type: string
+        contact_phone:
+          type: string
+          nullable: true
+          description: Only visible to authenticated users
+        created_at:
+          type: string
+          format: date-time
+        user_name:
+          type: string
+          description: Name of the post creator
+        user_type:
+          type: string
+          enum: [student, owner, service_provider]
+        can_view_contact:
+          type: boolean
+          description: Whether current user can view contact info
+
+    ChatMessage:
+      type: object
+      properties:
+        id:
+          type: integer
+        sender:
+          type: string
+          enum: [user, bot]
+        message:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+
+    MapLocation:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        type:
+          type: string
+          enum: [housing, food, essential, college]
+        location:
+          type: string
+        price:
+          type: integer
+          nullable: true
+        coordinates:
+          type: object
+          properties:
+            lat:
+              type: number
+            lng:
+              type: number
+
+    Accommodation:
+      type: object
+      description: Legacy accommodation model
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        type:
+          type: string
+          enum: [PG, Flat, Room, Hostel]
+        allowed_for:
+          type: string
+          enum: [Male, Female, Family]
+        rent:
+          type: integer
+        location:
+          type: string
+        facilities:
+          type: string
+        description:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+
+  responses:
+    BadRequest:
+      description: Bad request - Invalid input data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            message: "Invalid input data"
+            timestamp: "2024-01-15T10:30:00Z"
+
+    Unauthorized:
+      description: Unauthorized - Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            message: "Login required"
+            timestamp: "2024-01-15T10:30:00Z"
+
+    RateLimit:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            message: "Too many requests. Please try again later."
+            timestamp: "2024-01-15T10:30:00Z"
+
+    InternalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            success: false
+            message: "Internal server error"
+            timestamp: "2024-01-15T10:30:00Z"
+
+tags:
+  - name: Authentication
+    description: User registration, login, and session management
+  - name: Posts
+    description: Create and search accommodation and service listings
+  - name: Contact
+    description: Communication between users
+  - name: AI Chatbot
+    description: AI-powered assistance for housing and local services
+  - name: Map & Location
+    description: Location-based search and map integration
+  - name: Accommodations (Legacy)
+    description: Legacy accommodation endpoints (deprecated)

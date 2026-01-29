@@ -186,11 +186,8 @@ if (chatbotRoot) {
                 appendMessage('bot', data.reply, data.created_at || new Date());
             } catch (error) {
                 typingIndicator.remove();
-                if (window.NearBy?.showMessage) {
-                    window.NearBy.showMessage(error.message || 'Unable to send message right now.', 'danger');
-                } else {
-                    console.error(error);
-                }
+                const errorMessage = error.message.includes('Server returned invalid response') || error.message.includes('Failed to fetch') ? 'Sorry, I\'m having trouble connecting. Please try again later.' : error.message || 'Sorry, I\'m having trouble responding right now. Please try again later.';
+                appendMessage('bot', errorMessage, new Date());
             } finally {
                 isSending = false;
                 setFormDisabled(false);

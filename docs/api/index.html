@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NearBy API Documentation</title>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@5.10.5/swagger-ui.css" />
+    <link rel="icon" type="image/png" href="../../assets/images/favicon_io/favicon-32x32.png" sizes="32x32" />
+    <style>
+        html {
+            box-sizing: border-box;
+            overflow: -moz-scrollbars-vertical;
+            overflow-y: scroll;
+        }
+
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+
+        body {
+            margin: 0;
+            background: #fafafa;
+            font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        .swagger-ui .topbar {
+            background-color: #3bb273;
+            border-bottom: 1px solid #1f8f5b;
+        }
+
+        .swagger-ui .topbar .download-url-wrapper .select-label {
+            color: #fff;
+        }
+
+        .swagger-ui .topbar .download-url-wrapper input[type=text] {
+            border: 2px solid #1f8f5b;
+        }
+
+        .swagger-ui .topbar .download-url-wrapper .download-url-button {
+            background: #1f8f5b;
+            color: #fff;
+            border: 2px solid #1f8f5b;
+        }
+
+        .swagger-ui .info .title {
+            color: #3bb273;
+        }
+
+        .swagger-ui .scheme-container {
+            background: #fff;
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,.15);
+        }
+
+        .swagger-ui .opblock.opblock-post {
+            border-color: #3bb273;
+            background: rgba(59, 178, 115, .1);
+        }
+
+        .swagger-ui .opblock.opblock-post .opblock-summary-method {
+            background: #3bb273;
+        }
+
+        .swagger-ui .opblock.opblock-get {
+            border-color: #1f8f5b;
+            background: rgba(31, 143, 91, .1);
+        }
+
+        .swagger-ui .opblock.opblock-get .opblock-summary-method {
+            background: #1f8f5b;
+        }
+
+        .swagger-ui .btn.authorize {
+            background-color: #3bb273;
+            border-color: #3bb273;
+        }
+
+        .swagger-ui .btn.authorize:hover {
+            background-color: #1f8f5b;
+            border-color: #1f8f5b;
+        }
+
+        .custom-header {
+            background: linear-gradient(135deg, #3bb273 0%, #1f8f5b 100%);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        .custom-header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+
+        .custom-header p {
+            margin: 10px 0 0 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .api-info {
+            background: white;
+            padding: 20px;
+            margin: 0;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .api-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .info-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3bb273;
+        }
+
+        .info-card h3 {
+            margin: 0 0 10px 0;
+            color: #3bb273;
+            font-size: 1.1rem;
+        }
+
+        .info-card p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .security-notice {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+
+        .security-notice h3 {
+            margin: 0 0 10px 0;
+            color: #856404;
+        }
+
+        .security-notice ul {
+            margin: 0;
+            padding-left: 20px;
+            color: #856404;
+        }
+
+        #swagger-ui {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .custom-header h1 {
+                font-size: 2rem;
+            }
+            
+            .custom-header p {
+                font-size: 1rem;
+            }
+            
+            .api-info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="custom-header">
+        <h1>🏠 NearBy API Documentation</h1>
+        <p>Student Housing & Local Services Platform API</p>
+    </div>
+
+    <div class="api-info">
+        <div class="api-info-grid">
+            <div class="info-card">
+                <h3>🔐 Authentication</h3>
+                <p>Session-based authentication with role-based access control. Students and service providers have different permissions.</p>
+            </div>
+            <div class="info-card">
+                <h3>🏡 Accommodations</h3>
+                <p>Create, search, and manage room listings including PGs, flats, rooms, and hostels with advanced filtering.</p>
+            </div>
+            <div class="info-card">
+                <h3>🤖 AI Assistant</h3>
+                <p>Intelligent chatbot powered by Gemini AI for housing guidance and local service recommendations.</p>
+            </div>
+            <div class="info-card">
+                <h3>📍 Location Services</h3>
+                <p>Map integration with location-based search and discovery of nearby accommodations and services.</p>
+            </div>
+        </div>
+
+        <div class="security-notice">
+            <h3>🛡️ Security Features</h3>
+            <ul>
+                <li><strong>Rate Limiting:</strong> All endpoints have rate limits to prevent abuse</li>
+                <li><strong>Input Validation:</strong> Comprehensive validation and sanitization of all inputs</li>
+                <li><strong>XSS Protection:</strong> All user content is properly escaped and sanitized</li>
+                <li><strong>SQL Injection Prevention:</strong> Parameterized queries with proper type binding</li>
+                <li><strong>CSRF Protection:</strong> Cross-site request forgery tokens for sensitive operations</li>
+                <li><strong>Session Security:</strong> Secure session handling with regeneration</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="swagger-ui"></div>
+
+    <script src="https://unpkg.com/swagger-ui-dist@5.10.5/swagger-ui-bundle.js"></script>
+    <script src="https://unpkg.com/swagger-ui-dist@5.10.5/swagger-ui-standalone-preset.js"></script>
+    <script>
+        window.onload = function() {
+            // Determine the base URL dynamically
+            const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            const baseUrl = isLocal ? 'http://localhost/nearby' : 'https://sumitrathor.rf.gd/nearby';
+            
+            // Build a system
+            const ui = SwaggerUIBundle({
+                url: './openapi.yaml',
+                dom_id: '#swagger-ui',
+                deepLinking: true,
+                presets: [
+                    SwaggerUIBundle.presets.apis,
+                    SwaggerUIStandalonePreset
+                ],
+                plugins: [
+                    SwaggerUIBundle.plugins.DownloadUrl
+                ],
+                layout: "StandaloneLayout",
+                validatorUrl: null,
+                tryItOutEnabled: true,
+                requestInterceptor: function(request) {
+                    // Add base URL to relative URLs
+                    if (request.url.startsWith('/')) {
+                        request.url = baseUrl + '/api' + request.url;
+                    }
+                    
+                    // Add credentials for session-based auth
+                    request.credentials = 'include';
+                    
+                    // Add CSRF token if available
+                    const csrfToken = getCsrfToken();
+                    if (csrfToken) {
+                        request.headers['X-CSRF-Token'] = csrfToken;
+                    }
+                    
+                    return request;
+                },
+                responseInterceptor: function(response) {
+                    // Handle authentication redirects
+                    if (response.status === 401) {
+                        console.warn('Authentication required. Please login first.');
+                    }
+                    return response;
+                },
+                onComplete: function() {
+                    // Add custom styling after load
+                    addCustomStyling();
+                },
+                docExpansion: 'list',
+                operationsSorter: 'alpha',
+                tagsSorter: 'alpha'
+            });
+
+            // Helper function to get CSRF token from session storage or cookie
+            function getCsrfToken() {
+                // Try to get from session storage first
+                let token = sessionStorage.getItem('csrf_token');
+                if (token) return token;
+                
+                // Try to get from cookie
+                const cookies = document.cookie.split(';');
+                for (let cookie of cookies) {
+                    const [name, value] = cookie.trim().split('=');
+                    if (name === 'csrf_token') {
+                        return decodeURIComponent(value);
+                    }
+                }
+                return null;
+            }
+
+            // Add custom styling and functionality
+            function addCustomStyling() {
+                // Add authentication notice
+                const authNotice = document.createElement('div');
+                authNotice.innerHTML = `
+                    <div style="background: #d1ecf1; border: 1px solid #bee5eb; border-radius: 8px; padding: 15px; margin: 20px 0; color: #0c5460;">
+                        <h4 style="margin: 0 0 10px 0;">🔑 Authentication Required</h4>
+                        <p style="margin: 0;">Most endpoints require authentication. Please login through the main application first, then return here to test the APIs. Your session will be automatically used for authentication.</p>
+                    </div>
+                `;
+                
+                const infoSection = document.querySelector('.swagger-ui .information-container');
+                if (infoSection) {
+                    infoSection.appendChild(authNotice);
+                }
+
+                // Add rate limiting information
+                const rateLimitNotice = document.createElement('div');
+                rateLimitNotice.innerHTML = `
+                    <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 15px; margin: 20px 0; color: #856404;">
+                        <h4 style="margin: 0 0 10px 0;">⚡ Rate Limiting</h4>
+                        <ul style="margin: 0; padding-left: 20px;">
+                            <li><strong>Registration:</strong> 5 attempts per 5 minutes per IP</li>
+                            <li><strong>Login:</strong> 10 attempts per 5 minutes per IP</li>
+                            <li><strong>Post Creation:</strong> 5 posts per hour per user</li>
+                            <li><strong>Chatbot:</strong> 30 messages per 5 minutes per user</li>
+                        </ul>
+                    </div>
+                `;
+                
+                if (infoSection) {
+                    infoSection.appendChild(rateLimitNotice);
+                }
+            }
+
+            window.ui = ui;
+        };
+    </script>
+</body>
+</html>
