@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS users (
     user_type ENUM('student', 'owner', 'service_provider') NOT NULL DEFAULT 'student',
     user_category ENUM('student', 'home_owner', 'room_owner', 'tiffin', 'gas', 'milk', 'sabji', 'other_service') NOT NULL DEFAULT 'student',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS accommodations (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS accommodations (
     description TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_accommodations_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS posts (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS posts (
     INDEX idx_post_category (post_category),
     INDEX idx_post_service_type (service_type),
     INDEX idx_post_location (location(100))
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS guidance (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS guidance (
     title VARCHAR(180) NOT NULL,
     description TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS contact_requests (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -62,14 +62,32 @@ CREATE TABLE IF NOT EXISTS contact_requests (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_contact_accommodation FOREIGN KEY (accommodation_id) REFERENCES accommodations(id) ON DELETE CASCADE,
     CONSTRAINT fk_contact_requester FOREIGN KEY (requester_id) REFERENCES users(id) ON DELETE CASCADE
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS chatbot_messages (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     user_id INT UNSIGNED NOT NULL,
     sender ENUM('user', 'bot') NOT NULL,
     message TEXT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_chatbot_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     INDEX idx_chatbot_user_time (user_id, created_at)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS feedback (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(120) DEFAULT NULL,
+    email VARCHAR(160) DEFAULT NULL,
+    feedback_type VARCHAR(50) NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS contact (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(120) DEFAULT NULL,
+    email VARCHAR(160) NOT NULL,
+    subject VARCHAR(255) DEFAULT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;

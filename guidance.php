@@ -69,4 +69,48 @@ require_once __DIR__ . '/includes/header.php';
         </div>
     </div>
 </section>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Load guidance from API
+    fetch('api/fetch_guidance.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.data.length > 0) {
+                // Group by category
+                const categories = {};
+                data.data.forEach(item => {
+                    if (!categories[item.category]) {
+                        categories[item.category] = [];
+                    }
+                    categories[item.category].push(item);
+                });
+                
+                // Update the sections
+                const sections = {
+                    'food': document.querySelector('.col-lg-4:nth-child(1) .list-unstyled'),
+                    'transport': document.querySelector('.col-lg-4:nth-child(2) .list-unstyled'),
+                    'services': document.querySelector('.col-lg-4:nth-child(3) .list-unstyled')
+                };
+                
+                Object.keys(sections).forEach(category => {
+                    if (categories[category]) {
+                        const list = sections[category];
+                        list.innerHTML = '';
+                        categories[category].forEach(item => {
+                            const li = document.createElement('li');
+                            li.innerHTML = `
+                                <p class="fw-semibold text-dark mb-1">${item.title}</p>
+                                <p class="mb-0">${item.description}</p>
+                            `;
+                            list.appendChild(li);
+                        });
+                    }
+                });
+                
+                console.log('Guidance data loaded:', categories);
+            }
+        })
+        .catch(error => console.error('Error loading guidance:', error));
+});
+</script>
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

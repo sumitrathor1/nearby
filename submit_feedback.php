@@ -2,7 +2,7 @@
 require_once __DIR__ . '/config/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: includes/feedback.php');
+    header('Location: feedback.php');
     exit;
 }
 
@@ -17,7 +17,7 @@ $message = $_POST['message'] ?? '';
 
 // Step 3: basic validation
 if (empty($feedback_type) || empty($message)) {
-    header('Location: includes/feedback.php?error=1');
+    header('Location: feedback.php?error=1');
     exit;
 }
 
@@ -39,7 +39,7 @@ mysqli_stmt_bind_param(
 
 // Step 6: execute query
 if (mysqli_stmt_execute($stmt)) {
-    header('Location: includes/feedback.php?success=1');
+    header('Location: feedback.php?success=1');
 } else {
     header('Location: feedback.php?error=1');
 }

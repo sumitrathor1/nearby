@@ -793,8 +793,8 @@ a, .section-title {
 }
 
 .icon-circle {
-    width: 52px;
-    height: 52px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.4);
     display: grid;
@@ -1132,4 +1132,41 @@ textarea:focus {
     align-items: flex-start;
   }
 
+}
+
+/* Back to Top Button */
+.back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: var(--nearby-primary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.back-to-top:hover {
+  background: var(--nearby-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.back-to-top i {
+  font-size: 1.2rem;
 }

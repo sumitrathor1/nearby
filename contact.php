@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/includes/header.php'; ?>
+<?php require_once __DIR__ . '/includes/header.php'; ?>
 
 <main class="container my-5">
     <div class="row justify-content-center">
@@ -10,7 +10,15 @@
                         Have a question or need assistance? Feel free to contact us.
                     </p>
 
-                    <!-- Success / Error messages will be added later -->
+                    <?php if (isset($_GET['success'])): ?>
+                        <div class="alert alert-success">
+                            ✅ Thank you! Your message has been submitted successfully.
+                        </div>
+                    <?php elseif (isset($_GET['error'])): ?>
+                        <div class="alert alert-danger">
+                            ❌ Something went wrong. Please try again.
+                        </div>
+                    <?php endif; ?>
 
                     <form method="post" action="submit_contact.php">
                         <div class="mb-3">
@@ -45,4 +53,4 @@
     </div>
 </main>
 
-<?php include __DIR__ . '/includes/footer.php'; ?>
+<?php require_once __DIR__ . '/includes/footer.php'; ?>

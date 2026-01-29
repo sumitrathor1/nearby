@@ -146,6 +146,33 @@ toggleBtn.addEventListener('click', () => {
 });
 </script>
 
+<!-- Back to Top Button Script -->
+<script>
+const backToTopBtn = document.getElementById('backToTop');
+
+// Show/hide button based on scroll position
+window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+        backToTopBtn.classList.add('show');
+    } else {
+        backToTopBtn.classList.remove('show');
+    }
+});
+
+// Smooth scroll to top when clicked
+backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+</script>
+
+<!-- Back to Top Button -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <i class="bi bi-arrow-up"></i>
+</button>
+
 </body>
 
 

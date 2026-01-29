@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/includes/header.php'; ?>
+<?php require_once __DIR__ . '/includes/header.php'; ?>
 <main class="container my-5">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
@@ -56,4 +56,4 @@
     </div>
 </main>
 
-<?php include __DIR__ . '/includes/footer.php'; ?>
+<?php require_once __DIR__ . '/includes/footer.php'; ?>

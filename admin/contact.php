@@ -12,7 +12,6 @@ $sql = "SELECT id, name, email, subject, message, created_at
         ORDER BY created_at DESC";
 
 $result = $conn->query($sql);
-$conn = nearby_db_connect();
 if (!$result) {
     die("SQL Error: " . $conn->error);
 }
