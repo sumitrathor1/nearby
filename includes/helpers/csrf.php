@@ -4,14 +4,14 @@
  * Provides token generation and validation for Cross-Site Request Forgery protection
  */
 
+require_once __DIR__ . '/session.php';
+
 /**
  * Generate a CSRF token and store it in the session
  * @return string The generated CSRF token
  */
 function generateCSRFToken() {
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
+    secureSessionStart();
     
     // Generate a random token
     $token = bin2hex(random_bytes(32));
@@ -28,9 +28,7 @@ function generateCSRFToken() {
  * @return string The CSRF token
  */
 function getCSRFToken() {
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
+    secureSessionStart();
     
     // Check if token exists and is not expired (1 hour lifetime)
     if (isset($_SESSION['csrf_token']) && isset($_SESSION['csrf_token_time'])) {
@@ -49,9 +47,7 @@ function getCSRFToken() {
  * @return bool True if valid, false otherwise
  */
 function validateCSRFToken($token = null) {
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
+    secureSessionStart();
     
     // Get token from parameter, POST data, or headers
     if ($token === null) {

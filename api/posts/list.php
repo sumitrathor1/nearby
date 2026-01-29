@@ -1,10 +1,9 @@
 <?php
 header('Content-Type: application/json');
 require_once __DIR__ . '/../../config/db.php';
+require_once __DIR__ . '/../../includes/helpers/session.php';
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+secureSessionStart();
 
 $conn = nearby_db_connect();
 

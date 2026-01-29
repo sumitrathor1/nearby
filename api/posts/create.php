@@ -13,9 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // Validate CSRF token
 requireCSRFToken();
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+secureSessionStart();
 
 // Require authentication
 requireLogin();

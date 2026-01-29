@@ -4,14 +4,14 @@
  * Provides resource ownership verification to prevent IDOR vulnerabilities
  */
 
+require_once __DIR__ . '/session.php';
+
 /**
  * Get current logged-in user ID
  * @return int|null User ID or null if not logged in
  */
 function getCurrentUserId() {
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
+    secureSessionStart();
     return isset($_SESSION['user']['id']) ? (int) $_SESSION['user']['id'] : null;
 }
 
@@ -20,9 +20,7 @@ function getCurrentUserId() {
  * @return string|null User role or null if not logged in
  */
 function getCurrentUserRole() {
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
+    secureSessionStart();
     return $_SESSION['user']['role'] ?? null;
 }
 

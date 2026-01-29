@@ -11,9 +11,7 @@ $respond = static function (int $status, array $payload): void {
 };
 
 try {
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
+    secureSessionStart();
 
     // Validate CSRF token
     if (!validateCSRFToken()) {

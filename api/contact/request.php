@@ -4,9 +4,7 @@ require_once __DIR__ . '/../../config/db.php';
 require_once __DIR__ . '/../../includes/helpers/csrf.php';
 require_once __DIR__ . '/../../includes/helpers/authorization.php';
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+secureSessionStart();
 
 // Validate CSRF token
 requireCSRFToken();

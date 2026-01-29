@@ -1,7 +1,6 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . '/helpers/session.php';
+secureSessionStart();
 require_once __DIR__ . '/helpers/csrf.php';
 $pageTitle = $pageTitle ?? 'NearBy Student Housing';
 $currentUser = $_SESSION['user'] ?? null;
