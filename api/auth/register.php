@@ -17,12 +17,16 @@ if (!is_array($payload) || empty($payload)) {
 header('Content-Type: application/json');
 require_once __DIR__ . '/../../config/db.php';
 require_once __DIR__ . '/../../includes/helpers/validation.php';
+require_once __DIR__ . '/../../includes/helpers/csrf.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 	http_response_code(405);
 	echo json_encode(['success' => false, 'message' => 'Method not allowed']);
 	exit;
 }
+
+// Validate CSRF token
+requireCSRFToken();
 
 $payload = json_decode(file_get_contents('php://input'), true);
 if (!is_array($payload) || empty($payload)) {

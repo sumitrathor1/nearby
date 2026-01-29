@@ -178,19 +178,10 @@ if (chatbotRoot) {
             const typingIndicator = showTyping();
 
             try {
-                const response = await fetch('api/message-assistant-send.php', {
+                const data = await window.NearBy.fetchJSON('api/message-assistant-send.php', {
                     method: 'POST',
-                    headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
-                    body: JSON.stringify({message: rawValue}),
+                    body: {message: rawValue}
                 });
-                if (!response.ok) {
-                    const text = await response.text();
-                    throw new Error(text || 'Unable to send message right now.');
-                }
-                const data = await response.json().catch(() => ({success: false, message: 'Invalid response'}));
-                if (!data.success) {
-                    throw new Error(data.message || data.error || 'Unable to send message right now.');
-                }
                 typingIndicator.remove();
                 appendMessage('bot', data.reply, data.created_at || new Date());
             } catch (error) {

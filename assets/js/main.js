@@ -56,10 +56,29 @@
 
     const fetchJSON = async (url, options = {}) => {
         const defaultHeaders = {'Accept': 'application/json'};
+        
+        // Get CSRF token from meta tag
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+        
         options.headers = options.headers ? {...defaultHeaders, ...options.headers} : defaultHeaders;
+        
+        // Add CSRF token to headers for POST requests
+        if (csrfToken && (options.method === 'POST' || options.method === 'PUT' || options.method === 'DELETE')) {
+            options.headers['X-CSRF-Token'] = csrfToken;
+        }
+        
         if (options.body && !(options.body instanceof FormData)) {
             options.headers['Content-Type'] = 'application/json';
+            // Add CSRF token to JSON body if not already present
+            if (csrfToken && typeof options.body === 'object' && !options.body.csrf_token) {
+                options.body.csrf_token = csrfToken;
+            }
             options.body = JSON.stringify(options.body);
+        } else if (options.body instanceof FormData && csrfToken) {
+            // Add CSRF token to FormData if not already present
+            if (!options.body.has('csrf_token')) {
+                options.body.append('csrf_token', csrfToken);
+            }
         }
 
         const response = await fetch(url, options);
