@@ -1,14 +1,22 @@
 <?php
 header('Content-Type: application/json');
 require_once __DIR__ . '/../../config/db.php';
+require_once __DIR__ . '/../../config/security.php';
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+startSecureSession();
 
-if (($_SESSION['user']['role'] ?? '') !== 'senior') {
+if (!isSessionValid() || ($_SESSION['user']['role'] ?? '') !== 'senior') {
     http_response_code(403);
     echo json_encode(['success' => false, 'message' => 'Only senior students can post accommodations']);
+    exit;
+}
+
+// Additional authorization: Only owners can create accommodations
+$userType = $_SESSION['user']['user_type'] ?? 'student';
+$allowedOwnerTypes = ['home_owner', 'room_owner'];
+if (!in_array($userType, $allowedOwnerTypes)) {
+    http_response_code(403);
+    echo json_encode(['success' => false, 'message' => 'Only property owners can create accommodation listings']);
     exit;
 }
 
@@ -25,37 +33,70 @@ $location = trim($payload['location'] ?? '');
 $description = trim($payload['description'] ?? '');
 $facilities = $payload['facilities'] ?? [];
 
-if ($title === '' || $type === '' || $allowedFor === '' || $rent === '' || $location === '' || $description === '') {
-    echo json_encode(['success' => false, 'message' => 'All fields are required']);
+// Validate title
+$titleValidation = validateText($title, 5, 200);
+if (!$titleValidation['valid']) {
+    echo json_encode(['success' => false, 'message' => $titleValidation['error']]);
     exit;
 }
+$title = $titleValidation['text'];
 
-if (!is_numeric($rent)) {
-    echo json_encode(['success' => false, 'message' => 'Rent must be numeric']);
-    exit;
-}
-
+// Validate accommodation type
 $validTypes = ['PG', 'Flat', 'Room', 'Hostel'];
+$typeValidation = validateEnum($type, $validTypes, 'accommodation type');
+if (!$typeValidation['valid']) {
+    echo json_encode(['success' => false, 'message' => $typeValidation['error']]);
+    exit;
+}
+$type = $typeValidation['value'];
+
+// Validate allowed for
 $validAllowedFor = ['Male', 'Female', 'Family'];
-
-if (!in_array($type, $validTypes, true)) {
-    echo json_encode(['success' => false, 'message' => 'Invalid accommodation type']);
+$allowedForValidation = validateEnum($allowedFor, $validAllowedFor, 'allowed for option');
+if (!$allowedForValidation['valid']) {
+    echo json_encode(['success' => false, 'message' => $allowedForValidation['error']]);
     exit;
 }
+$allowedFor = $allowedForValidation['value'];
 
-if (!in_array($allowedFor, $validAllowedFor, true)) {
-    echo json_encode(['success' => false, 'message' => 'Invalid allowed for option']);
+// Validate rent
+$rentValidation = validateNumeric($rent, 500, 50000);
+if (!$rentValidation['valid']) {
+    echo json_encode(['success' => false, 'message' => $rentValidation['error']]);
     exit;
 }
+$rentInt = $rentValidation['value'];
+
+// Validate location
+$locationValidation = validateText($location, 5, 200);
+if (!$locationValidation['valid']) {
+    echo json_encode(['success' => false, 'message' => $locationValidation['error']]);
+    exit;
+}
+$location = $locationValidation['text'];
+
+// Validate description
+$descriptionValidation = validateText($description, 10, 1000, true);
+if (!$descriptionValidation['valid']) {
+    echo json_encode(['success' => false, 'message' => $descriptionValidation['error']]);
+    exit;
+}
+$description = $descriptionValidation['text'];
+
+// Validate facilities
+$facilitiesValidation = validateFacilities($facilities);
+if (!$facilitiesValidation['valid']) {
+    echo json_encode(['success' => false, 'message' => $facilitiesValidation['error']]);
+    exit;
+}
+$facilitiesArray = $facilitiesValidation['facilities'];
 
 $conn = nearby_db_connect();
 $ownerId = (int) $_SESSION['user']['id'];
-$rentInt = (int) $rent;
 $facilitiesStr = '';
 
-if (!empty($facilities) && is_array($facilities)) {
-    $cleanFacilities = array_map(static fn($fac) => trim($fac), $facilities);
-    $facilitiesStr = implode(',', $cleanFacilities);
+if (!empty($facilitiesArray)) {
+    $facilitiesStr = implode(',', $facilitiesArray);
 }
 
 $sql = 'INSERT INTO accommodations (user_id, title, type, allowed_for, rent, location, facilities, description)

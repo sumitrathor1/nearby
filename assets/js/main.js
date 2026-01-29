@@ -1,3 +1,5 @@
+import { escapeHtml } from './ui.js';
+
 (() => {
     const body = document.body;
     if (!body) {
@@ -15,7 +17,7 @@
         const wrapper = document.createElement('div');
         wrapper.innerHTML = `
             <div class="alert alert-${type} alert-glass alert-dismissible fade show" role="alert">
-                ${message}
+                ${escapeHtml(message)}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         `;
@@ -93,4 +95,32 @@
         fetchJSON,
         showMessage
     };
+
+    // Back to Top Button Functionality
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    if (backToTopBtn) {
+        // Show/hide button based on scroll position
+        const toggleBackToTopBtn = () => {
+            if (window.pageYOffset > 300) { // Show after scrolling 300px
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        };
+
+        // Smooth scroll to top
+        const scrollToTop = () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        };
+
+        // Event listeners
+        window.addEventListener('scroll', toggleBackToTopBtn);
+        backToTopBtn.addEventListener('click', scrollToTop);
+
+        // Initial check
+        toggleBackToTopBtn();
+    }
 })();

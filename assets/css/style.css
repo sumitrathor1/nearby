@@ -86,7 +86,6 @@ a, .section-title {
 
 .brand-logo {
     height: 55px;
-    width: auto;
     object-fit: contain;
     filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.25));
 }
@@ -160,7 +159,7 @@ a, .section-title {
 }
 
 .footer-logo {
-    width: 9rem;
+    width: 11rem;
 }
 
 .footer-heading {
@@ -1080,6 +1079,7 @@ textarea:focus {
     box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
 }
 
+}
 
 /* ================= MOBILE SPACING & ALIGNMENT FIXES ================= */
 

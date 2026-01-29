@@ -91,3 +91,21 @@ CREATE TABLE IF NOT EXISTS contact (
     message TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS products (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user_id INT UNSIGNED NOT NULL,
+    title VARCHAR(180) NOT NULL,
+    category ENUM('fridge', 'cooler', 'almirah', 'washing-machine', 'furniture', 'other') NOT NULL,
+    price INT UNSIGNED NOT NULL,
+    condition_status ENUM('new-like', 'good', 'old') NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    contact_phone VARCHAR(20) NOT NULL,
+    image_url VARCHAR(500) DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_products_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    INDEX idx_product_category (category),
+    INDEX idx_product_price (price),
+    INDEX idx_product_location (location(100))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;

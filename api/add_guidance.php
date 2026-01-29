@@ -8,11 +8,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . '/../config/security.php';
+startSecureSession();
 
-if (($_SESSION['user']['role'] ?? '') !== 'senior') {
+if (!isSessionValid() || ($_SESSION['user']['role'] ?? '') !== 'senior') {
     http_response_code(403);
     echo json_encode(['success' => false, 'message' => 'Only senior students can add guidance tips']);
     exit;

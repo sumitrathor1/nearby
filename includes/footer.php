@@ -83,14 +83,23 @@
                     </a>
 
                     <!-- Twitter/X -->
-                    <a class="social-link" href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                    <a class="social-link" href="https://twitter.com/nearbyhousing" target="_blank"
+                        rel="noopener noreferrer" aria-label="X (Twitter)">
                         <i class="bi bi-twitter-x"></i>
-                        <span class="visually-hidden">Twitter</span>
+                        <span class="visually-hidden">X (Twitter)</span>
                     </a>
 
-                    <!-- Instagram (New) -->
-                    <a class="social-link" href="https://www.instagram.com/yourprofile" target="_blank"
+                    <a class="social-link" href="https://instagram.com/nearbyhousing" target="_blank"
                         rel="noopener noreferrer" aria-label="Instagram">
+                        <i class="bi bi-instagram"></i>
+                        <span class="visually-hidden">Instagram</span>
+                    </a>
+
+                    <a class="social-link" href="https://facebook.com/nearbyhousing" target="_blank"
+                        rel="noopener noreferrer" aria-label="Facebook">
+                        <i class="bi bi-facebook"></i>
+                        <span class="visually-hidden">Facebook</span>
+                    </a>
                         <i class="bi bi-instagram"></i>
                         <span class="visually-hidden">Instagram</span>
                     </a>
@@ -107,6 +116,7 @@
     </div>
 </footer>
 
+<<<<<<< HEAD
 <?php if (!empty($enableChatbot)): ?>
     <?php include __DIR__ . '/chatbot-widget.php'; ?>
 <?php endif; ?>

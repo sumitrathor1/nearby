@@ -194,6 +194,59 @@ function validateFacilities($facilities) {
 }
 
 /**
+ * Validate password strength
+ * @param string $password Password to validate
+ * @return array ['valid' => bool, 'password' => string, 'error' => string]
+ */
+function validatePassword($password) {
+    if (!is_string($password)) {
+        return ['valid' => false, 'password' => '', 'error' => 'Password must be a string'];
+    }
+    
+    $password = trim($password);
+    
+    if (empty($password)) {
+        return ['valid' => false, 'password' => '', 'error' => 'Password is required'];
+    }
+    
+    if (mb_strlen($password) < 8) {
+        return ['valid' => false, 'password' => '', 'error' => 'Password must be at least 8 characters long'];
+    }
+    
+    if (mb_strlen($password) > 128) {
+        return ['valid' => false, 'password' => '', 'error' => 'Password cannot exceed 128 characters'];
+    }
+    
+    // Check for at least one uppercase letter
+    if (!preg_match('/[A-Z]/', $password)) {
+        return ['valid' => false, 'password' => '', 'error' => 'Password must contain at least one uppercase letter'];
+    }
+    
+    // Check for at least one lowercase letter
+    if (!preg_match('/[a-z]/', $password)) {
+        return ['valid' => false, 'password' => '', 'error' => 'Password must contain at least one lowercase letter'];
+    }
+    
+    // Check for at least one digit
+    if (!preg_match('/[0-9]/', $password)) {
+        return ['valid' => false, 'password' => '', 'error' => 'Password must contain at least one number'];
+    }
+    
+    // Check for at least one special character
+    if (!preg_match('/[!@#$%^&*()_+\-=\[\]{};\':"\\|,.<>\/?]/', $password)) {
+        return ['valid' => false, 'password' => '', 'error' => 'Password must contain at least one special character'];
+    }
+    
+    // Check for common weak passwords
+    $weakPasswords = ['password', '12345678', 'qwerty', 'abc123', 'password123', 'admin', 'letmein'];
+    if (in_array(strtolower($password), $weakPasswords)) {
+        return ['valid' => false, 'password' => '', 'error' => 'Password is too common. Please choose a stronger password'];
+    }
+    
+    return ['valid' => true, 'password' => $password, 'error' => ''];
+}
+
+/**
  * Generate secure error response without exposing sensitive information
  * @param string $message User-friendly error message
  * @param int $httpCode HTTP status code
@@ -266,15 +319,139 @@ function validateCSRFToken($token) {
 }
 
 /**
- * Generate CSRF token
+ * Initialize secure session configuration
+ * Must be called before session_start()
+ */
+function initSecureSession() {
+    // Set secure session configuration
+    ini_set('session.use_only_cookies', 1);
+    ini_set('session.use_strict_mode', 1);
+    ini_set('session.cookie_httponly', 1);
+    ini_set('session.cookie_secure', isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on');
+    ini_set('session.cookie_samesite', 'Lax');
+    ini_set('session.gc_maxlifetime', 3600); // 1 hour
+    ini_set('session.cookie_lifetime', 0); // Session cookie
+
+    // Set session save path to a secure location if possible
+    if (function_exists('session_save_path')) {
+        $sessionPath = session_save_path();
+        if (empty($sessionPath) || !is_writable($sessionPath)) {
+            // Try to set a custom path
+            $customPath = __DIR__ . '/../private/sessions';
+            if (!is_dir($customPath)) {
+                mkdir($customPath, 0700, true);
+            }
+            if (is_writable($customPath)) {
+                session_save_path($customPath);
+            }
+        }
+    }
+
+    // Set session name
+    session_name('NEARBY_SESS');
+}
+
+/**
+ * Start secure session with timeout and regeneration
+ */
+function startSecureSession() {
+    if (session_status() === PHP_SESSION_NONE) {
+        initSecureSession();
+        session_start();
+
+        // Check session timeout (30 minutes of inactivity)
+        if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 1800)) {
+            session_unset();
+            session_destroy();
+            session_start();
+        }
+        $_SESSION['last_activity'] = time();
+
+        // Regenerate session ID periodically (every 10 minutes)
+        if (!isset($_SESSION['created'])) {
+            $_SESSION['created'] = time();
+        } else if (time() - $_SESSION['created'] > 600) {
+            session_regenerate_id(true);
+            $_SESSION['created'] = time();
+        }
+    }
+}
+
+/**
+ * Regenerate session ID after successful login
+ */
+function regenerateSessionAfterLogin() {
+    session_regenerate_id(true);
+    $_SESSION['created'] = time();
+    $_SESSION['last_activity'] = time();
+}
+
+/**
+ * Check if user session is valid and not expired
+ * @return bool
+ */
+function isSessionValid() {
+    if (session_status() === PHP_SESSION_NONE) {
+        return false;
+    }
+
+    // Check if session has required data
+    if (!isset($_SESSION['user']) || !isset($_SESSION['created'])) {
+        return false;
+    }
+
+    // Check session timeout
+    if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 1800)) {
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * Secure logout function
+ */
+function secureLogout() {
+    // Clear all session data
+    $_SESSION = [];
+
+    // Delete session cookie
+    if (ini_get('session.use_cookies')) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000,
+            $params['path'], $params['domain'],
+            $params['secure'], $params['httponly']
+        );
+    }
+
+    // Destroy session
+    session_destroy();
+}
+
+/**
+ * Get CSRF token for forms
  * @return string CSRF token
  */
 function generateCSRFToken() {
     if (session_status() === PHP_SESSION_NONE) {
-        session_start();
+        startSecureSession();
     }
-    
-    $token = bin2hex(random_bytes(32));
-    $_SESSION['csrf_token'] = $token;
-    return $token;
+
+    if (!isset($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
+
+/**
+ * Validate CSRF token
+ * @param string $token Token to validate
+ * @return bool
+ */
+function validateCSRFToken($token) {
+    if (session_status() === PHP_SESSION_NONE) {
+        return false;
+    }
+
+    return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);
 }
