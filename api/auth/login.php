@@ -1,13 +1,17 @@
 <?php
 header('Content-Type: application/json');
 require_once __DIR__ . '/../../config/db.php';
-require_once __DIR__ . '/../../config/security.php';
+require_once __DIR__ . '/../../includes/helpers/validation.php';
+require_once __DIR__ . '/../../includes/helpers/csrf.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 	http_response_code(405);
 	echo json_encode(['success' => false, 'message' => 'Method not allowed']);
 	exit;
 }
+
+// Validate CSRF token
+requireCSRFToken();
 
 if (session_status() === PHP_SESSION_NONE) {
 	session_start();
@@ -24,23 +28,24 @@ if (!is_array($payload) || empty($payload)) {
 	$payload = $_POST;
 }
 
-// Validate and sanitize inputs
-$emailValidation = validateEmail($payload['email'] ?? '');
-if (!$emailValidation['valid']) {
-	secureErrorResponse($emailValidation['error'], 400);
-}
-$email = $emailValidation['email'];
-
-$password = $payload['password'] ?? '';
-$role = trim($payload['role'] ?? '');
-
-if ($password === '') {
-	secureErrorResponse('Password is required', 400);
-}
-
-$roleValidation = validateEnum($role, ['junior', 'senior'], 'role');
-if (!$roleValidation['valid']) {
-	secureErrorResponse($roleValidation['error'], 400);
+try {
+	$email = InputValidator::validateEmail($payload['email'] ?? '');
+	$password = $payload['password'] ?? '';
+	$role = InputValidator::validateRole($payload['role'] ?? '');
+	
+	if (!$email) {
+		echo json_encode(['success' => false, 'message' => 'Enter a valid email address']);
+		exit;
+	}
+	
+	if (empty($password)) {
+		echo json_encode(['success' => false, 'message' => 'Password is required']);
+		exit;
+	}
+	
+} catch (InvalidArgumentException $e) {
+	echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+	exit;
 }
 $role = $roleValidation['value'];
 

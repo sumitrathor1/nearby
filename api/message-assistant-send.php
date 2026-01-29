@@ -1,7 +1,8 @@
 <?php
 header('Content-Type: application/json');
 require_once __DIR__ . '/../config/db.php';
-require_once __DIR__ . '/../config/security.php';
+require_once __DIR__ . '/../includes/helpers/csrf.php';
+require_once __DIR__ . '/../includes/helpers/authorization.php';
 
 $respond = static function (int $status, array $payload): void {
     http_response_code($status);
@@ -14,16 +15,13 @@ try {
         session_start();
     }
 
-    if (empty($_SESSION['user']['id'])) {
-        $respond(401, ['success' => false, 'message' => 'Login required']);
+    // Validate CSRF token
+    if (!validateCSRFToken()) {
+        $respond(403, ['success' => false, 'message' => 'Invalid or missing CSRF token. Please refresh the page and try again.']);
     }
 
-    $userId = (int) $_SESSION['user']['id'];
-    
-    // Rate limiting for chatbot messages
-    if (!checkRateLimit('chatbot_' . $userId, 30, 300)) { // 30 messages per 5 minutes
-        $respond(429, ['success' => false, 'message' => 'Too many messages. Please wait before sending another message.']);
-    }
+    // Require authentication
+    requireLogin();
 
     $rawInput = file_get_contents('php://input');
     $payload = json_decode($rawInput, true);
@@ -91,7 +89,7 @@ try {
 
     $apiKey = GEMINI_API_KEY;
     if (!$apiKey) {
-        $respond(500, ['success' => false, 'message' => 'Gemini API key is not configured']);
+        $respond(500, ['success' => false, 'message' => 'AI service temporarily unavailable']);
     }
 
     $requestPayload = json_encode([

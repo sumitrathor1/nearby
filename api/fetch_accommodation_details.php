@@ -1,15 +1,21 @@
 <?php
 header('Content-Type: application/json');
 require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../includes/helpers/authorization.php';
 
 $id = $_GET['id'] ?? $_POST['id'] ?? null;
-if (!$id || !is_numeric($id)) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Invalid accommodation reference']);
+$id = validateId($id, 'accommodation ID');
+
+$conn = nearby_db_connect();
+
+// Verify accommodation exists
+if (!accommodationExists($conn, $id)) {
+    http_response_code(404);
+    echo json_encode(['success' => false, 'message' => 'Accommodation not found']);
+    mysqli_close($conn);
     exit;
 }
 
-$conn = nearby_db_connect();
 $sql = 'SELECT a.id, a.title, a.type, a.allowed_for, a.rent, a.location, a.facilities, a.description, a.created_at,
                u.name AS owner_name, u.college_email AS owner_email
         FROM accommodations a

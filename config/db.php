@@ -15,13 +15,7 @@ function nearby_db_connect(): mysqli
         http_response_code(500);
         die(json_encode([
             'success' => false,
-            'message' => 'Database configuration missing',
-            'debug' => IS_LOCAL ? [
-                'host' => DB_HOST ?: 'EMPTY',
-                'name' => DB_NAME ?: 'EMPTY',
-                'user' => DB_USER ?: 'EMPTY',
-                'env_file_exists' => file_exists(__DIR__ . '/.env') ? 'yes' : 'no'
-            ] : null
+            'message' => 'Database configuration missing'
         ]));
     }
 
@@ -32,14 +26,7 @@ function nearby_db_connect(): mysqli
         http_response_code(500);
         die(json_encode([
             'success' => false,
-            'message' => 'Database connection failed',
-            'error' => mysqli_connect_error(),
-            'debug' => IS_LOCAL ? [
-                'host' => DB_HOST,
-                'port' => DB_PORT,
-                'name' => DB_NAME,
-                'user' => DB_USER
-            ] : null
+            'message' => 'Database connection failed'
         ]));
     }
 
@@ -48,8 +35,7 @@ function nearby_db_connect(): mysqli
         http_response_code(500);
         die(json_encode([
             'success' => false,
-            'message' => 'Failed to set database charset',
-            'error' => mysqli_error($connection),
+            'message' => 'Database charset configuration failed'
         ]));
     }
 

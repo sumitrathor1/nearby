@@ -1,7 +1,8 @@
 <?php
 header('Content-Type: application/json');
 require_once __DIR__ . '/../../config/db.php';
-require_once __DIR__ . '/../../config/security.php';
+require_once __DIR__ . '/../../includes/helpers/csrf.php';
+require_once __DIR__ . '/../../includes/helpers/authorization.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -9,15 +10,15 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+// Validate CSRF token
+requireCSRFToken();
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-if (!isset($_SESSION['user']['id'])) {
-    http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'Login required to create a post']);
-    exit;
-}
+// Require authentication
+requireLogin();
 
 // Rate limiting for post creation
 $userId = $_SESSION['user']['id'];
@@ -115,7 +116,7 @@ if ($postCategory === 'room') {
 }
 
 $conn = nearby_db_connect();
-$userId = (int) $_SESSION['user']['id'];
+$userId = getCurrentUserId();
 
 $sql = 'INSERT INTO posts (user_id, post_category, service_type, accommodation_type, allowed_for, rent_or_price, location, facilities, availability_time, description, contact_phone)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
