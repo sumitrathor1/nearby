@@ -6,7 +6,7 @@ if (($_SESSION['user']['role'] ?? null) !== 'junior') {
     header('Location: login.php');
     exit;
 }
-
+//session_start();
 $pageTitle = 'Junior Dashboard | NearBy';
 $pageScripts = ['assets/js/search.js', 'assets/js/message.js'];
 $enableChatbot = true;
