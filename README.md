@@ -3,18 +3,25 @@
 **NearBy** is a student-centric web platform built to simplify the process of finding **rental rooms, PGs, hostels, and essential local services** in a new city.  
 The platform eliminates broker dependency and connects **students, property owners, and local service providers** directly in a trusted, user-friendly environment.
 
----
+
+
+![Elite Coders](https://img.shields.io/badge/Elite%20Coders-Participant-blue)
+![GitHub stars](https://img.shields.io/github/stars/sumitrathor1/nearby)
+![GitHub forks](https://img.shields.io/github/forks/sumitrathor1/nearby)
+![Issues](https://img.shields.io/github/issues/sumitrathor1/nearby)
+![License](https://img.shields.io/github/license/sumitrathor1/nearby)
 
 ## 🌟 Problem Statement
-
 When students move to a new city for education, they often face challenges such as:
-- Difficulty finding safe and affordable accommodation
-- High brokerage charges
-- Unreliable listings and lack of trust
-- No single platform for daily local services (food, milk, gas, etc.)
-- Feeling lost without local guidance
 
----
+-Difficulty finding safe and affordable accommodation
+-High brokerage charges
+-Unreliable listings and lack of trust
+-No single platform for daily local services (food, milk, gas, etc.)
+-Feeling lost without local guidance
+
+
+
 
 ## ✅ Solution – NearBy
 
@@ -57,7 +64,14 @@ The platform is designed **by students, for students**, keeping real-life needs 
   - Allowed for (Male / Female / Family)
   - Facilities (Wi-Fi, Food, Parking, Water, Electricity, CCTV, Power Backup)
 
----
+### Home Page
+![Home Page](https://github.com/RANAPOOJA321/nearby/blob/ca5a539b7bb35202b7cadf56eb51ea4feae18b52/home.png)
+
+### Listings Page
+![Listings Page](https://github.com/RANAPOOJA321/nearby/blob/7367dd105601d3dcb5abfc13241eb21b5360ace0/listing.png)
+
+### Local Services
+![Local Services](https://github.com/RANAPOOJA321/nearby/blob/7367dd105601d3dcb5abfc13241eb21b5360ace0/service.png)
 
 ### 🧑‍🤝‍🧑 Multi-Role User System
 Users on NearBy can be:
@@ -126,24 +140,6 @@ Each role can create and manage their own listings.
 - FireBase
 
 ---
-## 👨‍💻 Team & Contributors
-
-### 👤 **Sumit Rathor**
-- LinkedIn: https://www.linkedin.com/in/sumitrathor/
-- GitHub: https://github.com/sumitrathor1
-
-### 👤 **Udipt Kushwaha**
-- LinkedIn: https://www.linkedin.com/in/udipt-kushwaha-a91b0a2ba
-- GitHub: https://github.com/Udiptk
-
-### 👤 **Prachi Sharma**
-- LinkedIn: https://www.linkedin.com/in/prachi-sharma-449132252/
-- GitHub: https://github.com/prachisharma1277-eng
-
-### 👤 **Yash Dubey**
-- GitHub: https://github.com/dubeyyash580-ops
-
----
 
 ## 🚀 Future Enhancements
 
@@ -181,6 +177,9 @@ Thanks to:
 - Open-source community
 - Student testers and feedback
 - Mentors and peers who contributed ideas and reviews
+
+  
+  
 
 ---
 

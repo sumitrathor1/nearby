@@ -16,6 +16,12 @@ requireCSRFToken();
 
 secureSessionStart();
 
+// Rate limiting for login attempts
+$clientIP = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+if (!checkRateLimit('login_' . $clientIP, 10, 300)) { // 10 login attempts per 5 minutes
+	secureErrorResponse('Too many login attempts. Please try again later.', 429);
+}
+
 $payload = json_decode(file_get_contents('php://input'), true);
 if (!is_array($payload) || empty($payload)) {
 	$payload = $_POST;
@@ -40,12 +46,18 @@ try {
 	echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 	exit;
 }
+$role = $roleValidation['value'];
 
 $conn = nearby_db_connect();
 $emailLower = strtolower($email);
 
 $sql = 'SELECT id, name, college_email, password, role, user_type FROM users WHERE college_email = ? LIMIT 1';
 $stmt = mysqli_prepare($conn, $sql);
+
+if ($stmt === false) {
+	secureErrorResponse('Login failed. Please try again.', 500, 'Failed to prepare login statement: ' . mysqli_error($conn));
+}
+
 mysqli_stmt_bind_param($stmt, 's', $emailLower);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
@@ -53,18 +65,21 @@ $user = mysqli_fetch_assoc($result);
 mysqli_stmt_close($stmt);
 
 if (!$user || !password_verify($password, $user['password']) || $user['role'] !== $role) {
-	echo json_encode(['success' => false, 'message' => 'Invalid credentials']);
-	exit;
+	// Use generic error message to prevent user enumeration
+	secureErrorResponse('Invalid email, password, or role', 401);
 }
 
 // Set secure session with regeneration
 setUserSession([
 	'id' => (int) $user['id'],
-	'name' => $user['name'],
+	'name' => sanitizeInput($user['name']),
 	'email' => $user['college_email'],
 	'role' => $user['role'],
 	'user_type' => $user['user_type'] ?? 'student',
 ]);
+
+// Generate CSRF token for future requests
+$csrfToken = generateCSRFToken();
 
 $redirect = 'search.php';
 if ($user['role'] === 'junior') {
@@ -77,4 +92,5 @@ echo json_encode([
 	'success' => true,
 	'message' => 'Login successful',
 	'redirect' => $redirect,
+	'csrf_token' => $csrfToken,
 ]);

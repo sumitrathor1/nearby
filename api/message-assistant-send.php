@@ -27,18 +27,29 @@ try {
         $payload = [];
     }
 
-    $message = trim($payload['message'] ?? '');
-    if ($message === '') {
-        $respond(422, ['success' => false, 'message' => 'Message cannot be empty']);
+    // Validate and sanitize message
+    $messageValidation = validateText($payload['message'] ?? '', 1, 1000);
+    if (!$messageValidation['valid']) {
+        $respond(422, ['success' => false, 'message' => $messageValidation['error']]);
     }
+    $message = $messageValidation['text'];
 
-    $message = trim(preg_replace('/\s+/u', ' ', strip_tags($message)));
-    if (mb_strlen($message) > 1000) {
-        $respond(422, ['success' => false, 'message' => 'Please keep your message under 1000 characters']);
+    // Additional security: Check for potential prompt injection
+    $suspiciousPatterns = [
+        '/ignore\s+previous\s+instructions/i',
+        '/system\s*:/i',
+        '/assistant\s*:/i',
+        '/\[INST\]/i',
+        '/\<\|system\|\>/i',
+    ];
+    
+    foreach ($suspiciousPatterns as $pattern) {
+        if (preg_match($pattern, $message)) {
+            $respond(422, ['success' => false, 'message' => 'Message contains invalid content']);
+        }
     }
 
     $conn = nearby_db_connect();
-    $userId = (int) $_SESSION['user']['id'];
 
     $historySql = 'SELECT sender, message FROM chatbot_messages WHERE user_id = ? ORDER BY created_at DESC LIMIT 9';
     $historyStmt = mysqli_prepare($conn, $historySql);
@@ -54,7 +65,7 @@ try {
     while ($row = mysqli_fetch_assoc($historyResult)) {
         $history[] = [
             'sender' => $row['sender'],
-            'message' => trim(preg_replace('/\s+/u', ' ', strip_tags($row['message'] ?? ''))),
+            'message' => sanitizeInput($row['message'] ?? ''),
         ];
     }
     mysqli_stmt_close($historyStmt);
@@ -162,25 +173,31 @@ try {
 
     if ($responseBody === false) {
         error_log('[Gemini] cURL failed: ' . ($curlError ?: 'unknown error'));
-        $respond(502, ['success' => false, 'message' => 'Gemini API failed', 'details' => $curlError ?: 'Unknown cURL error']);
+        $respond(502, ['success' => false, 'message' => 'Sorry, I\'m having trouble connecting to my brain. Please try again later.']);
     }
 
     $responseData = json_decode($responseBody, true);
     if ($responseData === null) {
         error_log('[Gemini] Invalid JSON response: ' . $responseBody);
-        $respond(502, ['success' => false, 'message' => 'Gemini API returned invalid JSON']);
+        $respond(502, ['success' => false, 'message' => 'Sorry, I\'m having trouble processing the response. Please try again later.']);
     }
 
     if ($httpCode >= 400) {
         $errorMessage = $responseData['error']['message'] ?? 'Gemini API failed';
         error_log('[Gemini] HTTP ' . $httpCode . ': ' . $errorMessage);
-        $respond($httpCode, ['success' => false, 'message' => 'Gemini API failed', 'details' => $errorMessage]);
+        $respond(502, ['success' => false, 'message' => 'Sorry, I\'m having trouble responding right now. Please try again later.']);
     }
 
     $botReply = $responseData['candidates'][0]['content']['parts'][0]['text'] ?? '';
-    $botReply = trim($botReply);
+    $botReply = sanitizeInput(trim($botReply));
     if ($botReply === '') {
-        $respond(502, ['success' => false, 'message' => 'Gemini did not return a reply']);
+        $respond(502, ['success' => false, 'message' => 'Sorry, I couldn\'t generate a response. Please try again.']);
+    }
+
+    // Additional security: Validate bot response doesn't contain sensitive info
+    if (preg_match('/password|token|secret|key|api/i', $botReply)) {
+        error_log('[NearBy Security] Potentially sensitive content in bot response: ' . substr($botReply, 0, 100));
+        $botReply = 'I apologize, but I cannot provide that information. Please contact support for assistance.';
     }
 
     $insertSql = 'INSERT INTO chatbot_messages (user_id, sender, message) VALUES (?, ?, ?)';
