@@ -2,6 +2,7 @@
 header('Content-Type: application/json');
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../includes/helpers/csrf.php';
+require_once __DIR__ . '/../includes/helpers/authorization.php';
 
 $respond = static function (int $status, array $payload): void {
     http_response_code($status);
@@ -19,9 +20,8 @@ try {
         $respond(403, ['success' => false, 'message' => 'Invalid or missing CSRF token. Please refresh the page and try again.']);
     }
 
-    if (empty($_SESSION['user']['id'])) {
-        $respond(401, ['success' => false, 'message' => 'Login required']);
-    }
+    // Require authentication
+    requireLogin();
 
     $rawInput = file_get_contents('php://input');
     $payload = json_decode($rawInput, true);

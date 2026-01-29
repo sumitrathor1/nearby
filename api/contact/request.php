@@ -2,6 +2,7 @@
 header('Content-Type: application/json');
 require_once __DIR__ . '/../../config/db.php';
 require_once __DIR__ . '/../../includes/helpers/csrf.php';
+require_once __DIR__ . '/../../includes/helpers/authorization.php';
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -10,13 +11,8 @@ if (session_status() === PHP_SESSION_NONE) {
 // Validate CSRF token
 requireCSRFToken();
 
-$user = $_SESSION['user'] ?? null;
-
-if (!$user) {
-    http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'Please login to contact the owner']);
-    exit;
-}
+// Require user to be logged in
+requireLogin();
 
 $input = json_decode(file_get_contents('php://input'), true);
 if (!is_array($input) || empty($input)) {
@@ -24,31 +20,15 @@ if (!is_array($input) || empty($input)) {
 }
 
 $accommodationId = $input['accommodation_id'] ?? null;
+$accommodationId = validateId($accommodationId, 'accommodation ID');
 $message = trim($input['message'] ?? '');
 
-if (!$accommodationId || !is_numeric($accommodationId)) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Missing accommodation reference']);
-    exit;
-}
-
 $conn = nearby_db_connect();
-$accommodationId = (int) $accommodationId;
-$userId = (int) $user['id'];
 
-$checkSql = 'SELECT id FROM accommodations WHERE id = ? LIMIT 1';
-$checkStmt = mysqli_prepare($conn, $checkSql);
-mysqli_stmt_bind_param($checkStmt, 'i', $accommodationId);
-mysqli_stmt_execute($checkStmt);
-$result = mysqli_stmt_get_result($checkStmt);
-$exists = mysqli_fetch_assoc($result);
-mysqli_stmt_close($checkStmt);
+// Verify accommodation exists
+requireResourceExists(accommodationExists($conn, $accommodationId), 'accommodation');
 
-if (!$exists) {
-    http_response_code(404);
-    echo json_encode(['success' => false, 'message' => 'Accommodation not found']);
-    exit;
-}
+$userId = getCurrentUserId();
 
 $insertSql = 'INSERT INTO contact_requests (accommodation_id, requester_id, message) VALUES (?, ?, ?)';
 $insertStmt = mysqli_prepare($conn, $insertSql);

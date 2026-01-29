@@ -2,6 +2,7 @@
 header('Content-Type: application/json');
 require_once __DIR__ . '/../../config/db.php';
 require_once __DIR__ . '/../../includes/helpers/csrf.php';
+require_once __DIR__ . '/../../includes/helpers/authorization.php';
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -10,11 +11,8 @@ if (session_status() === PHP_SESSION_NONE) {
 // Validate CSRF token
 requireCSRFToken();
 
-if (($_SESSION['user']['role'] ?? '') !== 'senior') {
-    http_response_code(403);
-    echo json_encode(['success' => false, 'message' => 'Only senior students can post accommodations']);
-    exit;
-}
+// Require senior role
+requireRole('senior');
 
 $payload = json_decode(file_get_contents('php://input'), true);
 if (!is_array($payload) || empty($payload)) {
@@ -53,7 +51,7 @@ if (!in_array($allowedFor, $validAllowedFor, true)) {
 }
 
 $conn = nearby_db_connect();
-$ownerId = (int) $_SESSION['user']['id'];
+$ownerId = getCurrentUserId();
 $rentInt = (int) $rent;
 $facilitiesStr = '';
 
