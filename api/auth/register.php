@@ -20,58 +20,41 @@ if (!is_array($payload) || empty($payload)) {
 	$payload = $_POST;
 }
 
-// Validate and sanitize inputs
-$nameValidation = validateText($payload['name'] ?? '', 2, 120);
-if (!$nameValidation['valid']) {
-	secureErrorResponse($nameValidation['error'], 400);
-}
-$name = $nameValidation['text'];
+<?php
+header('Content-Type: application/json');
+require_once __DIR__ . '/../../config/db.php';
+require_once __DIR__ . '/../../includes/helpers/validation.php';
+require_once __DIR__ . '/../../includes/helpers/csrf.php';
 
-$emailValidation = validateEmail($payload['email'] ?? '');
-if (!$emailValidation['valid']) {
-	secureErrorResponse($emailValidation['error'], 400);
-}
-$email = $emailValidation['email'];
-
-$password = $payload['password'] ?? '';
-$role = trim($payload['role'] ?? '');
-$userCategory = trim($payload['user_category'] ?? '');
-
-// Validate password strength
-if (empty($password)) {
-	secureErrorResponse('Password is required', 400);
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+	http_response_code(405);
+	echo json_encode(['success' => false, 'message' => 'Method not allowed']);
+	exit;
 }
 
-if (strlen($password) < 6) {
-	secureErrorResponse('Password must be at least 6 characters long', 400);
+// Validate CSRF token
+requireCSRFToken();
+
+$payload = json_decode(file_get_contents('php://input'), true);
+if (!is_array($payload) || empty($payload)) {
+	$payload = $_POST;
 }
 
-// Additional password strength check
-if (!preg_match('/^(?=.*[a-zA-Z])(?=.*\d)/', $password)) {
-	secureErrorResponse('Password must contain at least one letter and one number', 400);
-}
-
-// Validate role
-$roleValidation = validateEnum($role, ['junior', 'senior'], 'role');
-if (!$roleValidation['valid']) {
-	secureErrorResponse($roleValidation['error'], 400);
-}
-$role = $roleValidation['value'];
-
-// Validate user category
-$validCategories = ['student', 'home_owner', 'room_owner', 'tiffin', 'gas', 'milk', 'sabji', 'other_service'];
-$categoryValidation = validateEnum($userCategory, $validCategories, 'user category');
-if (!$categoryValidation['valid']) {
-	secureErrorResponse($categoryValidation['error'], 400);
-}
-$userCategory = $categoryValidation['value'];
-
-if ($name === '' || $email === '' || $password === '' || $role === '' || $userCategory === '') {
-	secureErrorResponse('All fields are required', 400);
-}
-
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-	secureErrorResponse('Enter a valid email', 400);
+try {
+	$name = InputValidator::validateName($payload['name'] ?? '');
+	$email = InputValidator::validateEmail($payload['email'] ?? '');
+	$password = InputValidator::validatePassword($payload['password'] ?? '');
+	$role = InputValidator::validateRole($payload['role'] ?? '');
+	$userCategory = InputValidator::validateUserCategory($payload['user_category'] ?? '');
+	
+	if (!$email) {
+		echo json_encode(['success' => false, 'message' => 'Enter a valid email address']);
+		exit;
+	}
+	
+} catch (InvalidArgumentException $e) {
+	echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+	exit;
 }
 
 $categoryMap = [
@@ -100,8 +83,21 @@ if ($userType !== 'student') {
 	$role = 'senior';
 }
 
-if (!in_array($role, ['junior', 'senior'], true)) {
-	secureErrorResponse('Invalid role', 400);
+$userType = $categoryMap[strtolower($userCategory)] ?? null;
+if ($userType === null) {
+	echo json_encode(['success' => false, 'message' => 'Select a valid user category']);
+	exit;
+}
+
+$allowedDomain = '@mitsgwl.ac.in';
+$emailLower = strtolower($email);
+if ($userType === 'student' && !str_ends_with($emailLower, $allowedDomain)) {
+	echo json_encode(['success' => false, 'message' => 'Students must use their @mitsgwl.ac.in email']);
+	exit;
+}
+
+if ($userType !== 'student') {
+	$role = 'senior';
 }
 
 $conn = nearby_db_connect();

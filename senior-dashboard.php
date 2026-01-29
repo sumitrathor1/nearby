@@ -1,7 +1,6 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . '/includes/helpers/session.php';
+secureSessionStart();
 if (($_SESSION['user']['role'] ?? null) !== 'senior') {
     header('Location: login.php');
     exit;

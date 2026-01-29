@@ -1,19 +1,16 @@
 <?php
 header('Content-Type: application/json');
 require_once __DIR__ . '/../../config/db.php';
-require_once __DIR__ . '/../../config/security.php';
+require_once __DIR__ . '/../../includes/helpers/csrf.php';
+require_once __DIR__ . '/../../includes/helpers/authorization.php';
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+secureSessionStart();
 
-$user = $_SESSION['user'] ?? null;
+// Validate CSRF token
+requireCSRFToken();
 
-if (!$user) {
-    http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'Please login to contact the owner']);
-    exit;
-}
+// Require user to be logged in
+requireLogin();
 
 // Rate limiting for contact requests
 $userId = $user['id'];
@@ -26,44 +23,16 @@ if (!is_array($input) || empty($input)) {
     $input = $_POST;
 }
 
-// Validate accommodation ID
-$accommodationIdValidation = validateNumeric($input['accommodation_id'] ?? '', 1);
-if (!$accommodationIdValidation['valid']) {
-    secureErrorResponse('Valid accommodation ID is required', 400);
-}
-$accommodationId = $accommodationIdValidation['value'];
-
-// Validate and sanitize message
-$message = '';
-if (!empty($input['message'])) {
-    $messageValidation = validateText($input['message'], 0, 500);
-    if (!$messageValidation['valid']) {
-        secureErrorResponse('Message: ' . $messageValidation['error'], 400);
-    }
-    $message = $messageValidation['text'];
-}
+$accommodationId = $input['accommodation_id'] ?? null;
+$accommodationId = validateId($accommodationId, 'accommodation ID');
+$message = trim($input['message'] ?? '');
 
 $conn = nearby_db_connect();
-$userId = (int) $user['id'];
 
-$checkSql = 'SELECT id FROM accommodations WHERE id = ? LIMIT 1';
-$checkStmt = mysqli_prepare($conn, $checkSql);
+// Verify accommodation exists
+requireResourceExists(accommodationExists($conn, $accommodationId), 'accommodation');
 
-if ($checkStmt === false) {
-    secureErrorResponse('Failed to process request. Please try again.', 500, 'Failed to prepare accommodation check: ' . mysqli_error($conn));
-}
-
-mysqli_stmt_bind_param($checkStmt, 'i', $accommodationId);
-mysqli_stmt_execute($checkStmt);
-$result = mysqli_stmt_get_result($checkStmt);
-$exists = mysqli_fetch_assoc($result);
-mysqli_stmt_close($checkStmt);
-
-if (!$exists) {
-    http_response_code(404);
-    echo json_encode(['success' => false, 'message' => 'Accommodation not found']);
-    exit;
-}
+$userId = getCurrentUserId();
 
 $insertSql = 'INSERT INTO contact_requests (accommodation_id, requester_id, message) VALUES (?, ?, ?)';
 $insertStmt = mysqli_prepare($conn, $insertSql);

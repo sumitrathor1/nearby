@@ -1,7 +1,9 @@
 <?php
 header('Content-Type: application/json');
 require_once __DIR__ . '/../../config/db.php';
-require_once __DIR__ . '/../../config/security.php';
+require_once __DIR__ . '/../../includes/helpers/validation.php';
+require_once __DIR__ . '/../../includes/helpers/csrf.php';
+require_once __DIR__ . '/../../includes/helpers/session.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 	http_response_code(405);
@@ -9,9 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 	exit;
 }
 
-if (session_status() === PHP_SESSION_NONE) {
-	session_start();
-}
+// Validate CSRF token
+requireCSRFToken();
+
+secureSessionStart();
 
 // Rate limiting for login attempts
 $clientIP = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
@@ -24,23 +27,24 @@ if (!is_array($payload) || empty($payload)) {
 	$payload = $_POST;
 }
 
-// Validate and sanitize inputs
-$emailValidation = validateEmail($payload['email'] ?? '');
-if (!$emailValidation['valid']) {
-	secureErrorResponse($emailValidation['error'], 400);
-}
-$email = $emailValidation['email'];
-
-$password = $payload['password'] ?? '';
-$role = trim($payload['role'] ?? '');
-
-if ($password === '') {
-	secureErrorResponse('Password is required', 400);
-}
-
-$roleValidation = validateEnum($role, ['junior', 'senior'], 'role');
-if (!$roleValidation['valid']) {
-	secureErrorResponse($roleValidation['error'], 400);
+try {
+	$email = InputValidator::validateEmail($payload['email'] ?? '');
+	$password = $payload['password'] ?? '';
+	$role = InputValidator::validateRole($payload['role'] ?? '');
+	
+	if (!$email) {
+		echo json_encode(['success' => false, 'message' => 'Enter a valid email address']);
+		exit;
+	}
+	
+	if (empty($password)) {
+		echo json_encode(['success' => false, 'message' => 'Password is required']);
+		exit;
+	}
+	
+} catch (InvalidArgumentException $e) {
+	echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+	exit;
 }
 $role = $roleValidation['value'];
 
@@ -65,17 +69,14 @@ if (!$user || !password_verify($password, $user['password']) || $user['role'] !=
 	secureErrorResponse('Invalid email, password, or role', 401);
 }
 
-// Regenerate session ID to prevent session fixation
-session_regenerate_id(true);
-
-$_SESSION['user'] = [
+// Set secure session with regeneration
+setUserSession([
 	'id' => (int) $user['id'],
 	'name' => sanitizeInput($user['name']),
 	'email' => $user['college_email'],
 	'role' => $user['role'],
 	'user_type' => $user['user_type'] ?? 'student',
-	'login_time' => time(),
-];
+]);
 
 // Generate CSRF token for future requests
 $csrfToken = generateCSRFToken();

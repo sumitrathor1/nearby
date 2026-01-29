@@ -1,12 +1,11 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}//s
+require_once __DIR__ . '/includes/helpers/session.php';
+secureSessionStart();
 if (($_SESSION['user']['role'] ?? null) !== 'junior') {
     header('Location: login.php');
     exit;
 }
-
+//session_start();
 $pageTitle = 'Junior Dashboard | NearBy';
 $pageScripts = ['assets/js/search.js', 'assets/js/message.js'];
 $enableChatbot = true;

@@ -1,6 +1,8 @@
 <?php
 header('Content-Type: application/json');
 require_once __DIR__ . '/../../config/db.php';
+require_once __DIR__ . '/../../includes/helpers/csrf.php';
+require_once __DIR__ . '/../../includes/helpers/session.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -8,9 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+// Validate CSRF token
+requireCSRFToken();
+
+secureSessionStart();
 
 $payload = json_decode(file_get_contents('php://input'), true);
 if (!is_array($payload) || empty($payload)) {
@@ -94,13 +97,14 @@ if (!$user) {
     exit;
 }
 
-$_SESSION['user'] = [
+// Set secure session with regeneration
+setUserSession([
     'id' => (int) $user['id'],
     'name' => $user['name'],
     'email' => $user['college_email'],
     'role' => $user['role'],
     'user_type' => $user['user_type'] ?? 'student',
-];
+]);
 
 $redirect = 'search.php';
 if ($user['role'] === 'junior') {

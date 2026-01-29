@@ -1,11 +1,9 @@
 <?php
 header('Content-Type: application/json');
 require_once __DIR__ . '/../../config/db.php';
-require_once __DIR__ . '/../../config/security.php';
+require_once __DIR__ . '/../../includes/helpers/session.php';
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+secureSessionStart();
 
 // Rate limiting for search requests
 $clientIP = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
