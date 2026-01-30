@@ -34,6 +34,143 @@ When students move to a new city for education, they often face challenges such 
 The platform is designed **by students, for students**, keeping real-life needs in mind.
 
 ---
+✨ Features
+🏡 Accommodation Discovery
+
+Browse PGs, rooms, flats, and hostels
+
+Student-focused listings near campuses
+
+Advanced filters:
+
+Location
+
+Rent range
+
+Accommodation type
+
+Gender preference (Male / Female / Family)
+
+Facilities (Wi-Fi, Food, Parking, Water, Electricity, CCTV, Power Backup)
+
+🧑‍🤝‍🧑 Multi-Role User System
+
+Supports multiple user roles:
+
+Students
+
+Property Owners
+
+Local Service Providers
+
+Dedicated dashboards for each role
+
+Role-based access and functionality
+
+🏠 Property & Listing Management
+
+Property owners can:
+
+Add new accommodation listings
+
+Edit and manage their listings
+
+Service providers can:
+
+Add and manage local service listings
+
+Listings update in real time for users
+
+🧺 Local Services Directory
+
+Discover essential local services:
+
+Tiffin / Mess services
+
+Milk (Doodh) providers
+
+Gas suppliers
+
+Vegetable (Sabji) vendors
+
+Other daily-need services
+
+Everything accessible from one platform
+
+🤖 AI-Powered Chatbot Assistance
+
+Integrated AI chatbot (Gemini AI)
+
+Available on:
+
+Home page
+
+Search page
+
+User dashboards
+
+Provides:
+
+Accommodation and service guidance
+
+Local help and suggestions
+
+Student-friendly Q&A
+
+Login-based access control
+
+Secure chat history storage
+
+Works on both local and live servers
+
+📍 Local Guidance & Discovery
+
+Helps students find:
+
+Nearby food options
+
+Transport information
+
+Hospitals and essential shops
+
+Acts as a digital local guide for new students
+
+🔐 Authentication & Security
+
+Secure login and authentication system
+
+Role-based access control
+
+Guest users can:
+
+View listings
+
+View chatbot interface (login required to interact)
+
+Clean session and backend handling
+
+📱 Responsive & Modern UI
+
+Fully responsive across all devices
+
+Clean, modern, and student-friendly design
+
+Glassmorphism UI with a light green theme
+
+🌐 Map & Location Integration
+
+Location-based discovery of rooms and services
+
+Map API integration for better navigation
+
+⚡ Performance & Usability
+
+AJAX-based interactions for faster performance
+
+Smooth and intuitive user experience
+
+Minimal and easy-to-navigate interface
+
 
 ## 🌐 Live Project
 
