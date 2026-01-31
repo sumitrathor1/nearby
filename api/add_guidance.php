@@ -1,6 +1,7 @@
 <?php
 header('Content-Type: application/json');
 require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../includes/helpers/csrf.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -8,8 +9,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-require_once __DIR__ . '/../config/security.php';
-startSecureSession();
+// Validate CSRF token
+requireCSRFToken();
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 if (!isSessionValid() || ($_SESSION['user']['role'] ?? '') !== 'senior') {
     http_response_code(403);

@@ -13,6 +13,7 @@
             </div>
             <div class="modal-body pt-3">
                 <form id="createPostForm" class="needs-validation" novalidate>
+                    <?= csrfField() ?>
                     <div class="mb-4">
                         <span class="form-label d-block mb-2">What would you like to post?</span>
                         <div class="d-flex flex-wrap gap-3" role="group" aria-label="Post type selector">

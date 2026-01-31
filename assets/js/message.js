@@ -178,20 +178,10 @@ if (chatbotRoot) {
             const typingIndicator = showTyping();
 
             try {
-                const response = await fetch('api/message-assistant-send.php', {
+                const data = await window.NearBy.fetchJSON('api/message-assistant-send.php', {
                     method: 'POST',
-                    headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
-                    body: JSON.stringify({message: rawValue}),
+                    body: {message: rawValue}
                 });
-                let data;
-                try {
-                    data = await response.json();
-                } catch {
-                    throw new Error('Server returned invalid response');
-                }
-                if (!response.ok || !data.success) {
-                    throw new Error(data.message || 'Unable to send message');
-                }
                 typingIndicator.remove();
                 appendMessage('bot', data.reply, data.created_at || new Date());
             } catch (error) {

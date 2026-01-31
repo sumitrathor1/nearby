@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 require_once __DIR__ . '/../config/db.php';
-require_once __DIR__ . '/../config/security.php';
+require_once __DIR__ . '/../includes/helpers/csrf.php';
 
 $respond = static function (int $status, array $payload): void {
     http_response_code($status);
@@ -12,7 +12,12 @@ $respond = static function (int $status, array $payload): void {
 try {
     startSecureSession();
 
-    if (!isSessionValid() || empty($_SESSION['user']['id'])) {
+    // Validate CSRF token
+    if (!validateCSRFToken()) {
+        $respond(403, ['success' => false, 'message' => 'Invalid or missing CSRF token. Please refresh the page and try again.']);
+    }
+
+    if (empty($_SESSION['user']['id'])) {
         $respond(401, ['success' => false, 'message' => 'Login required']);
     }
 
@@ -89,7 +94,7 @@ try {
 
     $apiKey = GEMINI_API_KEY;
     if (!$apiKey) {
-        $respond(500, ['success' => false, 'message' => 'Gemini API key is not configured']);
+        $respond(500, ['success' => false, 'message' => 'AI service temporarily unavailable']);
     }
 
     $requestPayload = json_encode([

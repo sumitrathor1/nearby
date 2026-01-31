@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 require_once __DIR__ . '/../config/db.php';
-require_once __DIR__ . '/../config/security.php';
+require_once __DIR__ . '/../includes/helpers/csrf.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -9,7 +9,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-startSecureSession();
+// Validate CSRF token
+requireCSRFToken();
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 $raw = file_get_contents('php://input');
 $data = json_decode($raw, true);
