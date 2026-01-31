@@ -292,6 +292,17 @@ a, .section-title {
     .footer-social {
         justify-content: center;
     }
+
+    /* Issue #46: Improve footer spacing and touch targets on mobile */
+    .footer-list {
+        gap: 1rem;
+        line-height: 1.8;
+    }
+
+    .social-link {
+        width: 44px;
+        height: 44px;
+    }
 }
 
 .hero-section {
@@ -1062,6 +1073,29 @@ a, .section-title {
         width: calc(100vw - 2rem);
         max-height: 26rem;
     }
+
+    /* Issue #46: Reduce visual clutter on extra-small screens */
+    .footer-heading {
+        font-size: 0.8rem;
+        margin-bottom: 0.85rem;
+    }
+
+    .footer-list {
+        font-size: 0.85rem;
+        gap: 0.9rem;
+    }
+
+    .footer-logo {
+        width: 8rem;
+    }
+
+    .footer-copy {
+        font-size: 0.85rem;
+    }
+
+    .footer-maintained {
+        font-size: 0.8rem;
+    }
 }
 
 /* ===== Improve input text vertical alignment ===== */
@@ -1093,7 +1127,6 @@ textarea:focus {
     box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
 }
 
-}
 
 /* ================= MOBILE SPACING & ALIGNMENT FIXES ================= */
 
@@ -1144,6 +1177,15 @@ textarea:focus {
 
   .step-card {
     align-items: flex-start;
+  }
+
+  /* Issue #46: Prevent chatbot overlap and improve footer readability */
+  .glass-footer {
+    padding-bottom: 7rem;
+  }
+
+  .footer-divider {
+    margin: 1.5rem 0 1rem;
   }
 
 }
