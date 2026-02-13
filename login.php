@@ -18,6 +18,9 @@ require_once __DIR__ . '/includes/header.php';
                     <label for="loginPassword" class="form-label">Password</label>
                     <input type="password" class="form-control" id="loginPassword" name="password" required minlength="6">
                     <div class="invalid-feedback">Password must be at least 6 characters</div>
+                    <div class="text-end mt-1">
+                        <a href="forgot-password.php" class="small text-decoration-none">Forgot password?</a>
+                    </div>
                 </div>
                 <div class="mb-4">
                     <label for="loginRole" class="form-label">I am a</label>

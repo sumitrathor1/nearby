@@ -47,7 +47,7 @@ try {
 	echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 	exit;
 }
-$role = $roleValidation['value'];
+// $role is already validated above 
 
 $conn = nearby_db_connect();
 $emailLower = strtolower($email);

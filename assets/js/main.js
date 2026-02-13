@@ -27,7 +27,7 @@ import { escapeHtml } from './ui.js';
     const showMessage = (message, type = 'success') => {
         const sweetAlert = window.Swal;
         if (sweetAlert) {
-            const iconMap = {success: 'success', danger: 'error', warning: 'warning', info: 'info'};
+            const iconMap = { success: 'success', danger: 'error', warning: 'warning', info: 'info' };
             const icon = iconMap[type] || 'info';
             const titleMap = {
                 success: 'Success',
@@ -57,18 +57,18 @@ import { escapeHtml } from './ui.js';
     };
 
     const fetchJSON = async (url, options = {}) => {
-        const defaultHeaders = {'Accept': 'application/json'};
-        
+        const defaultHeaders = { 'Accept': 'application/json' };
+
         // Get CSRF token from meta tag
         const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-        
-        options.headers = options.headers ? {...defaultHeaders, ...options.headers} : defaultHeaders;
-        
+
+        options.headers = options.headers ? { ...defaultHeaders, ...options.headers } : defaultHeaders;
+
         // Add CSRF token to headers for POST requests
         if (csrfToken && (options.method === 'POST' || options.method === 'PUT' || options.method === 'DELETE')) {
             options.headers['X-CSRF-Token'] = csrfToken;
         }
-        
+
         if (options.body && !(options.body instanceof FormData)) {
             options.headers['Content-Type'] = 'application/json';
             // Add CSRF token to JSON body if not already present
@@ -95,7 +95,7 @@ import { escapeHtml } from './ui.js';
         }
 
         if (!data) {
-            data = {success: false, message: rawText.trim() || 'Invalid server response'};
+            data = { success: false, message: rawText.trim() || 'Invalid server response' };
         }
 
         const isSuccess = response.ok && data.success !== false;
@@ -120,7 +120,8 @@ import { escapeHtml } from './ui.js';
     if (backToTopBtn) {
         // Show/hide button based on scroll position
         const toggleBackToTopBtn = () => {
-            if (window.pageYOffset > 300) { // Show after scrolling 300px
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > 300) { // Show after scrolling 300px
                 backToTopBtn.classList.add('show');
             } else {
                 backToTopBtn.classList.remove('show');
