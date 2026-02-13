@@ -1,334 +1,263 @@
-# 🏠 NearBy – Student Housing & Local Services Platform
+# 🏠 NearBy  
+### Student Housing & Local Services Platform  
 
-**NearBy** is a student-centric web platform built to simplify the process of finding **rental rooms, PGs, hostels, and essential local services** in a new city.  
-The platform eliminates broker dependency and connects **students, property owners, and local service providers** directly in a trusted, user-friendly environment.
-
-[![Elite Coders](https://img.shields.io/badge/Elite%20Coders-Participant-blue)](https://example.com)
-[![GitHub stars](https://img.shields.io/github/stars/sumitrathor1/nearby)](https://github.com/sumitrathor1/nearby/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/sumitrathor1/nearby)](https://github.com/sumitrathor1/nearby/network/members)
-[![GitHub issues](https://img.shields.io/github/issues/sumitrathor1/nearby)](https://github.com/sumitrathor1/nearby/issues)
-[![License](https://img.shields.io/github/license/sumitrathor1/nearby)](https://github.com/sumitrathor1/nearby/blob/main/LICENSE)
-[![PHP Version](https://img.shields.io/badge/PHP-7.4+-blue)](https://php.net)
-[![MySQL](https://img.shields.io/badge/MySQL-5.7+-orange)](https://mysql.com)
-
-## 🌟 Problem Statement
-
-When students move to a new city for education, they often face challenges such as:
-
-- Difficulty finding safe and affordable accommodation
-- High brokerage charges
-- Unreliable listings and lack of trust
-- No single platform for daily local services (food, milk, gas, etc.)
-- Feeling lost without local guidance
-
-## ✅ Solution – NearBy
-
-**NearBy** solves these problems by providing:
-
-- Verified accommodation listings near campuses
-- Direct communication with owners and service providers
-- Local guidance for food, transport, and daily needs
-- AI-powered chatbot support
-- A modern, clean, and mobile-friendly interface
-
-The platform is designed **by students, for students**, keeping real-life needs in mind.
+<p align="center">
+  <img src="https://img.shields.io/badge/Elite%20Coders-Participant-blue" />
+  <img src="https://img.shields.io/github/stars/sumitrathor1/nearby" />
+  <img src="https://img.shields.io/github/forks/sumitrathor1/nearby" />
+  <img src="https://img.shields.io/github/issues/sumitrathor1/nearby" />
+  <img src="https://img.shields.io/github/license/sumitrathor1/nearby" />
+  <img src="https://img.shields.io/badge/PHP-7.4+-blue" />
+  <img src="https://img.shields.io/badge/MySQL-5.7+-orange" />
+</p>
 
 ---
-✨ Features
-🏡 Accommodation Discovery
 
-Browse PGs, rooms, flats, and hostels
+## 🌍 Overview
 
-Student-focused listings near campuses
+**NearBy** is a student-centric web platform built to simplify the process of finding **rental rooms, PGs, hostels, and essential local services** in a new city.
 
-Advanced filters:
+It eliminates broker dependency and directly connects:
 
-Location
+- 🎓 Students  
+- 🏠 Property Owners  
+- 🛍️ Local Service Providers  
 
-Rent range
+All within a secure, intuitive, and modern ecosystem.
 
-Accommodation type
+> Built **by students, for students** to solve real relocation challenges.
 
-Gender preference (Male / Female / Family)
+---
 
-Facilities (Wi-Fi, Food, Parking, Water, Electricity, CCTV, Power Backup)
+## 🚩 Problem Statement
 
-🧑‍🤝‍🧑 Multi-Role User System
+When students move to a new city for education, they often face:
 
-Supports multiple user roles:
+- Difficulty finding safe and affordable accommodation  
+- High brokerage charges  
+- Unverified listings and lack of trust  
+- No unified platform for daily services  
+- Lack of local guidance  
 
-Students
+These challenges create unnecessary stress and financial burden.
 
-Property Owners
+---
 
-Local Service Providers
+## 💡 Solution – NearBy
 
-Dedicated dashboards for each role
+NearBy provides:
 
-Role-based access and functionality
+✔ Verified accommodation listings  
+✔ Direct communication with owners  
+✔ Essential local service discovery  
+✔ AI-powered chatbot support  
+✔ Location-based assistance  
+✔ Fully responsive modern UI  
 
-🏠 Property & Listing Management
+---
 
-Property owners can:
+# ✨ Core Features
 
-Add new accommodation listings
+---
 
-Edit and manage their listings
+## 🏡 Accommodation Discovery
 
-Service providers can:
+Browse and filter:
 
-Add and manage local service listings
+- PGs  
+- Hostels  
+- Flats  
+- Rental Rooms  
 
-Listings update in real time for users
+### 🔎 Advanced Filters
 
-🧺 Local Services Directory
+- 📍 Location  
+- 💰 Rent Range  
+- 🏷 Accommodation Type  
+- 👥 Gender Preference (Male / Female / Family)  
+- 🛠 Facilities:
+  - Wi-Fi  
+  - Food  
+  - Parking  
+  - Water  
+  - Electricity  
+  - CCTV  
+  - Power Backup  
 
-Discover essential local services:
+---
 
-Tiffin / Mess services
+## 🧑‍🤝‍🧑 Multi-Role User System
 
-Milk (Doodh) providers
+### 🎓 Students
+- Search & filter listings  
+- Access chatbot  
+- Explore local services  
 
-Gas suppliers
+### 🏠 Property Owners
+- Add listings  
+- Edit & manage properties  
+- Direct student interaction  
 
-Vegetable (Sabji) vendors
+### 🛍 Local Service Providers
+- Add service listings  
+- Manage offerings  
+- Reach student audience  
 
-Other daily-need services
+Each role has a **dedicated dashboard** with role-based access control.
 
-Everything accessible from one platform
+---
 
-🤖 AI-Powered Chatbot Assistance
+## 🧺 Local Services Directory
 
-Integrated AI chatbot (Gemini AI)
+Discover:
 
-Available on:
+- 🍱 Tiffin / Mess services  
+- 🥛 Milk providers  
+- 🔥 Gas suppliers  
+- 🥦 Vegetable vendors  
+- 🏥 Essential shops  
 
-Home page
+Everything accessible from one platform.
 
-Search page
+---
 
-User dashboards
+## 🤖 AI-Powered Chatbot
 
-Provides:
+Integrated with **Gemini AI**.
 
-Accommodation and service guidance
+### Available On:
+- Home Page  
+- Search Page  
+- Student Dashboards  
 
-Local help and suggestions
+### Features:
+- Accommodation guidance  
+- Local suggestions  
+- Student-friendly Q&A  
+- Secure chat history storage  
+- Login-based interaction  
 
-Student-friendly Q&A
+---
 
-Login-based access control
-
-Secure chat history storage
-
-Works on both local and live servers
-
-📍 Local Guidance & Discovery
+## 📍 Local Guidance
 
 Helps students find:
 
-Nearby food options
+- Nearby food options  
+- Transport information  
+- Hospitals & essential shops  
 
-Transport information
+Acts as a **digital local assistant** for new students.
 
-Hospitals and essential shops
+---
 
-Acts as a digital local guide for new students
+## 🔐 Authentication & Security
 
-🔐 Authentication & Security
+- Secure login system  
+- Role-based access control  
+- Guest users can view listings  
+- Clean backend session handling  
 
-Secure login and authentication system
+---
 
-Role-based access control
+## 📱 UI & Experience
 
-Guest users can:
+- Fully responsive design  
+- Glassmorphism light-green theme  
+- Mobile-friendly layout  
+- Smooth AJAX-based interactions  
+- Minimal and intuitive navigation  
 
-View listings
-
-View chatbot interface (login required to interact)
-
-Clean session and backend handling
-
-📱 Responsive & Modern UI
-
-Fully responsive across all devices
-
-Clean, modern, and student-friendly design
-
-Glassmorphism UI with a light green theme
-
-🌐 Map & Location Integration
-
-Location-based discovery of rooms and services
-
-Map API integration for better navigation
-
-⚡ Performance & Usability
-
-AJAX-based interactions for faster performance
-
-Smooth and intuitive user experience
-
-Minimal and easy-to-navigate interface
-
+---
 
 ## 🌐 Live Project
 
-🔗 **Website:** [https://sumitrathor.rf.gd/nearby/](https://sumitrathor.rf.gd/nearby/)  
-🔗 **GitHub Repository:** [https://github.com/sumitrathor1/nearby](https://github.com/sumitrathor1/nearby)
-
----
-
-## 🌐 Flow Diagram
-
-<img width="798" height="168" alt="Flow Diagram" src="https://github.com/user-attachments/assets/9ef161b7-7013-4412-b823-c8c82a7261ae" />
-
----
-
-## 🧩 Core Features
-
-### 🏡 Accommodation Search
-
-- PG, Flat, Room, Hostel listings
-- Advanced filters:
-  - Location
-  - Rent range
-  - Accommodation type
-  - Allowed for (Male / Female / Family)
-  - Facilities (Wi-Fi, Food, Parking, Water, Electricity, CCTV, Power Backup)
-
-### 🧑‍🤝‍🧑 Multi-Role User System
-
-Users on NearBy can be:
-
-- **Students** (Juniors and Seniors)
-- **Home / Room Owners**
-- **Local Service Providers**:
-  - Tiffin / Mess services
-  - Milk (Doodh) providers
-  - Gas suppliers
-  - Vegetable (Sabji) vendors
-  - Other daily-need services
-
-Each role can create and manage their own listings.
-
-### 🤖 AI Chatbot Assistance
-
-- Available on:
-  - Home Page
-  - Search Page
-  - Junior & Senior Dashboards
-- Login-based access control
-- Features:
-  - Room and service guidance
-  - Local help suggestions
-  - Student-friendly Q&A
-- Chat history stored securely
-- Works seamlessly on **local and live servers**
-
-### 📍 Local Guidance
-
-- Nearby food options
-- Transport information
-- Hospitals, shops, and essential services
-- Helps new students settle quickly and confidently
-
-### 🔐 Authentication & Security
-
-- Secure login system
-- Role-based access
-- Guest users can view chatbot but must login to use it
-- Clean session and backend handling
+🔗 Website: https://sumitrathor.rf.gd/nearby/  
+🔗 GitHub Repository: https://github.com/sumitrathor1/nearby  
 
 ---
 
 ## 📸 Screenshots
 
-### Home Page
-![Home Page](https://github.com/RANAPOOJA321/nearby/blob/ca5a539b7bb35202b7cadf56eb51ea4feae18b52/home.png)
+### 🏠 Home Page
+![Home](https://github.com/RANAPOOJA321/nearby/blob/ca5a539b7bb35202b7cadf56eb51ea4feae18b52/home.png)
 
-### Listings Page
-![Listings Page](https://github.com/RANAPOOJA321/nearby/blob/7367dd105601d3dcb5abfc13241eb21b5360ace0/listing.png)
+### 📋 Listings Page
+![Listings](https://github.com/RANAPOOJA321/nearby/blob/7367dd105601d3dcb5abfc13241eb21b5360ace0/listing.png)
 
-### Local Services
-![Local Services](https://github.com/RANAPOOJA321/nearby/blob/7367dd105601d3dcb5abfc13241eb21b5360ace0/service.png)
-
----
-
-## 🛠️ Tech Stack
-
-### Frontend
-- **HTML5** - Semantic markup
-- **CSS3** - Custom styling with Glassmorphism UI
-- **Bootstrap 5.3** - Responsive framework
-- **JavaScript (ES6)** - Interactive functionality
-
-### Backend
-- **PHP** - Server-side logic
-- **MySQL (MySQLi)** - Database management
-- **AJAX** - Asynchronous data loading
-
-### Integrations
-- **Google APIs** - Maps and authentication
-- **Gemini AI** - Chatbot functionality
-- **Firebase** - Additional services
+### 🛍 Local Services
+![Services](https://github.com/RANAPOOJA321/nearby/blob/7367dd105601d3dcb5abfc13241eb21b5360ace0/service.png)
 
 ---
 
-## 🚀 Future Enhancements
+# 🛠️ Tech Stack
 
-- [ ] Admin verification for listings
-- [ ] Rating & review system
-- [ ] Second-hand products marketplace
-- [ ] Push notifications
-- [ ] Mobile app version
-- [ ] Advanced AI recommendations
-- [ ] Dark/Light mode toggle
+## Frontend
+- HTML5  
+- CSS3  
+- Bootstrap 5.3  
+- JavaScript (ES6)  
+
+## Backend
+- PHP 7.4+  
+- MySQL (MySQLi)  
+- AJAX  
+
+## Integrations
+- Google Maps API  
+- Gemini AI  
+- Firebase  
 
 ---
 
-## 💡 Key Benefits
+# 🚀 Future Enhancements
+
+- [ ] Admin verification system  
+- [ ] Rating & review system  
+- [ ] Second-hand marketplace  
+- [ ] Push notifications  
+- [ ] Mobile app version  
+- [ ] Advanced AI recommendations  
+- [ ] Dark/Light mode toggle  
+
+---
+
+# 💡 Key Benefits
 
 ✅ No brokerage fees  
-✅ Student-friendly platform  
-✅ Trusted & direct connections  
-✅ AI-powered assistance  
+✅ Direct connections  
+✅ Student-focused design  
+✅ AI assistance  
 ✅ Local services in one place  
-✅ Fully responsive design  
 ✅ Easy to scale and extend  
 
 ---
 
-## 👥 Contributors
+# 👥 Contributors
 
-We appreciate all contributors who have helped make NearBy better!
-
-| Name | GitHub | LinkedIn | Role |
-|------|--------|----------|------|
-| Sumit Rathor | [@sumitrathor1](https://github.com/sumitrathor1) | [LinkedIn](https://linkedin.com/in/sumitrathor) | Project Lead & Developer |
-| Rana Pooja | [@RANAPOOJA321](https://github.com/RANAPOOJA321) | [LinkedIn](https://linkedin.com/in/ranapooja) | UI/UX Designer & Contributor |
-| [Your Name] | [@yourusername](https://github.com/yourusername) | [LinkedIn](https://linkedin.com/in/yourprofile) | Contributor |
-
-*Want to contribute? See our [Contributing Guidelines](CONTRIBUTING.md) and join the team!*
+| Name | GitHub | Role |
+|------|--------|------|
+| Sumit Rathor | https://github.com/sumitrathor1 | Project Lead & Developer |
+| Rana Pooja | https://github.com/RANAPOOJA321 | UI/UX Designer |
+| Your Name | https://github.com/yourusername | Contributor |
 
 ---
 
-## 📄 License
+# 📄 License
 
-This project is currently under **development and learning phase**.  
-Licensing and commercial usage terms will be defined in future releases.
-
----
-
-## 🙌 Acknowledgements
-
-Thanks to:
-
-- **Open-source community** for the amazing tools and libraries
-- **Student testers and feedback providers** for valuable insights
-- **Mentors and peers** who contributed ideas and reviews
-- **Elite Coders** program for the opportunity to collaborate
+This project is currently in the **development and learning phase**.  
+Licensing and commercial terms will be defined in future releases.
 
 ---
 
-**NearBy** – *Helping students find a place and feel at home.* 🌟
+# 🙌 Acknowledgements
+
+- Open-source community  
+- Student testers  
+- Mentors & reviewers  
+- Elite Coders Program  
+
+---
+
+## 🌟 NearBy  
+**Helping students find a place and feel at home.**
