@@ -122,16 +122,20 @@
     </div>
 </footer>
 
-<<<<<<< HEAD
 <?php if (!empty($enableChatbot)): ?>
     <?php include __DIR__ . '/chatbot-widget.php'; ?>
 <?php endif; ?>
 </div>
+<!-- Back to Top Button -->
+<button class="back-to-top" id="backToTopBtn" aria-label="Back to top" style="z-index: 2000;">
+    <i class="bi bi-arrow-up"></i>
+</button>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="assets/js/main.js"></script>
+<script src="assets/js/main.js" type="module"></script>
 <?php if (!empty($pageScripts)): ?>
         <?php foreach ($pageScripts as $scriptPath): ?>
                 <script src="<?= htmlspecialchars($scriptPath) ?>" type="module"></script>
@@ -141,56 +145,27 @@
 <script>
 const toggleBtn = document.getElementById('dark-mode-toggle');
 const icon = document.getElementById('dark-mode-icon');
-
 // Check local storage to remember preference
-if(localStorage.getItem('darkMode') === 'enabled'){
+if(localStorage.getItem('darkMode') === 'enabled' && toggleBtn && icon){
     document.body.classList.add('dark-mode');
     icon.classList.replace('bi-moon-fill', 'bi-sun-fill');
 }
 
-toggleBtn.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
+if(toggleBtn && icon) {
+    toggleBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
 
-    // Change icon
-    if(document.body.classList.contains('dark-mode')){
-        icon.classList.replace('bi-sun-fill', 'bi-moon-fill');
-        localStorage.setItem('darkMode','enabled');
-    } else {
-        icon.classList.replace('bi-moon-fill', 'bi-sun-fill');
-        localStorage.setItem('darkMode','disabled');
-    }
-});
-</script>
-
-<!-- Back to Top Button Script -->
-<script>
-const backToTopBtn = document.getElementById('backToTop');
-
-// Show/hide button based on scroll position
-window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 300) {
-        backToTopBtn.classList.add('show');
-    } else {
-        backToTopBtn.classList.remove('show');
-    }
-});
-
-// Smooth scroll to top when clicked
-backToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+        // Change icon
+        if(document.body.classList.contains('dark-mode')){
+            icon.classList.replace('bi-sun-fill', 'bi-moon-fill');
+            localStorage.setItem('darkMode','enabled');
+        } else {
+            icon.classList.replace('bi-moon-fill', 'bi-sun-fill');
+            localStorage.setItem('darkMode','disabled');
+        }
     });
-});
+}
 </script>
-
-<!-- Back to Top Button -->
-<button class="back-to-top" id="backToTop" aria-label="Back to top">
-    <i class="bi bi-arrow-up"></i>
-</button>
 
 </body>
-
-
-
 </html>

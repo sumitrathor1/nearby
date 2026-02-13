@@ -14,7 +14,7 @@ const userTypeBadge = {
     service_provider: 'bg-info'
 };
 
-const escapeHtml = (value = '') => {
+export const escapeHtml = (value = '') => {
     const stringValue = String(value ?? '');
     return stringValue.replace(/[&<>"']/g, (char) => ({
         '&': '&amp;',
@@ -74,7 +74,7 @@ const formatCreatedAt = (isoValue) => {
     if (Number.isNaN(date.getTime())) {
         return '';
     }
-    return date.toLocaleDateString(undefined, {day: 'numeric', month: 'short'});
+    return date.toLocaleDateString(undefined, { day: 'numeric', month: 'short' });
 };
 
 export const buildPostCard = (item) => {
