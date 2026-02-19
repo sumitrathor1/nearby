@@ -122,7 +122,6 @@
     </div>
 </footer>
 
-<<<<<<< HEAD
 <?php if (!empty($enableChatbot)): ?>
     <?php include __DIR__ . '/chatbot-widget.php'; ?>
 <?php endif; ?>
@@ -188,9 +187,5 @@ backToTopBtn.addEventListener('click', () => {
 <button class="back-to-top" id="backToTop" aria-label="Back to top">
     <i class="bi bi-arrow-up"></i>
 </button>
-
 </body>
-
-
-
 </html>
