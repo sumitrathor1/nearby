@@ -14,7 +14,7 @@ require_once __DIR__ . '/includes/header.php';
         <div class="carousel-inner">
             <div class="carousel-item active" data-bs-interval="3000">
                 <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=1460&q=80" class="slider-image" alt="Student housing near green campus">
-                <div class="slider-overlay"></div>
+                
                 <div class="slider-content d-flex align-items-center">
                     <div class="container text-center text-lg-start">
                         <span class="badge bg-success bg-opacity-75 text-white mb-3">Verified Senior Listings</span>
