@@ -3,6 +3,7 @@
 **NearBy** is a student-centric web platform built to simplify the process of finding **rental rooms, PGs, hostels, and essential local services** in a new city.  
 The platform eliminates broker dependency and connects **students, property owners, and local service providers** directly in a trusted, user-friendly environment.
 
+
 [![Elite Coders](https://img.shields.io/badge/Elite%20Coders-Participant-blue)](https://example.com)
 [![GitHub stars](https://img.shields.io/github/stars/sumitrathor1/nearby)](https://github.com/sumitrathor1/nearby/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/sumitrathor1/nearby)](https://github.com/sumitrathor1/nearby/network/members)
@@ -10,6 +11,8 @@ The platform eliminates broker dependency and connects **students, property owne
 [![License](https://img.shields.io/github/license/sumitrathor1/nearby)](https://github.com/sumitrathor1/nearby/blob/main/LICENSE)
 [![PHP Version](https://img.shields.io/badge/PHP-7.4+-blue)](https://php.net)
 [![MySQL](https://img.shields.io/badge/MySQL-5.7+-orange)](https://mysql.com)
+![Visitors](https://visitor-badge.laobi.icu/badge?page_id=sumitrathor1.nearby&label=Views)
+
 
 ## 🌟 Problem Statement
 
