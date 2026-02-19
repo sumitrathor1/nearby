@@ -14,7 +14,45 @@ The platform eliminates broker dependency and connects **students, property owne
 ![Visitors](https://visitor-badge.laobi.icu/badge?page_id=sumitrathor1.nearby&label=Views)
 
 
-## 🌟 Problem Statement
+## �️ Architecture Diagram
+
+```mermaid
+graph TD
+    A[User] --> B[Web Browser]
+    B --> C[PHP Application Server]
+    C --> D[MySQL Database]
+    C --> E[Google Maps API]
+    C --> F[Gemini AI API]
+    C --> G[Firebase Services]
+    
+    subgraph "Frontend"
+        B1[HTML/CSS/JS]
+        B2[Bootstrap 5.3]
+        B3[AJAX]
+    end
+    
+    subgraph "Backend"
+        C1[PHP Controllers]
+        C2[API Endpoints]
+        C3[Authentication]
+    end
+    
+    subgraph "Database"
+        D1[User Data]
+        D2[Listings]
+        D3[Chat History]
+    end
+    
+    B --> B1
+    B1 --> C
+    C --> C1
+    C1 --> D
+    D --> D1
+```
+
+---
+
+## �🌟 Problem Statement
 
 When students move to a new city for education, they often face challenges such as:
 
