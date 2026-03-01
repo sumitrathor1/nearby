@@ -11,6 +11,7 @@
                     Discover vetted rooms, apartments, and co-living spaces designed for students and young
                     professionals.
                 </p>
+                <p class="footer-maintained small mb-0">Platform managed with care by the NearBy Support Team.</p>
             </div>
 
             <div class="col-sm-6 col-lg-2">
