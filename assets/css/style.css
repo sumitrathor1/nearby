@@ -202,3 +202,21 @@ textarea:focus {
     background: var(--nearby-secondary);
     transform: translateY(-2px);
 }
+/* ===== FOOTER LOGO BALANCE FIX ===== */
+
+.footer-logo {
+    max-height: 48px;      /* reduced size */
+    width: auto;
+    opacity: 0.9;          /* slightly softer */
+}
+
+.footer-top .col-lg-3 {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.footer-copy {
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
