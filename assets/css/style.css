@@ -202,3 +202,54 @@ textarea:focus {
     background: var(--nearby-secondary);
     transform: translateY(-2px);
 }
+/* ===== CHATBOT FLOATING POSITION FIX (#106) ===== */
+
+.chatbot-entry {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1100;
+}
+
+/* Floating Button */
+.chatbot-toggle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    background: var(--nearby-primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.chatbot-toggle:hover {
+    transform: translateY(-4px);
+    background: var(--nearby-secondary);
+}
+
+/* Chat Panel Alignment */
+.chatbot-panel {
+    position: absolute;
+    bottom: 72px;
+    right: 0;
+}
+
+/* Responsive Adjustment */
+@media (max-width: 768px) {
+    .chatbot-entry {
+        bottom: 20px;
+        right: 16px;
+    }
+
+    .chatbot-toggle {
+        width: 52px;
+        height: 52px;
+        font-size: 20px;
+    }
+}
