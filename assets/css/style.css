@@ -44,27 +44,112 @@ a:hover {
     color: var(--nearby-primary);
 }
 
-/* ===== NAVBAR ===== */
-
-.glass-nav {
-    background: rgba(40, 89, 60, 0.45);
-    backdrop-filter: blur(15px);
-    border-radius: 20px;
-    margin: 16px 16px 0;
-    padding: 6px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
+/* Force compact navbar */
+.navbar {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+    min-height: 48px !important;
 }
 
-.navbar-brand,
+/* Reduce collapse wrapper padding */
+.navbar-collapse {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Reduce nav link vertical space */
+.navbar-nav .nav-link {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+}
+
+.brand-logo {
+    height: 30px;      /* smaller than before */
+    width: auto;
+}
+
+/* ===== SLIM GLASS NAVBAR ===== */
+
+.glass-nav {
+    background: rgba(40, 89, 60, 0.55);
+    backdrop-filter: blur(12px);
+    border-radius: 14px;
+    margin: 6px 16px 0;
+    padding: 0 16px;          /* remove vertical padding completely */
+}
+
+.navbar {
+    min-height: 56px;
+    align-items: center;
+}
+
+/* Reduce brand text size */
+.navbar-brand {
+    font-size: 1.4rem;
+}
+
+/* ===== NAVBAR MENU TEXT SIZE UPDATE ===== */
+
+.navbar .nav-link {
+    font-size: 1.1rem;              /* slightly bigger */
+    font-weight: 500;             /* stronger presence */
+    letter-spacing: 0.2px;
+    padding: 0.2rem 0.6rem;       /* better spacing */
+}
+
+/* ===== NAVBAR BUTTON SIZE UPDATE ===== */
+
+.navbar .btn {
+    font-size: 0.95rem;      /* bigger text */
+    padding: 6px 18px;       /* more width & height */
+    border-radius: 8px;
+}
+
+/* Theme toggle button */
+#dark-mode-toggle {
+    font-size: 1rem;
+    padding: 6px 14px;
+}
+
+.navbar .btn {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+}
+
 .nav-link {
     color: #fff;
 }
 
+.navbar-brand {
+    color: #178a55;
+}
+
 .nav-link:hover {
     color: var(--nearby-accent);
+}
+
+/* ===== TEXT LOGO STYLE ===== */
+
+.logo-text {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #178a55;
+    text-decoration: none;
+}
+
+.logo-text:hover {
+    color: #178a55;
+}
+
+.register-btn {
+    background-color: #178a55;
+    color: white !important;
+    border: none;
+}
+
+.register-btn:hover {
+    background-color: #147a4a;
+    color: white !important;
 }
 
 /* ===== CARDS ===== */
@@ -201,4 +286,33 @@ textarea:focus {
 .back-to-top:hover {
     background: var(--nearby-secondary);
     transform: translateY(-2px);
+}
+/* FORCE SLIM NAVBAR */
+
+.navbar {
+    padding: 0 !important;
+    min-height: 80px !important;   /* increased height */
+}
+
+.navbar > .container-fluid {
+    min-height: 80px !important;
+    display: flex;
+    align-items: center;
+}
+
+/* Keep nav links vertically centered */
+.navbar-nav .nav-link {
+    line-height: normal;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.navbar .btn {
+    padding: 4px 14px !important;
+}
+
+/* Slightly increase brand alignment */
+.navbar-brand {
+    display: flex;
+    align-items: center;
 }

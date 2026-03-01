@@ -14,7 +14,7 @@ const userTypeBadge = {
     service_provider: 'bg-info'
 };
 
-const escapeHtml = (value = '') => {
+export const escapeHtml = (value = '') => {
     const stringValue = String(value ?? '');
     return stringValue.replace(/[&<>"']/g, (char) => ({
         '&': '&amp;',

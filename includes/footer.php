@@ -130,7 +130,7 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="assets/js/main.js"></script>
+<script type="module" src="assets/js/main.js"></script>
 <?php if (!empty($pageScripts)): ?>
         <?php foreach ($pageScripts as $scriptPath): ?>
                 <script src="<?= htmlspecialchars($scriptPath) ?>" type="module"></script>
@@ -138,48 +138,56 @@
 <?php endif; ?>
 
 <script>
-const toggleBtn = document.getElementById('dark-mode-toggle');
-const icon = document.getElementById('dark-mode-icon');
+document.addEventListener('DOMContentLoaded', function () {
 
-// Check local storage to remember preference
-if(localStorage.getItem('darkMode') === 'enabled'){
-    document.body.classList.add('dark-mode');
-    icon.classList.replace('bi-moon-fill', 'bi-sun-fill');
-}
+    const toggleBtn = document.getElementById('dark-mode-toggle');
+    const icon = document.getElementById('dark-mode-icon');
 
-toggleBtn.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
+    if (!toggleBtn || !icon) return;
 
-    // Change icon
-    if(document.body.classList.contains('dark-mode')){
-        icon.classList.replace('bi-sun-fill', 'bi-moon-fill');
-        localStorage.setItem('darkMode','enabled');
-    } else {
+    // Load saved preference
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        document.body.classList.add('dark-mode');
         icon.classList.replace('bi-moon-fill', 'bi-sun-fill');
-        localStorage.setItem('darkMode','disabled');
     }
+
+    toggleBtn.addEventListener('click', function () {
+        document.body.classList.toggle('dark-mode');
+
+        if (document.body.classList.contains('dark-mode')) {
+            icon.classList.replace('bi-moon-fill', 'bi-sun-fill');
+            localStorage.setItem('darkMode', 'enabled');
+        } else {
+            icon.classList.replace('bi-sun-fill', 'bi-moon-fill');
+            localStorage.setItem('darkMode', 'disabled');
+        }
+    });
+
 });
 </script>
 
 <!-- Back to Top Button Script -->
 <script>
-const backToTopBtn = document.getElementById('backToTop');
+document.addEventListener('DOMContentLoaded', function () {
 
-// Show/hide button based on scroll position
-window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 300) {
-        backToTopBtn.classList.add('show');
-    } else {
-        backToTopBtn.classList.remove('show');
-    }
-});
+    const backToTopBtn = document.getElementById('backToTop');
+    if (!backToTopBtn) return;
 
-// Smooth scroll to top when clicked
-backToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+    window.addEventListener('scroll', function () {
+        if (window.pageYOffset > 300) {
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
     });
+
+    backToTopBtn.addEventListener('click', function () {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
 });
 </script>
 
