@@ -66,50 +66,51 @@
 
                 </div>
 
-                <div class="footer-social d-flex gap-2">
-                    <!-- GitHub -->
-                    <a class="social-link" href="https://github.com/sumitrathor1/nearby" target="_blank"
-                        rel="noopener noreferrer" aria-label="GitHub">
-                        <i class="bi bi-github"></i>
-                        <span class="visually-hidden">GitHub</span>
-                    </a>
+               <div class="footer-social d-flex gap-3">
 
-                    <!-- Email -->
-                    <a class="social-link" href="mailto:sumitrathor142272@gmail.com" target="_blank"
-                        rel="noopener noreferrer" aria-label="Email">
-                        <i class="bi bi-envelope-fill"></i>
-                        <span class="visually-hidden">Email</span>
-                    </a>
+    <!-- GitHub -->
+    <a class="social-link" href="https://github.com/sumitrathor1/nearby" target="_blank"
+        rel="noopener noreferrer" aria-label="GitHub">
+        <i class="bi bi-github"></i>
+        <span class="visually-hidden">GitHub</span>
+    </a>
 
-                    <!-- LinkedIn -->
-                    <a class="social-link" href="https://www.linkedin.com/in/sumitrathor" target="_blank"
-                        rel="noopener noreferrer" aria-label="LinkedIn">
-                        <i class="bi bi-linkedin"></i>
-                        <span class="visually-hidden">LinkedIn</span>
-                    </a>
+    <!-- Email -->
+    <a class="social-link" href="mailto:sumitrathor142272@gmail.com" target="_blank"
+        rel="noopener noreferrer" aria-label="Email">
+        <i class="bi bi-envelope-fill"></i>
+        <span class="visually-hidden">Email</span>
+    </a>
 
-                    <!-- Twitter/X -->
-                    <a class="social-link" href="https://twitter.com/nearbyhousing" target="_blank"
-                        rel="noopener noreferrer" aria-label="X (Twitter)">
-                        <i class="bi bi-twitter-x"></i>
-                        <span class="visually-hidden">X (Twitter)</span>
-                    </a>
+    <!-- LinkedIn -->
+    <a class="social-link" href="https://www.linkedin.com/in/sumitrathor" target="_blank"
+        rel="noopener noreferrer" aria-label="LinkedIn">
+        <i class="bi bi-linkedin"></i>
+        <span class="visually-hidden">LinkedIn</span>
+    </a>
 
-                    <a class="social-link" href="https://instagram.com/nearbyhousing" target="_blank"
-                        rel="noopener noreferrer" aria-label="Instagram">
-                        <i class="bi bi-instagram"></i>
-                        <span class="visually-hidden">Instagram</span>
-                    </a>
+    <!-- Twitter/X -->
+    <a class="social-link" href="https://twitter.com/nearbyhousing" target="_blank"
+        rel="noopener noreferrer" aria-label="Twitter">
+        <i class="bi bi-twitter-x"></i>
+        <span class="visually-hidden">Twitter</span>
+    </a>
 
-                    <a class="social-link" href="https://facebook.com/nearbyhousing" target="_blank"
-                        rel="noopener noreferrer" aria-label="Facebook">
-                        <i class="bi bi-facebook"></i>
-                        <span class="visually-hidden">Facebook</span>
-                    </a>
-                        <i class="bi bi-instagram"></i>
-                        <span class="visually-hidden">Instagram</span>
-                    </a>
-                </div>
+    <!-- Instagram -->
+    <a class="social-link" href="https://instagram.com/nearbyhousing" target="_blank"
+        rel="noopener noreferrer" aria-label="Instagram">
+        <i class="bi bi-instagram"></i>
+        <span class="visually-hidden">Instagram</span>
+    </a>
+
+    <!-- Facebook -->
+    <a class="social-link" href="https://facebook.com/nearbyhousing" target="_blank"
+        rel="noopener noreferrer" aria-label="Facebook">
+        <i class="bi bi-facebook"></i>
+        <span class="visually-hidden">Facebook</span>
+    </a>
+
+</div>
             </div>
         </div>
 
