@@ -202,54 +202,47 @@ textarea:focus {
     background: var(--nearby-secondary);
     transform: translateY(-2px);
 }
-/* ===== CHATBOT FLOATING POSITION FIX (#106) ===== */
 
-.chatbot-entry {
+/* ===== Scroll To Top Button (#105) ===== */
+
+.back-to-top {
     position: fixed;
     bottom: 24px;
     right: 24px;
-    z-index: 1100;
-}
-
-/* Floating Button */
-.chatbot-toggle {
-    width: 56px;
-    height: 56px;
+    width: 54px;
+    height: 54px;
     border-radius: 50%;
     border: none;
     background: var(--nearby-primary);
     color: #fff;
+    font-size: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
     cursor: pointer;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    visibility: hidden;
     transition: all 0.3s ease;
+    z-index: 1050;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-.chatbot-toggle:hover {
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
     transform: translateY(-4px);
     background: var(--nearby-secondary);
 }
 
-/* Chat Panel Alignment */
-.chatbot-panel {
-    position: absolute;
-    bottom: 72px;
-    right: 0;
-}
-
-/* Responsive Adjustment */
+/* Mobile Adjustment */
 @media (max-width: 768px) {
-    .chatbot-entry {
+    .back-to-top {
         bottom: 20px;
         right: 16px;
-    }
-
-    .chatbot-toggle {
-        width: 52px;
-        height: 52px;
-        font-size: 20px;
+        width: 50px;
+        height: 50px;
     }
 }
