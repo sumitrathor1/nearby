@@ -2,11 +2,11 @@
 </main>
 <footer class="glass-footer py-5 mt-auto">
     <div class="container">
-        <div class="row gy-4 align-items-start footer-top">
-            <div class="col-lg-3 text-center text-lg-start">
-                <div class="d-inline-flex align-items-center gap-3 mb-3">
-                    <img src="assets/images/nearby_image.png" alt="NearBy logo" class="footer-logo">
-                </div>
+        <div class="row g-4 align-items-start footer-top">
+            <div class="col-lg-3 col-md-6 text-center text-lg-start">
+                <div class="mb-3">
+    <a href="index.php" class="logo-text">NearBy</a>
+</div>
                 <p class="footer-copy mb-3">
                     Discover vetted rooms, apartments, and co-living spaces designed for students and young
                     professionals.

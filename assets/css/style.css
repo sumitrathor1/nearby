@@ -331,3 +331,18 @@ textarea:focus {
         height: 50px;
     }
 }
+
+/* ===== Footer Layout Fix (#119) ===== */
+
+.footer-logo {
+    max-width: 120px;
+}
+
+.glass-footer {
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+
+.footer-top {
+    align-items: flex-start;
+}
