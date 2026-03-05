@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 /**
  * Fetch Second-Hand Products API
  * Returns filtered list of products based on query parameters
@@ -24,7 +26,7 @@ $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 20;
 $offset = isset($_GET['offset']) ? (int)$_GET['offset'] : 0;
 
 // Build query
-$query = "SELECT p.*, u.name as seller_name FROM products p JOIN users u ON p.user_id = u.id WHERE 1=1";
+$query = "SELECT p.*, 'Student Seller' as seller_name FROM products p WHERE 1=1";
 $params = [];
 $types = "";
 
@@ -89,16 +91,47 @@ try {
 
     // Get total count for pagination
     $countQuery = "SELECT COUNT(*) as total FROM products p WHERE 1=1";
-    $countParams = array_slice($params, 0, -2); // Remove limit and offset
-    $countTypes = substr($types, 0, -2);
 
-    $countStmt = $db->prepare($countQuery);
-    if (!empty($countParams)) {
-        $countStmt->bind_param($countTypes, ...$countParams);
-    }
-    $countStmt->execute();
-    $countResult = $countStmt->get_result();
-    $total = $countResult->fetch_assoc()['total'];
+$countParams = [];
+$countTypes = "";
+
+// Apply same filters as main query
+if ($category) {
+    $countQuery .= " AND p.category = ?";
+    $countParams[] = $category;
+    $countTypes .= "s";
+}
+
+if ($maxPrice) {
+    $countQuery .= " AND p.price <= ?";
+    $countParams[] = $maxPrice;
+    $countTypes .= "i";
+}
+
+if ($condition) {
+    $countQuery .= " AND p.condition_status = ?";
+    $countParams[] = $condition;
+    $countTypes .= "s";
+}
+
+if ($search) {
+    $countQuery .= " AND (p.title LIKE ? OR p.description LIKE ? OR p.location LIKE ?)";
+    $searchTerm = "%$search%";
+    $countParams[] = $searchTerm;
+    $countParams[] = $searchTerm;
+    $countParams[] = $searchTerm;
+    $countTypes .= "sss";
+}
+
+$countStmt = $db->prepare($countQuery);
+
+if (!empty($countParams)) {
+    $countStmt->bind_param($countTypes, ...$countParams);
+}
+
+$countStmt->execute();
+$countResult = $countStmt->get_result();
+$total = $countResult->fetch_assoc()['total'];
 
     echo json_encode([
         'success' => true,

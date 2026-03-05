@@ -163,5 +163,65 @@ require_once __DIR__ . '/includes/header.php';
         </div>
     </div>
 </div>
+<!-- Product Details Modal -->
+<div class="modal fade" id="productDetailsModal" tabindex="-1" aria-labelledby="productDetailsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content glass-card">
 
+            <div class="modal-header">
+                <h5 class="modal-title" id="productDetailsLabel">Product Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row g-4">
+
+                    <div class="col-md-5">
+                        <img id="detailProductImage"
+                             src=""
+                             class="img-fluid rounded-3"
+                             alt="Product Image">
+                    </div>
+
+                    <div class="col-md-7">
+
+                        <h4 id="detailProductTitle" class="fw-semibold mb-2"></h4>
+
+                        <p id="detailProductPrice"
+                           class="text-success fw-bold mb-2"></p>
+
+                        <p class="small text-muted mb-2">
+                            <i class="bi bi-stars me-1"></i>
+                            Condition:
+                            <span id="detailProductCondition"></span>
+                        </p>
+
+                        <p class="small text-muted mb-2">
+                            <i class="bi bi-geo-alt me-1"></i>
+                            <span id="detailProductLocation"></span>
+                        </p>
+
+                        <p id="detailProductDescription"
+                           class="small mb-3"></p>
+
+                        <div class="seller-info small text-muted mb-3">
+                            <strong>Seller:</strong>
+                            <span id="detailSellerName"></span>
+                        </div>
+
+                        <button class="btn btn-success w-100">
+                            <i class="bi bi-chat-dots me-2"></i>
+                            Contact Seller
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
