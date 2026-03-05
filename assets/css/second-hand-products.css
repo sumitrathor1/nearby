@@ -125,3 +125,17 @@
         transition: none;
     }
 }
+
+/* ===== Post Your Item CTA Feature (#125) ===== */
+
+.post-item-cta {
+    font-weight: 600;
+    padding: 10px 22px;
+    border-radius: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-item-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
