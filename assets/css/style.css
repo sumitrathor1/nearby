@@ -128,6 +128,26 @@ a:hover {
     color: var(--nearby-accent);
 }
 
+/* ===== ACTIVE NAVBAR INDICATOR (#120) ===== */
+
+.navbar-nav .nav-link.active {
+    color: var(--nearby-accent) !important;
+    font-weight: 600;
+    position: relative;
+}
+
+/* underline indicator */
+.navbar-nav .nav-link.active::after {
+    content: "";
+    position: absolute;
+    left: 10%;
+    bottom: -4px;
+    width: 80%;
+    height: 2px;
+    background: var(--nearby-accent);
+    border-radius: 2px;
+}
+
 /* ===== TEXT LOGO STYLE ===== */
 
 .logo-text {
