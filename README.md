@@ -315,6 +315,37 @@ Each role can create and manage their own listings.
 - **Firebase** - Additional services
 
 ---
+## 📂 Project Folder Structure
+
+nearby/
+│
+├── .github/              # GitHub workflows and configuration
+├── admin/                # Admin dashboard and management files
+├── api/                  # API endpoints (AJAX handlers, data fetch logic)
+├── assets/               # Static resources (CSS, JS, images)
+├── config/               # Application configuration files
+├── controllers/          # Business logic and request handling
+├── database/             # Database connection and schema files
+├── docs/                 # Additional project documentation
+├── includes/             # Reusable components (header, footer, modals)
+├── private/             # Internal application files
+│
+├── index.php             # Homepage
+├── search.php            # Accommodation search page
+├── details.php           # Listing details page
+├── login.php             # User login
+├── register.php          # User registration
+├── junior-dashboard.php  # Junior user dashboard
+├── senior-dashboard.php  # Senior user dashboard
+├── second-hand-products.php  # Marketplace page
+├── feedback.php          # Feedback form page
+├── contact.php           # Contact form page
+├── faq.php               # FAQ page
+├── privacy.php           # Privacy policy
+├── terms.php             # Terms of use
+│
+└── README.md             # Project documentation
+
 
 ## 🚀 Future Enhancements
 
