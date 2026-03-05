@@ -82,9 +82,19 @@ require_once __DIR__ . '/includes/header.php';
             <div class="row g-4" data-products-grid>
                 <!-- Products will be loaded here dynamically -->
             </div>
-            <div class="text-center mt-4">
-                <button class="btn btn-outline-success d-none" type="button" data-load-more>Load More</button>
-            </div>
+           <div class="text-center mt-4">
+
+    <button
+        class="btn btn-outline-success d-none"
+        type="button"
+        data-load-more>
+
+        <i class="bi bi-arrow-down-circle me-2"></i>
+        Load More Products
+
+    </button>
+
+</div>
             <div class="empty-state text-center py-5 d-none" data-empty-state>
                 <div class="glass-card d-inline-block px-4 py-5">
                     <i class="bi bi-box-seam display-6 text-success mb-3"></i>
