@@ -541,4 +541,20 @@ textarea:focus {
 
 .footer-top {
     align-items: flex-start;
+}}
+/* ===== NAVBAR LAYOUT ALIGNMENT FIX ===== */
+
+/* Push everything except logo to the right */
+#primaryNav {
+    justify-content: flex-end;
+}
+
+/* Space between menu items and buttons */
+#primaryNav .navbar-nav {
+    margin-right: 20px;
+}
+
+/* Keep logo clearly on the left */
+.logo-text {
+    margin-right: auto;
 }
