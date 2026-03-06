@@ -15,15 +15,6 @@ $currentUser = $_SESSION['user'] ?? null;
 $pageStyles = $pageStyles ?? [];
 $pageScripts = $pageScripts ?? [];
 ?>
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-require_once __DIR__ . '/helpers/csrf.php';
-$pageTitle = $pageTitle ?? 'NearBy Student Housing';
-$currentUser = $_SESSION['user'] ?? null;
-$pageStyles = $pageStyles ?? [];
-$pageScripts = $pageScripts ?? [];
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,58 +39,88 @@ $pageScripts = $pageScripts ?? [];
     <nav class="navbar navbar-expand-lg glass-nav fixed-top shadow-sm">
     <div class="container-fluid px-5">
 
-
-                    <?php if ($currentUser && $currentUser['role'] === 'junior'): ?>
-                        <li class="nav-item"><a class="nav-link" href="junior-dashboard.php">Junior Dashboard</a></li>
-                    <?php elseif ($currentUser && $currentUser['role'] === 'senior'): ?>
-                        <li class="nav-item"><a class="nav-link" href="senior-dashboard.php">Senior Dashboard</a></li>
-                    <?php endif; ?>
-                </ul>
-                <div class="d-flex flex-column flex-lg-row gap-2 mt-3 mt-lg-0">
-                    <?php if ($currentUser): ?>
-                        <span class="navbar-text small text-white-50 me-2">Hi, <?= htmlspecialchars($currentUser['name']) ?></span>
-                        <a class="btn btn-sm btn-outline-light" href="logout.php">Logout</a>
-                    <?php else: ?>
-                        <a class="btn btn-sm btn-light w-100 w-sm-auto" href="login.php">Login</a>
-                        <a class="btn btn-sm btn-primary w-100 w-sm-auto" href="register.php">Register</a>
-                    <!-- Dark Mode Toggle Button -->
-<button id="dark-mode-toggle" class="btn btn-outline-secondary btn-sm w-100 w-sm-auto" title="Toggle Dark Mode">
-    <i id="dark-mode-icon" class="bi bi-moon-fill"></i>
-</button>
-
+        <!-- Logo -->
         <a class="navbar-brand logo-text" href="index.php">
-    NearBy
-</a>
+            NearBy
+        </a>
 
+        <!-- Mobile Toggle -->
         <button class="navbar-toggler border-0" type="button"
             data-bs-toggle="collapse" data-bs-target="#primaryNav">
             <span class="navbar-toggler-icon"></span>
         </button>
 
+        <!-- Navbar Content -->
         <div class="collapse navbar-collapse justify-content-end" id="primaryNav">
 
-            <ul class="navbar-nav align-items-center gap-lg-4 me-4">
-                <li class="nav-item"><a class="nav-link text-white" href="index.php">Home</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="search.php">Search</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="guidance.php">Local Guidance</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="second-hand-products.php">Second-Hand</a></li>
-            </ul>
+    <div class="d-flex align-items-center gap-4">
 
-            <div class="d-flex align-items-center gap-2">
+        <!-- Navigation Links -->
+        <ul class="navbar-nav align-items-center gap-lg-4">
+            <li class="nav-item">
+                <a class="nav-link text-white" href="index.php">Home</a>
+            </li>
 
-    <a class="btn btn-light btn-sm px-3 fw-semibold" href="login.php">Login</a>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="search.php">Search</a>
+            </li>
 
-    <a class="btn btn-sm px-3 fw-semibold register-btn" href="register.php">Register</a>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="guidance.php">Local Guidance</a>
+            </li>
 
-    <!-- Dark Mode Toggle -->
-    <button id="dark-mode-toggle"
-        class="btn btn-sm btn-outline-light ms-1"
-        title="Toggle Dark Mode">
-        <i id="dark-mode-icon" class="bi bi-moon-fill"></i>
-    </button>
-<?php endif; ?>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="second-hand-products.php">Second-Hand</a>
+            </li>
+
+            <?php if ($currentUser && $currentUser['role'] === 'junior'): ?>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="junior-dashboard.php">Junior Dashboard</a>
+                </li>
+            <?php elseif ($currentUser && $currentUser['role'] === 'senior'): ?>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="senior-dashboard.php">Senior Dashboard</a>
+                </li>
+            <?php endif; ?>
+        </ul>
+
+        <!-- Auth Buttons -->
+        <div class="d-flex align-items-center gap-2">
+
+            <?php if ($currentUser): ?>
+
+                <span class="navbar-text small text-white-50 me-2">
+                    Hi, <?= htmlspecialchars($currentUser['name']) ?>
+                </span>
+
+                <a class="btn btn-sm btn-outline-light" href="logout.php">
+                    Logout
+                </a>
+
+            <?php else: ?>
+
+                <a class="btn btn-light btn-sm px-3 fw-semibold" href="login.php">
+                    Login
+                </a>
+
+                <a class="btn btn-sm px-3 fw-semibold register-btn" href="register.php">
+                    Register
+                </a>
+
+            <?php endif; ?>
+
+            <!-- Dark Mode Toggle -->
+            <button id="dark-mode-toggle"
+                class="btn btn-sm btn-outline-light"
+                title="Toggle Dark Mode">
+                <i id="dark-mode-icon" class="bi bi-moon-fill"></i>
+            </button>
+
+        </div>
+
+    </div>
+
 </div>
-
 
         </div>
     </div>
