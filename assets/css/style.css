@@ -692,3 +692,62 @@ body div.chatbot-entry .chatbot-panel {
     outline:none;
     box-shadow:0 0 0 3px rgba(40,167,69,0.35);
 }
+
+/* ============================= */
+/* Search Page UI Enhancements   */
+/* ============================= */
+
+/* Filter form improvements */
+
+.search-filter-form .form-label{
+    font-weight:500;
+    margin-bottom:4px;
+}
+
+.search-filter-form .form-select,
+.search-filter-form .form-control{
+    border-radius:8px;
+}
+
+/* Search results container */
+
+.search-results-container{
+    border-radius:20px;
+    background:#ffffff;
+}
+
+/* Reduce unnecessary spacing */
+
+.map-explorer-section{
+    margin-top:10px;
+}
+
+/* Map loading state */
+
+.map-loading-state{
+    min-height:320px;
+    color:#6c757d;
+}
+
+.map-loading-state .spinner-border{
+    width:2rem;
+    height:2rem;
+}
+
+/* Improve filter responsiveness */
+
+@media (min-width:768px){
+
+    .search-filter-form .row{
+        row-gap:18px;
+    }
+
+}
+
+@media (max-width:768px){
+
+    .search-filter-form .row > div{
+        margin-bottom:10px;
+    }
+
+}

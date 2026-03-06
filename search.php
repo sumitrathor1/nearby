@@ -34,7 +34,7 @@ require_once __DIR__ . '/includes/header.php';
         </div>
     </div>
 
-    <form id="advancedSearch" class="glass-card p-4 mb-4" data-pagination-target="#searchPagination">
+    <form id="advancedSearch" class="glass-card p-4 mb-4 search-filter-form" data-pagination-target="#searchPagination">
         <div class="row g-3">
             <div class="col-md-3">
                 <label class="form-label" for="filterCategory">Post Type</label>
@@ -96,7 +96,7 @@ require_once __DIR__ . '/includes/header.php';
         </div>
     </form>
 
-    <div class="border p-3 shadow-sm mb-4" style="border-radius: 20px;">
+    <div class="search-results-container border p-3 shadow-sm mb-4">
         <div id="searchResults" class="row g-4"></div>
         <div id="searchPagination" class="d-flex justify-content-between align-items-center mt-4" data-pagination
             hidden>
@@ -110,7 +110,7 @@ require_once __DIR__ . '/includes/header.php';
         </div>
     </div>
 
-    <section class="glass-card p-4 p-lg-5 mb-5" data-map-explorer>
+    <section class="glass-card p-4 p-lg-5 mb-4 map-explorer-section" data-map-explorer>
         <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 align-items-lg-center mb-4">
             <div>
                 <span class="badge bg-success-subtle text-success-emphasis small mb-2">Campus map</span>
@@ -160,9 +160,9 @@ require_once __DIR__ . '/includes/header.php';
             </div>
             <div class="col-lg-8">
                 <div class="map-canvas glass-card overflow-hidden h-100">
-                    <div class="map-canvas-inner" data-map-canvas>
-                        <div class="d-flex justify-content-center align-items-center h-100 text-muted flex-column gap-2"
-                            data-map-loading>
+                    <div class="map-canvas-inner position-relative" data-map-canvas>
+                        <div class="map-loading-state d-flex justify-content-center align-items-center flex-column gap-2"
+    data-map-loading>
                             <div class="spinner-border text-success" role="status"></div>
                             <span class="small">Preparing map...</span>
                         </div>
