@@ -162,7 +162,7 @@ $sql .= ' ORDER BY p.created_at DESC LIMIT 100';
 if ($params) {
     $stmt = mysqli_prepare($conn, $sql);
     if ($stmt === false) {
-        secureErrorResponse('Search failed. Please try again.', 500, 'Failed to prepare search query: ' . mysqli_error($conn));
+        secureErrorResponse('Search failed. Please try again.', 500);
     }
     mysqli_stmt_bind_param($stmt, $types, ...$params);
     mysqli_stmt_execute($stmt);
@@ -172,7 +172,7 @@ if ($params) {
 }
 
 if (!$result) {
-    secureErrorResponse('Search failed. Please try again.', 500, 'Failed to execute search query: ' . mysqli_error($conn));
+    secureErrorResponse('Search failed. Please try again.', 500);
 }
 
 $isLoggedIn = isset($_SESSION['user']['id']);

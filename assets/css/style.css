@@ -828,3 +828,62 @@ body > .hero-section {
     height: 640px;
     object-fit: cover;
 }
+
+/* ======================================================
+   Search Clear Button Visibility Fix (#165)
+   Improves contrast and visibility of the clear button
+   ====================================================== */
+
+/* ======================================================
+   Search Clear Button UI Enhancement (#165)
+   ====================================================== */
+
+/* ======================================================
+   Search Clear Button Visibility Fix (#165)
+   ====================================================== */
+
+.search-filter-form .btn-clear,
+.search-filter-form .btn-outline-secondary {
+
+    background: #ffffff !important;
+    color: #1f8f5b !important;
+
+    border: 2px solid #1f8f5b !important;
+
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 10px;
+
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+
+    transition: all 0.25s ease;
+}
+
+/* Hover state */
+.search-filter-form .btn-clear:hover,
+.search-filter-form .btn-outline-secondary:hover {
+
+    background: #1f8f5b !important;
+    color: #ffffff !important;
+
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+/* Hover interaction */
+.search-filter-form .btn-clear:hover,
+.search-filter-form .btn-outline-secondary:hover {
+
+    background: var(--nearby-primary);
+    color: #ffffff;
+
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+/* Active click */
+.search-filter-form .btn-clear:active,
+.search-filter-form .btn-outline-secondary:active {
+
+    transform: translateY(0);
+}
