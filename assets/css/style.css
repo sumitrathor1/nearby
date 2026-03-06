@@ -459,14 +459,11 @@ textarea:focus {
   }
 
 }
-
 /* Back to Top Button */
 .back-to-top:hover {
     background: var(--nearby-secondary);
     transform: translateY(-2px);
 }
-
-/* ===== Scroll To Top Button (#105) ===== */
 
 .back-to-top {
     position: fixed;
@@ -510,8 +507,6 @@ textarea:focus {
     }
 }
 
-/* ===== Featured Property Image Fix (#118) ===== */
-
 .featured-card {
     overflow: hidden;
 }
@@ -524,13 +519,10 @@ textarea:focus {
     border-radius: 20px 20px 0 0;
 }
 
-/* Smooth hover effect */
 .featured-card:hover .featured-image {
     transform: scale(1.04);
     transition: transform 0.35s ease;
 }
-
-/* ===== Footer Layout Fix (#119) ===== */
 
 .footer-logo {
     max-width: 120px;
@@ -544,24 +536,19 @@ textarea:focus {
 .footer-top {
     align-items: flex-start;
 }
-/* ===== NAVBAR LAYOUT ALIGNMENT FIX ===== */
 
-/* Push everything except logo to the right */
 #primaryNav {
     justify-content: flex-end;
 }
 
-/* Space between menu items and buttons */
 #primaryNav .navbar-nav {
     margin-right: 20px;
 }
 
-/* Keep logo clearly on the left */
 .logo-text {
     margin-right: auto;
 }
 
-/* ===== CHATBOT POSITION FIX (#141) ===== */
 
 .chatbot-entry {
     position: fixed !important;
@@ -571,7 +558,6 @@ textarea:focus {
     z-index: 1200;
 }
 
-/* Fix toggle button positioning */
 .chatbot-toggle {
     position: relative;
     width: 52px;
@@ -582,7 +568,6 @@ textarea:focus {
     justify-content: center;
 }
 
-/* Ensure panel opens above button */
 .chatbot-panel {
     position: absolute;
     bottom: 70px;
@@ -615,11 +600,9 @@ textarea:focus {
     }
 }
 
-/* ===== FORCE CHATBOT FIX (#141) ===== */
-
 body div.chatbot-entry {
     position: fixed !important;
-    bottom: 24px !important;
+    bottom: 90px !important; /* move above scroll button */
     right: 24px !important;
     left: auto !important;
     z-index: 2000 !important;
@@ -645,11 +628,10 @@ body div.chatbot-entry .chatbot-panel {
 /* Mobile fix */
 @media (max-width: 768px) {
     body div.chatbot-entry {
-        bottom: 20px !important;
+        bottom: 80px !important; /* stack above scroll button */
         right: 16px !important;
     }
 }
-/* ===== Login to Create Post Button Enhancement (#143) ===== */
 
 .login-create-post-btn {
     font-weight: 600;
