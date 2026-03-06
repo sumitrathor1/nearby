@@ -91,9 +91,20 @@ if (sort) params.append('sort', sort);
 
         col.innerHTML = `
             <article class="product-card glass-card h-100">
-                <div class="product-image-wrapper">
-                    <img src="${imageUrl}" class="product-image" alt="${escapeHtml(product.title)}">
-                </div>
+                <div class="product-image-wrapper position-relative">
+
+    <img src="${imageUrl}" class="product-image" alt="${escapeHtml(product.title)}">
+
+    <button 
+        class="wishlist-btn btn btn-light position-absolute top-0 end-0 m-2"
+        onclick="toggleWishlist(${product.id})"
+        title="Save item">
+
+        <i class="bi bi-heart"></i>
+
+    </button>
+
+</div>
                 <div class="product-body d-flex flex-column">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <h3 class="h5 product-title">${escapeHtml(product.title)}</h3>
@@ -269,6 +280,41 @@ if (sortSelect) {
 });
 
 // Function to show product details (can be expanded)
+function showProductDetails(productId) {
+    // For now, just alert. Can be expanded to modal
+    alert(`Product details for ID: ${productId}`);
+}
+
+/* ===============================
+   Wishlist Feature (#126)
+   Uses localStorage to save items
+
+function getWishlist() {
+    const saved = localStorage.getItem("nearby_wishlist");
+    return saved ? JSON.parse(saved) : [];
+}
+
+function saveWishlist(list) {
+    localStorage.setItem("nearby_wishlist", JSON.stringify(list));
+}
+
+function toggleWishlist(productId) {
+
+    let wishlist = getWishlist();
+
+    if (wishlist.includes(productId)) {
+
+        wishlist = wishlist.filter(id => id !== productId);
+        alert("Removed from wishlist");
+
+    } else {
+
+        wishlist.push(productId);
+        alert("Saved to wishlist");
+
+    }
+
+    saveWishlist(wishlist);
 async function showProductDetails(productId) {
 
     try {

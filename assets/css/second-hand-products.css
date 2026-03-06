@@ -125,6 +125,24 @@
         transition: none;
     }
 }
+/* =========================
+   Wishlist Button (#126)
+
+.wishlist-btn {
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wishlist-btn i {
+    color: #dc3545;
+}
+
+.wishlist-btn:hover {
+    background: #fff;
 /* Seller Profile & Trust Indicators */
 
 .seller-info {
