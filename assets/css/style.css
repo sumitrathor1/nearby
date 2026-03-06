@@ -68,6 +68,112 @@ a:hover {
     width: auto;
 }
 
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+
+.glass-nav {
+    background: rgba(40, 89, 60, 0.45);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    margin: 16px 16px 0;
+    /* Make navbar thinner vertically */
+   padding: 6px 16px;   /* thinner navbar */ /* less vertical padding (was probably bigger before) */
+    height: auto; /* optional: remove fixed height to let padding control thickness */
+
+    /* Position navbar a bit away from top/left */
+    margin: 16px 16px 0;
+}
+
+.glass-footer {
+    background: rgba(12, 24, 32, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    color: rgba(255, 255, 255, 0.85);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-footer::before {
+    content: "";
+    position: absolute;
+    inset: -40% 50% auto -20%;
+    min-height: 320px;
+    background: radial-gradient(circle at center, rgba(68, 187, 116, 0.35), transparent 65%);
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+.glass-footer::after {
+    content: "";
+    position: absolute;
+    inset: auto -20% -45% 55%;
+    min-height: 280px;
+    background: radial-gradient(circle at center, rgba(136, 249, 212, 0.25), transparent 70%);
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.glass-footer .container {
+    position: relative;
+    z-index: 1;
+}
+
+.glass-footer a {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.glass-footer a:hover,
+.glass-footer a:focus {
+    color: var(--nearby-accent);
+}
+
+.footer-top {
+    padding-bottom: 2.5rem;
+}
+
+.footer-brand {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 0.75rem 1rem;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.footer-logo {
+    width: 11rem;
+}
+
+.footer-heading {
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    font-size: 0.9rem;
+    margin-bottom: 1.25rem;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.footer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.footer-list a {
+    text-decoration: none;
+}
+
+.footer-list span {
+    color: rgba(255, 255, 255, 0.6);
+}
+
 /* ===== SLIM GLASS NAVBAR ===== */
 
 .glass-nav {
@@ -76,6 +182,7 @@ a:hover {
     border-radius: 14px;
     margin: 6px 16px 0;
     padding: 0 16px;          /* remove vertical padding completely */
+
 }
 
 .navbar {
@@ -126,6 +233,26 @@ a:hover {
 
 .nav-link:hover {
     color: var(--nearby-accent);
+}
+
+/* ===== ACTIVE NAVBAR INDICATOR (#120) ===== */
+
+.navbar-nav .nav-link.active {
+    color: var(--nearby-accent) !important;
+    font-weight: 600;
+    position: relative;
+}
+
+/* underline indicator */
+.navbar-nav .nav-link.active::after {
+    content: "";
+    position: absolute;
+    left: 10%;
+    bottom: -4px;
+    width: 80%;
+    height: 2px;
+    background: var(--nearby-accent);
+    border-radius: 2px;
 }
 
 /* ===== TEXT LOGO STYLE ===== */
@@ -283,6 +410,57 @@ textarea:focus {
     visibility: visible;
 }
 
+
+/* ================= MOBILE SPACING & ALIGNMENT FIXES ================= */
+
+@media (max-width: 768px) {
+
+  .container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .hero-section {
+    padding: 20px 0;
+    text-align: center;
+  }
+
+  .hero-card {
+    padding: 10px;
+  }
+
+  .glass-card {
+    padding: 16px !important;
+    margin-bottom: 16px;
+  }
+
+  .featured-card {
+    margin-bottom: 18px;
+  }
+
+  .featured-image {
+    width: 100%;
+    height: auto;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .row {
+    --bs-gutter-x: 0.75rem;
+  }
+
+  .section-title {
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .step-card {
+    align-items: flex-start;
+  }
+
+}
+
+/* Back to Top Button */
 .back-to-top:hover {
     background: var(--nearby-secondary);
     transform: translateY(-2px);
@@ -350,4 +528,17 @@ textarea:focus {
 .featured-card:hover .featured-image {
     transform: scale(1.04);
     transition: transform 0.35s ease;
+/* ===== Footer Layout Fix (#119) ===== */
+
+.footer-logo {
+    max-width: 120px;
+}
+
+.glass-footer {
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+
+.footer-top {
+    align-items: flex-start;
 }

@@ -11,6 +11,45 @@ require_once __DIR__ . '/includes/header.php';
     </div>
 </section>
 <section class="products-layout">
+    <!-- Safety Guidelines Section -->
+<div class="glass-card p-4 mb-4">
+    <h2 class="h5 fw-semibold mb-3">
+        <i class="bi bi-shield-check text-success me-2"></i>
+        Safety Guidelines for Buyers & Sellers
+    </h2>
+
+    <div class="row g-3">
+
+        <div class="col-md-6">
+            <div class="d-flex gap-2 align-items-start">
+                <i class="bi bi-geo-alt text-success"></i>
+                <span>Meet in a safe public place when exchanging items.</span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="d-flex gap-2 align-items-start">
+                <i class="bi bi-search text-success"></i>
+                <span>Inspect the product carefully before making payment.</span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="d-flex gap-2 align-items-start">
+                <i class="bi bi-cash-stack text-success"></i>
+                <span>Avoid sending advance payments for second-hand products.</span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="d-flex gap-2 align-items-start">
+                <i class="bi bi-flag text-success"></i>
+                <span>Report suspicious listings or sellers to keep the marketplace safe.</span>
+            </div>
+        </div>
+
+    </div>
+</div>
     <div class="row g-4 align-items-start">
         <aside class="col-12 col-lg-3">
             <div class="filter-panel glass-card p-4" data-filter-form>
@@ -72,26 +111,50 @@ require_once __DIR__ . '/includes/header.php';
         </aside>
         <div class="col-12 col-lg-9">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <div class="search-container flex-grow-1 me-3">
-                    <input type="text" class="form-control" placeholder="Search products..." data-search-input>
-                </div>
-                <button class="btn btn-success" type="button" data-toggle="modal" data-target="#postProductModal">
-                    <i class="bi bi-plus-circle me-2"></i>Post Product
-                </button>
-            </div>
+    <div class="search-container flex-grow-1 me-3">
+        <input type="text" class="form-control" placeholder="Search products..." data-search-input>
+    </div>
+
+    <button 
+        class="btn btn-success btn-lg post-item-cta"
+        type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#postProductModal">
+        <i class="bi bi-plus-circle me-2"></i>
+        Post Your Item
+    </button>
+</div>
             <div class="row g-4" data-products-grid>
                 <!-- Products will be loaded here dynamically -->
             </div>
-            <div class="text-center mt-4">
-                <button class="btn btn-outline-success d-none" type="button" data-load-more>Load More</button>
-            </div>
+           <div class="text-center mt-4">
+
+    <button
+        class="btn btn-outline-success d-none"
+        type="button"
+        data-load-more>
+
+        <i class="bi bi-arrow-down-circle me-2"></i>
+        Load More Products
+
+    </button>
+
+</div>
             <div class="empty-state text-center py-5 d-none" data-empty-state>
-                <div class="glass-card d-inline-block px-4 py-5">
-                    <i class="bi bi-box-seam display-6 text-success mb-3"></i>
-                    <h3 class="h5 fw-semibold mb-2">No products found</h3>
-                    <p class="text-muted mb-0">Be the first to post a second-hand product!</p>
-                </div>
-            </div>
+    <div class="glass-card d-inline-block px-4 py-5">
+        <i class="bi bi-box-seam display-6 text-success mb-3"></i>
+        <h3 class="h5 fw-semibold mb-2">No products found</h3>
+        <p class="text-muted mb-3">Be the first to post a second-hand product!</p>
+
+        <button 
+            class="btn btn-success post-item-cta"
+            data-bs-toggle="modal"
+            data-bs-target="#postProductModal">
+            <i class="bi bi-plus-circle me-2"></i>
+            Post Your Item
+        </button>
+    </div>
+</div>
         </div>
     </div>
 </section>
@@ -163,5 +226,65 @@ require_once __DIR__ . '/includes/header.php';
         </div>
     </div>
 </div>
+<!-- Product Details Modal -->
+<div class="modal fade" id="productDetailsModal" tabindex="-1" aria-labelledby="productDetailsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content glass-card">
 
+            <div class="modal-header">
+                <h5 class="modal-title" id="productDetailsLabel">Product Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row g-4">
+
+                    <div class="col-md-5">
+                        <img id="detailProductImage"
+                             src=""
+                             class="img-fluid rounded-3"
+                             alt="Product Image">
+                    </div>
+
+                    <div class="col-md-7">
+
+                        <h4 id="detailProductTitle" class="fw-semibold mb-2"></h4>
+
+                        <p id="detailProductPrice"
+                           class="text-success fw-bold mb-2"></p>
+
+                        <p class="small text-muted mb-2">
+                            <i class="bi bi-stars me-1"></i>
+                            Condition:
+                            <span id="detailProductCondition"></span>
+                        </p>
+
+                        <p class="small text-muted mb-2">
+                            <i class="bi bi-geo-alt me-1"></i>
+                            <span id="detailProductLocation"></span>
+                        </p>
+
+                        <p id="detailProductDescription"
+                           class="small mb-3"></p>
+
+                        <div class="seller-info small text-muted mb-3">
+                            <strong>Seller:</strong>
+                            <span id="detailSellerName"></span>
+                        </div>
+
+                        <button class="btn btn-success w-100">
+                            <i class="bi bi-chat-dots me-2"></i>
+                            Contact Seller
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
