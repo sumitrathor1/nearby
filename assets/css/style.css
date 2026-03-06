@@ -787,3 +787,62 @@ body div.chatbot-entry .chatbot-panel {
 .guidance-map-btn i{
     font-size:14px;
 }
+/* ======================================================
+   Global Section Spacing Fix (#160)
+   Reduces excessive vertical spacing across pages
+   ====================================================== */
+
+section,
+.section,
+.section-block {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+/* Reduce large gaps between stacked sections */
+section + section {
+    margin-top: 10px;
+}
+
+/* Ensure containers do not push content too far down */
+.container {
+    margin-top: 0;
+}
+
+/* Hero section spacing correction */
+.hero,
+.hero-section {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+/* Remove extra gap after navbar */
+body > section:first-of-type,
+body > .hero,
+body > .hero-section {
+    margin-top: 10px;
+}
+
+/* ===== HERO SLIDER COMPACT FIX (#160) ===== */
+
+.hero-slider {
+    margin-bottom: 20px !important;
+}
+
+/* Limit carousel height */
+#homepageSlider {
+    max-height: 640px;
+    overflow: hidden;
+}
+
+/* Keep slides compact */
+#homepageSlider .carousel-item {
+    max-height: 640px;
+}
+
+/* Responsive slider image */
+.slider-image {
+    width: 100%;
+    height: 640px;
+    object-fit: cover;
+}
