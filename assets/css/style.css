@@ -696,9 +696,7 @@ body div.chatbot-entry .chatbot-panel {
 
         width: 90vw;
         right: 0;
-
     }
-
 }
 
 /* Mobile fix */
@@ -734,12 +732,6 @@ body div.chatbot-entry .chatbot-panel {
     outline:none;
     box-shadow:0 0 0 3px rgba(40,167,69,0.35);
 }
-
-/* ============================= */
-/* Search Page UI Enhancements   */
-/* ============================= */
-
-/* Filter form improvements */
 
 .search-filter-form .form-label{
     font-weight:500;
@@ -829,10 +821,6 @@ body div.chatbot-entry .chatbot-panel {
 .guidance-map-btn i{
     font-size:14px;
 }
-/* ======================================================
-   Global Section Spacing Fix (#160)
-   Reduces excessive vertical spacing across pages
-   ====================================================== */
 
 section,
 .section,
@@ -865,8 +853,6 @@ body > .hero-section {
     margin-top: 10px;
 }
 
-/* ===== HERO SLIDER COMPACT FIX (#160) ===== */
-
 .hero-slider {
     margin-bottom: 20px !important;
 }
@@ -888,19 +874,6 @@ body > .hero-section {
     height: 640px;
     object-fit: cover;
 }
-
-/* ======================================================
-   Search Clear Button Visibility Fix (#165)
-   Improves contrast and visibility of the clear button
-   ====================================================== */
-
-/* ======================================================
-   Search Clear Button UI Enhancement (#165)
-   ====================================================== */
-
-/* ======================================================
-   Search Clear Button Visibility Fix (#165)
-   ====================================================== */
 
 .search-filter-form .btn-clear,
 .search-filter-form .btn-outline-secondary {
@@ -935,4 +908,80 @@ body > .hero-section {
 .search-filter-form .btn-outline-secondary:active {
 
     transform: translateY(0);
+}
+
+.smart-tips-section {
+
+    padding: 50px 0;
+
+}
+
+.smart-tips-container {
+
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    gap: 48px;
+    align-items: center;
+
+}
+
+.smart-tips-image img {
+
+    width: 100%;
+    border-radius: 16px;
+    object-fit: cover;
+
+}
+
+.smart-tips-content h2 {
+
+    margin-bottom: 18px;
+    font-weight: 600;
+
+}
+
+.smart-tips-list {
+
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+}
+
+.smart-tips-list li {
+
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+    line-height: 1.6;
+
+}
+
+.smart-tips-list li i {
+
+    font-size: 18px;
+    margin-top: 3px;
+    color: var(--nearby-primary);
+
+}
+
+/* Smart Tips Mobile Layout */
+
+@media (max-width: 768px) {
+
+.smart-tips-container {
+
+    grid-template-columns: 1fr;
+    gap: 24px;
+    text-align: center;
+
+}
+
+.smart-tips-list li {
+
+    justify-content: center;
+
+}
+
 }
