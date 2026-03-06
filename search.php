@@ -91,7 +91,9 @@ require_once __DIR__ . '/includes/header.php';
             </div>
         </div>
         <div class="d-flex justify-content-end gap-3 mt-4">
-            <button class="btn btn-outline-light" type="reset">Clear</button>
+            <button class="btn btn-outline-secondary btn-clear" type="reset">
+    <i class="bi bi-x-circle me-1"></i> Clear
+</button>
             <button class="btn btn-primary" type="submit">Search</button>
         </div>
     </form>
