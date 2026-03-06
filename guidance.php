@@ -13,9 +13,9 @@ require_once __DIR__ . '/includes/header.php';
         <div class="col-lg-4">
             <div class="glass-card p-4 h-100 guidance-card">
                 <h2 class="h5 fw-semibold mb-2">
-<i class="bi bi-egg-fried me-2 text-success"></i>Food & Mess
-</h2>
-<p class="small text-muted mb-3">Popular mess and tiffin services around campus.</p>
+                    <i class="bi bi-egg-fried me-2 text-success"></i>Food & Mess
+                </h2>
+                    <p class="small text-muted mb-3">Popular mess and tiffin services around campus.</p>
                 <ul class="list-unstyled d-grid gap-3 small text-muted mb-0 guidance-list">
                     <li>
                         <p class="fw-semibold text-dark mb-1">Campus Delight Mess</p>
@@ -70,6 +70,113 @@ require_once __DIR__ . '/includes/header.php';
                 </ul>
             </div>
         </div>
+        <div class="col-lg-4">
+    <div class="glass-card p-4 h-100 guidance-card">
+        <h2 class="h5 fw-semibold mb-3">
+            <i class="bi bi-pencil-square me-2 text-success"></i>Stationery & Bookstores
+        </h2>
+        <ul class="list-unstyled d-grid gap-3 small text-muted mb-0 guidance-list">
+            <li>
+                <p class="fw-semibold text-dark mb-1">Campus Book Depot</p>
+                <p class="mb-0">Engineering books, notebooks, and printing services.</p>
+            </li>
+            <li>
+                <p class="fw-semibold text-dark mb-1">Student Stationery Hub</p>
+                <p class="mb-0">Affordable stationery and project supplies.</p>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="col-lg-4">
+    <div class="glass-card p-4 h-100 guidance-card">
+        <h2 class="h5 fw-semibold mb-3">
+            <i class="bi bi-bank me-2 text-success"></i>ATMs & Banks
+        </h2>
+        <ul class="list-unstyled d-grid gap-3 small text-muted mb-0 guidance-list">
+            <li>
+                <p class="fw-semibold text-dark mb-1">SBI ATM</p>
+                <p class="mb-0">Located near main campus gate.</p>
+            </li>
+            <li>
+                <p class="fw-semibold text-dark mb-1">HDFC Bank Branch</p>
+                <p class="mb-0">Full banking services for students.</p>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="col-lg-4">
+    <div class="glass-card p-4 h-100 guidance-card">
+        <h2 class="h5 fw-semibold mb-3">
+            <i class="bi bi-capsule me-2 text-success"></i>Medical Stores
+        </h2>
+        <ul class="list-unstyled d-grid gap-3 small text-muted mb-0 guidance-list">
+            <li>
+                <p class="fw-semibold text-dark mb-1">24x7 Pharmacy</p>
+                <p class="mb-0">Emergency medicines available all night.</p>
+            </li>
+            <li>
+                <p class="fw-semibold text-dark mb-1">HealthPlus Pharmacy</p>
+                <p class="mb-0">Student discounts on prescriptions.</p>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="col-lg-4">
+    <div class="glass-card p-4 h-100 guidance-card">
+        <h2 class="h5 fw-semibold mb-3">
+            <i class="bi bi-cup-hot me-2 text-success"></i>Cafes
+        </h2>
+        <ul class="list-unstyled d-grid gap-3 small text-muted mb-0 guidance-list">
+            <li>
+                <p class="fw-semibold text-dark mb-1">Campus Brew Cafe</p>
+                <p class="mb-0">Coffee, snacks, and student study seating.</p>
+            </li>
+            <li>
+                <p class="fw-semibold text-dark mb-1">Evening Coffee Corner</p>
+                <p class="mb-0">Popular late-night hangout for students.</p>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="col-lg-4">
+    <div class="glass-card p-4 h-100 guidance-card">
+        <h2 class="h5 fw-semibold mb-3">
+            <i class="bi bi-book me-2 text-success"></i>Study Spaces
+        </h2>
+        <ul class="list-unstyled d-grid gap-3 small text-muted mb-0 guidance-list">
+            <li>
+                <p class="fw-semibold text-dark mb-1">Community Study Hall</p>
+                <p class="mb-0">Quiet environment with free Wi-Fi.</p>
+            </li>
+            <li>
+                <p class="fw-semibold text-dark mb-1">Public Library</p>
+                <p class="mb-0">Large reading rooms and exam preparation zones.</p>
+            </li>
+        </ul>
+    </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="glass-card p-4 h-100 guidance-card">
+            <h2 class="h5 fw-semibold mb-3">
+                <i class="bi bi-heart-pulse me-2 text-success"></i>Gym & Fitness
+            </h2>
+            <ul class="list-unstyled d-grid gap-3 small text-muted mb-0 guidance-list">
+                <li>
+                    <p class="fw-semibold text-dark mb-1">FitZone Gym</p>
+                    <p class="mb-0">Affordable student memberships.</p>
+                </li>
+                <li>
+                    <p class="fw-semibold text-dark mb-1">Yoga & Wellness Studio</p>
+                    <p class="mb-0">Morning yoga and meditation sessions.</p>
+                </li>
+            </ul>
+        </div>
+    </div>
     </div>
 </section>
 <script>
