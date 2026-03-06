@@ -667,3 +667,28 @@ body div.chatbot-entry .chatbot-panel {
 .login-create-post-btn i {
     font-size: 16px;
 }
+/* Login to Create Post CTA Enhancement */
+
+.login-create-post-btn{
+    background: linear-gradient(135deg,#28a745,#1e7e34);
+    color: #fff;
+    font-weight: 600;
+    padding: 12px 22px;
+    border-radius: 10px;
+    text-decoration: none;
+    gap: 8px;
+    transition: all 0.25s ease;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+.login-create-post-btn:hover{
+    transform: translateY(-3px);
+    background: linear-gradient(135deg,#218838,#19692c);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    color:#fff;
+}
+
+.login-create-post-btn:focus{
+    outline:none;
+    box-shadow:0 0 0 3px rgba(40,167,69,0.35);
+}

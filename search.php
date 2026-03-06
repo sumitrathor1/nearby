@@ -26,10 +26,11 @@ require_once __DIR__ . '/includes/header.php';
                 <i class="bi bi-plus-circle me-2"></i>Create Post
             </button>
             <?php else: ?>
-            <a class="btn btn-success login-create-post-btn" href="login.php">
-    <i class="bi bi-box-arrow-in-right me-2"></i>Login to Create Post
+<a class="btn login-create-post-btn d-flex align-items-center justify-content-center" href="login.php">
+    <i class="bi bi-box-arrow-in-right me-2"></i>
+    <span>Login to Create Post</span>
 </a>
-            <?php endif; ?>
+<?php endif; ?>
         </div>
     </div>
 
