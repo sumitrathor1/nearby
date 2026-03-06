@@ -77,8 +77,8 @@ switch ($sort) {
         break;
 
     case 'latest':
-    default:
-        $query .= " ORDER BY p.created_at DESC";
+default:
+    $query .= " ORDER BY COALESCE(p.created_at, NOW()) DESC";
 }
 
 $query .= " LIMIT ? OFFSET ?";
@@ -106,6 +106,7 @@ try {
             'description' => $row['description'],
             'contact_phone' => $row['contact_phone'],
             'image_url' => $row['image_url'],
+            'image' => $row['image_url'],
             'seller_name' => $row['seller_name'],
             'created_at' => $row['created_at']
         ];
