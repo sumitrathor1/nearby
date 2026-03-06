@@ -137,18 +137,6 @@ require_once __DIR__ . '/includes/header.php';
             <option value="price_low">Price: Low → High</option>
             <option value="price_high">Price: High → Low</option>
         </select>
-
-        <button
-            class="btn btn-success"
-            type="button"
-            data-bs-toggle="modal"
-            data-bs-target="#postProductModal">
-
-            <i class="bi bi-plus-circle me-2"></i>
-            Post Product
-
-        </button>
-
     </div>
 
             <div class="d-flex justify-content-between align-items-center mb-4">
