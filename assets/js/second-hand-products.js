@@ -8,9 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const priceValueLabel = filterContainer ? filterContainer.querySelector('[data-price-value]') : null;
     const categoryInputs = filterContainer ? Array.from(filterContainer.querySelectorAll('input[name="category"]')) : [];
     const conditionInputs = filterContainer ? Array.from(filterContainer.querySelectorAll('input[name="condition"]')) : [];
-    const searchInput = document.querySelector('[data-search-input]');
-    const loadMoreButton = document.querySelector('[data-load-more]');
-
+  const searchInput = document.querySelector('[data-search-input]');
+const sortSelect = document.querySelector('[data-sort]');
+const locationInput = document.querySelector('[data-filter-location]');
+const loadMoreButton = document.querySelector('[data-load-more]');
     let currentOffset = 0;
     const limit = 12;
     let isLoading = false;
@@ -27,21 +28,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isLoading) return;
         isLoading = true;
 
-        const selectedCategories = getActiveValues(categoryInputs);
-        const selectedConditions = getActiveValues(conditionInputs);
-        const maxPrice = priceInput ? priceInput.value : null;
-        const search = searchInput ? searchInput.value.trim() : null;
-
+       const selectedCategories = getActiveValues(categoryInputs);
+const selectedConditions = getActiveValues(conditionInputs);
+const maxPrice = priceInput ? priceInput.value : null;
+const search = searchInput ? searchInput.value.trim() : null;
+const location = locationInput ? locationInput.value.trim() : null;
+const sort = sortSelect ? sortSelect.value : "latest";
         const params = new URLSearchParams({
             limit: limit,
             offset: append ? currentOffset : 0
         });
 
-        if (selectedCategories.length > 0) params.append('category', selectedCategories[0]); // For simplicity, take first
-        if (maxPrice) params.append('max_price', maxPrice);
-        if (selectedConditions.length > 0) params.append('condition', selectedConditions[0]);
-        if (search) params.append('search', search);
-
+        if (selectedCategories.length > 0) params.append('category', selectedCategories[0]);
+if (maxPrice) params.append('max_price', maxPrice);
+if (selectedConditions.length > 0) params.append('condition', selectedConditions[0]);
+if (search) params.append('search', search);
+if (location) params.append('location', location);
+if (sort) params.append('sort', sort);
         try {
             const response = await fetch(`api/fetch_products.php?${params}`);
             const data = await response.json();
@@ -170,17 +173,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (searchInput) {
-        searchInput.addEventListener('input', debounce(handleInputChange, 300));
-    }
+    searchInput.addEventListener('input', debounce(handleInputChange, 300));
+}
+
+if (locationInput) {
+    locationInput.addEventListener('input', debounce(handleInputChange, 300));
+}
+
+if (sortSelect) {
+    sortSelect.addEventListener('change', handleInputChange);
+}
 
     if (clearButton) {
-        clearButton.addEventListener('click', () => {
-            [...categoryInputs, ...conditionInputs].forEach(input => input.checked = false);
-            if (priceInput) priceInput.value = 15000;
-            if (searchInput) searchInput.value = '';
-            handleInputChange();
-        });
-    }
+    clearButton.addEventListener('click', () => {
+        [...categoryInputs, ...conditionInputs].forEach(input => input.checked = false);
+
+        if (priceInput) priceInput.value = 15000;
+        if (searchInput) searchInput.value = '';
+        if (locationInput) locationInput.value = '';
+        if (sortSelect) sortSelect.value = 'latest';
+
+        handleInputChange();
+    });
+}
 
     if (loadMoreButton) {
         loadMoreButton.addEventListener('click', () => fetchProducts(true));

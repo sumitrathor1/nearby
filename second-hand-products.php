@@ -87,6 +87,16 @@ require_once __DIR__ . '/includes/header.php';
                         <h3 class="filter-heading mb-0">Price range</h3>
                         <span class="fw-semibold" data-price-value>₹15,000</span>
                     </div>
+                    <div class="filter-group mb-4">
+    <h3 class="filter-heading">Location</h3>
+
+    <input
+        type="text"
+        class="form-control"
+        placeholder="Search by location..."
+        data-filter-location>
+
+</div>
                     <input type="range" class="form-range" min="2000" max="20000" step="500" value="15000" data-filter-price>
                     <small class="text-muted">Slide to adjust maximum budget.</small>
                 </div>
@@ -110,6 +120,37 @@ require_once __DIR__ . '/includes/header.php';
             </div>
         </aside>
         <div class="col-12 col-lg-9">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+
+    <div class="search-container flex-grow-1">
+        <input
+            type="text"
+            class="form-control"
+            placeholder="Search products..."
+            data-search-input>
+    </div>
+
+    <div class="d-flex gap-2 align-items-center">
+
+        <select class="form-select" style="max-width:200px" data-sort>
+            <option value="latest">Sort: Latest</option>
+            <option value="price_low">Price: Low → High</option>
+            <option value="price_high">Price: High → Low</option>
+        </select>
+
+        <button
+            class="btn btn-success"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#postProductModal">
+
+            <i class="bi bi-plus-circle me-2"></i>
+            Post Product
+
+        </button>
+
+    </div>
+
             <div class="d-flex justify-content-between align-items-center mb-4">
     <div class="search-container flex-grow-1 me-3">
         <input type="text" class="form-control" placeholder="Search products..." data-search-input>
