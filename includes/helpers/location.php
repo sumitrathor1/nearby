@@ -94,6 +94,63 @@ function nearby_get_verified_locations(): array
             'description' => 'Good quality tiffin service available.',
             'verified_by' => 'Ankit (EE, 3rd Year)'
         ]
+        [
+    'id' => 10,
+    'name' => 'Gole Ka Mandir Bus Stop',
+    'type' => 'essential',
+    'lat' => 26.2395,
+    'lng' => 78.2085,
+    'description' => 'Major transport hub connecting city routes.',
+    'verified_by' => 'Community'
+],
+[
+    'id' => 11,
+    'name' => 'Campus Stationery & Print Shop',
+    'type' => 'essential',
+    'lat' => 26.2334,
+    'lng' => 78.2068,
+    'description' => 'Printouts, project reports, notebooks and supplies.',
+    'verified_by' => 'Rahul (Mechanical, 2nd Year)'
+],
+[
+    'id' => 12,
+    'name' => 'Chai Sutta Cafe',
+    'type' => 'food',
+    'lat' => 26.2363,
+    'lng' => 78.2075,
+    'price' => '₹120',
+    'description' => 'Popular evening hangout for tea, snacks and study breaks.',
+    'verified_by' => 'Harsh (IT, 3rd Year)'
+],
+[
+    'id' => 13,
+    'name' => 'Student Study Library',
+    'type' => 'essential',
+    'lat' => 26.2310,
+    'lng' => 78.2030,
+    'price' => '₹300/mo',
+    'description' => 'Quiet AC library with WiFi for exam preparation.',
+    'verified_by' => 'Community'
+],
+[
+    'id' => 14,
+    'name' => 'Fresh Milk Booth',
+    'type' => 'food',
+    'lat' => 26.2348,
+    'lng' => 78.2045,
+    'price' => '₹60/litre',
+    'description' => 'Daily fresh milk and dairy products.',
+    'verified_by' => 'Local Vendor'
+],
+[
+    'id' => 15,
+    'name' => 'MITS Sports Ground',
+    'type' => 'college',
+    'lat' => 26.2337,
+    'lng' => 78.2025,
+    'description' => 'Popular spot for cricket and football practice.',
+    'verified_by' => 'Admin'
+]
     ];
 }
 
