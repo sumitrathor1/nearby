@@ -649,3 +649,21 @@ body div.chatbot-entry .chatbot-panel {
         right: 16px !important;
     }
 }
+/* ===== Login to Create Post Button Enhancement (#143) ===== */
+
+.login-create-post-btn {
+    font-weight: 600;
+    padding: 10px 22px;
+    border-radius: 10px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    transition: all 0.25s ease;
+}
+
+.login-create-post-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.login-create-post-btn i {
+    font-size: 16px;
+}
