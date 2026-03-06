@@ -1,4 +1,20 @@
 <?php
+// Enable error reporting for debugging HTTP 500 issues
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+require_once __DIR__ . '/helpers/csrf.php';
+
+$pageTitle = $pageTitle ?? 'NearBy Student Housing';
+$currentUser = $_SESSION['user'] ?? null;
+$pageStyles = $pageStyles ?? [];
+$pageScripts = $pageScripts ?? [];
+?>
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -81,7 +97,7 @@ $pageScripts = $pageScripts ?? [];
         title="Toggle Dark Mode">
         <i id="dark-mode-icon" class="bi bi-moon-fill"></i>
     </button>
-
+<?php endif; ?>
 </div>
 
 
