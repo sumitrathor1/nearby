@@ -101,10 +101,49 @@ document.addEventListener('DOMContentLoaded', () => {
                         <li><i class="bi bi-stars me-2 text-success"></i>Condition: ${escapeHtml(product.condition.replace('-', ' '))}</li>
                         <li><i class="bi bi-geo-alt me-2 text-success"></i>${escapeHtml(product.location)}</li>
                     </ul>
-                    <div class="mt-auto d-flex justify-content-between align-items-center">
-                        <span class="product-meta text-success fw-semibold">By ${escapeHtml(product.seller_name)}</span>
-                        <button class="btn btn-outline-success btn-sm" type="button" onclick="showProductDetails(${product.id})">View Details</button>
-                    </div>
+                    <div class="seller-info small text-muted mb-3">
+    <div class="d-flex align-items-center gap-2 flex-wrap">
+
+        <span class="fw-semibold text-success">
+            <i class="bi bi-person-circle me-1"></i>
+            ${escapeHtml(product.seller_name)}
+        </span>
+
+        <span class="badge bg-success-subtle text-success">
+            <i class="bi bi-patch-check-fill"></i>
+            Verified
+        </span>
+
+        <span class="badge bg-light text-dark">
+            <i class="bi bi-calendar3"></i>
+            Member since 2024
+        </span>
+
+        <span class="badge bg-warning-subtle text-warning">
+            <i class="bi bi-star-fill"></i>
+            4.8 Rating
+        </span>
+
+        <span class="badge bg-info-subtle text-info">
+            <i class="bi bi-clock"></i>
+            Responds quickly
+        </span>
+
+    </div>
+</div>
+
+<div class="mt-auto d-flex justify-content-between align-items-center">
+
+    <button class="btn btn-outline-success btn-sm" type="button" onclick="showProductDetails(${product.id})">
+        View Details
+    </button>
+
+    <button class="btn btn-success btn-sm">
+        <i class="bi bi-chat-dots me-1"></i>
+        Contact
+    </button>
+
+</div>
                 </div>
             </article>
         `;
