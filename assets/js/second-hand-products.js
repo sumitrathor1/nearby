@@ -77,8 +77,23 @@ if (search) params.append('search', search);
 if (location) params.append('location', location);
 if (sort) params.append('sort', sort);
         try {
-            const response = await fetch(`api/fetch_products.php?${params}`);
-            const data = await response.json();
+            const response = await fetch(`/nearby/api/fetch_products.php?${params}`);
+
+/* Read raw response first to avoid JSON parsing crash */
+const text = await response.text();
+
+if (!text) {
+    throw new Error("Empty API response");
+}
+
+let data;
+
+try {
+    data = JSON.parse(text);
+} catch (err) {
+    console.error("Invalid JSON returned from API:", text);
+    throw new Error("Invalid JSON response from server");
+}
 
             if (data.success) {
                 if (!append) {
@@ -122,8 +137,19 @@ if (!append && data.products.length === 0) {
                 }
             }
         } catch (error) {
-            console.error('Error fetching products:', error);
-        } finally {
+    console.error('Error fetching products:', error);
+
+    const emptyState = document.querySelector('[data-empty-state]');
+    if (emptyState) {
+        emptyState.classList.remove('d-none');
+        emptyState.innerHTML = `
+            <div class="text-center text-danger py-5">
+                <i class="bi bi-exclamation-triangle fs-2"></i>
+                <p class="mt-2">Failed to load products. Please refresh.</p>
+            </div>
+        `;
+    }
+} finally {
             isLoading = false;
         }
     };

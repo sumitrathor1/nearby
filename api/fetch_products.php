@@ -1,9 +1,11 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+// Prevent PHP warnings from breaking JSON responses
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
 error_reporting(E_ALL);
 
-header('Content-Type: text/plain');
+// Start output buffering
+ob_start();
 /**
  * Fetch Second-Hand Products API
  * Returns filtered list of products based on query parameters
@@ -12,7 +14,7 @@ header('Content-Type: text/plain');
 require_once __DIR__ . '/../config/db.php';
 //require_once __DIR__ . '/../config/security.php';
 
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET');
 header('Access-Control-Allow-Headers: Content-Type');
@@ -136,20 +138,29 @@ $countStmt->execute();
 $countResult = $countStmt->get_result();
 $total = $countResult->fetch_assoc()['total'];
 
-    echo json_encode([
-        'success' => true,
-        'products' => $products,
-        'total' => $total,
-        'limit' => $limit,
-        'offset' => $offset
-    ]);
+    // Ensure no accidental output before JSON
+ob_clean();
+
+echo json_encode([
+    'success' => true,
+    'products' => $products,
+    'total' => $total,
+    'limit' => $limit,
+    'offset' => $offset
+], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+exit;
 
 } catch (Exception $e) {
     http_response_code(500);
-    echo json_encode([
-        'success' => false,
-        'error' => 'Database error: ' . $e->getMessage()
-    ]);
+    ob_clean();
+
+echo json_encode([
+    'success' => false,
+    'error' => 'Database error occurred while fetching products.'
+]);
+
+exit;
 }
 
 nearby_db_close();
