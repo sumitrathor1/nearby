@@ -207,12 +207,12 @@ require_once __DIR__ . '/includes/header.php';
             </div>
         </div>
     </div>
-    <section class="row g-4 align-items-stretch mb-5">
+    <div class="glass-card feature-card h-100 p-3 p-md-4">
         <div class="col-lg-4">
             <div class="glass-card h-100 p-3 p-md-4">
                 <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=900&q=80"
-                    class="img-fluid rounded-3 mb-3" alt="Cozy student room with study desk">
-                <h2 class="h5 fw-semibold mb-2">Find Your Study-Ready Space</h2>
+                    class="img-fluid rounded-3 mb-3 feature-card-img" alt="Cozy student room with study desk">
+                <h2 class="h5 fw-semibold mb-2 feature-card-title">Find Your Study-Ready Space</h2>
                 <p class="text-muted small mb-0">Browse curated listings with Wi-Fi, power backup, and quiet corners so
                     you can stay focused during exam season.</p>
             </div>
@@ -220,8 +220,8 @@ require_once __DIR__ . '/includes/header.php';
         <div class="col-lg-4">
             <div class="glass-card h-100 p-3 p-md-4">
                 <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=900&q=80"
-                    class="img-fluid rounded-3 mb-3" alt="Students collaborating in a modern common area">
-                <h2 class="h5 fw-semibold mb-2">Share With Trusted Roommates</h2>
+                    cclass="img-fluid rounded-3 mb-3 feature-card-img" alt="Students collaborating in a modern common area">
+                <h2 class="h5 fw-semibold mb-2 feature-card-title">Share With Trusted Roommates</h2>
                 <p class="text-muted small mb-0">Match with fellow MITS students who share similar schedules and
                     lifestyle preferences for a smoother living experience.</p>
             </div>
@@ -229,8 +229,8 @@ require_once __DIR__ . '/includes/header.php';
         <div class="col-lg-4">
             <div class="glass-card h-100 p-3 p-md-4">
                 <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80"
-                    class="img-fluid rounded-3 mb-3" alt="Modern apartment building exterior">
-                <h2 class="h5 fw-semibold mb-2">Stay Close to Campus</h2>
+                    class="img-fluid rounded-3 mb-3 feature-card-img" alt="Modern apartment building exterior">
+                <h2 class="h5 fw-semibold mb-2 feature-card-title">Stay Close to Campus</h2>
                 <p class="text-muted small mb-0">Filter by walking distance, public transport, and neighborhood
                     amenities to settle into the perfect location.</p>
             </div>
