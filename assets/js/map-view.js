@@ -231,7 +231,14 @@ function refreshLocations() {
             renderError(error instanceof Error ? error.message : 'Failed to fetch locations');
         });
 }
-
+function fetchWithTimeout(resource, options = {}, timeout = 8000) {
+    return Promise.race([
+        fetch(resource, options),
+        new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Map request timed out')), timeout)
+        )
+    ]);
+}
 function fetchLocations(filters) {
     const params = new URLSearchParams();
     if (filters.type && filters.type !== 'all') {
@@ -247,19 +254,32 @@ function fetchLocations(filters) {
     const query = params.toString();
     const url = query ? `${API_ENDPOINT}?${query}` : API_ENDPOINT;
 
-    return fetch(url, { headers: { 'Accept': 'application/json' } })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error('Map data request failed');
-            }
-            return response.json();
-        })
-        .then((payload) => {
-            if (!payload.success) {
-                throw new Error(payload.message || 'Unable to load map data');
-            }
-            return Array.isArray(payload.data) ? payload.data : [];
-        });
+    return fetchWithTimeout(url, { headers: { 'Accept': 'application/json' } })
+    .then((response) => {
+
+        if (!response.ok) {
+            throw new Error(`Map API request failed (${response.status})`);
+        }
+
+        return response.json();
+
+    })
+    .then((payload) => {
+
+        if (!payload || payload.success === false) {
+            throw new Error(payload?.message || 'Map data request failed');
+        }
+
+        return Array.isArray(payload.data) ? payload.data : [];
+
+    })
+    .catch((error) => {
+
+        console.error('Map API error:', error);
+
+        throw new Error('Unable to load campus map locations');
+
+    });
 }
 
 function renderListings(locations) {
@@ -405,12 +425,21 @@ function updateCountBadge(count) {
 }
 
 function renderError(message) {
+
     if (state.listingsEl) {
-        state.listingsEl.innerHTML = `<div class="text-center py-4 text-danger small">${escapeHtml(message)}</div>`;
+        state.listingsEl.innerHTML = `
+            <div class="text-center py-4 text-muted small">
+                <i class="bi bi-map fs-4 text-success mb-2 d-block"></i>
+                <p class="mb-1">${escapeHtml(message)}</p>
+                <p class="mb-0">Please refresh the page or try again later.</p>
+            </div>
+        `;
     }
+
     if (state.countEl) {
         state.countEl.textContent = '0';
     }
+
 }
 
 function updatePriceLabel() {
