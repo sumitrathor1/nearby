@@ -9,22 +9,32 @@ require_once __DIR__ . '/includes/header.php';
             <h1 class="h3 fw-semibold mb-4 text-center">Create Your NearBy Account</h1>
             <form id="registerForm" novalidate>
                 <?= csrfField() ?>
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label for="regName" class="form-label">Full Name</label>
-                        <input type="text" class="form-control" id="regName" name="name" required>
-                        <div class="invalid-feedback">Please enter your name</div>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="regEmail" class="form-label">College Email</label>
-                        <input type="email" class="form-control" id="regEmail" name="email" placeholder="you@mitsgwl.ac.in" required>
-                        <div class="invalid-feedback">Students must use their @mitsgwl.ac.in college email</div>
-                    </div>
-                </div>
-                <div class="row g-3 mt-1">
+                <div class="row g-4">
+    <div class="col-md-6">
+        <label for="regName" class="form-label fw-semibold">Full Name</label>
+        <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-person"></i></span>
+            <input type="text" class="form-control" id="regName" name="name" placeholder="Enter your full name" required>
+        </div>
+        <div class="invalid-feedback">Please enter your name</div>
+    </div>
+
+    <div class="col-md-6">
+        <label for="regEmail" class="form-label fw-semibold">College Email</label>
+        <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+            <input type="email" class="form-control" id="regEmail" name="email" placeholder="you@mitsgwl.ac.in" required>
+        </div>
+        <div class="invalid-feedback">Students must use their @mitsgwl.ac.in college email</div>
+    </div>
+</div>
+                <div class="row g-4 mt-2">
                     <div class="col-md-6">
                         <label for="regPassword" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="regPassword" name="password" required minlength="6">
+                        <div class="input-group">
+    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+    <input type="password" class="form-control" id="regPassword" name="password" placeholder="Create a password" required minlength="6">
+</div>
                         <div class="invalid-feedback">Password must be at least 6 characters</div>
                     </div>
                     <div class="col-md-6">
@@ -52,9 +62,14 @@ require_once __DIR__ . '/includes/header.php';
                     </select>
                     <div class="invalid-feedback">Please tell us how you will use NearBy</div>
                 </div>
-                <button type="submit" class="btn btn-primary w-100 mt-4">Create Account</button>
+                <button type="submit" class="btn btn-success w-100 mt-4 py-2 fw-semibold shadow-sm">
+Create Account
+</button>
             </form>
-            <p class="small text-muted text-center mt-4 mb-0">Already a member? <a href="login.php">Login instead</a></p>
+            <p class="small text-muted text-center mt-4 mb-0">
+Already a member?
+<a href="login.php" class="fw-semibold text-success">Login instead</a>
+</p>
         </div>
     </div>
     <div class="col-lg-4 mt-4 mt-lg-0">
