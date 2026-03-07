@@ -47,6 +47,26 @@ require_once __DIR__ . '/includes/header.php';
                 <span>Report suspicious listings or sellers to keep the marketplace safe.</span>
             </div>
         </div>
+        <div class="col-md-6">
+    <div class="d-flex gap-2 align-items-start">
+        <i class="bi bi-credit-card text-success"></i>
+        <span>Prefer digital payments that provide a transaction record.</span>
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="d-flex gap-2 align-items-start">
+        <i class="bi bi-shield-lock text-success"></i>
+        <span>Never share sensitive financial information like OTPs or bank PINs.</span>
+    </div>
+</div>
+
+<div class="col-md-6">
+    <div class="d-flex gap-2 align-items-start">
+        <i class="bi bi-person-check text-success"></i>
+        <span>Verify the identity of the seller before completing the transaction.</span>
+    </div>
+</div>
 
     </div>
 </div>
