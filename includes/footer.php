@@ -2,11 +2,11 @@
 </main>
 <footer class="glass-footer py-5 mt-auto">
     <div class="container">
-        <div class="row gy-4 align-items-start footer-top">
-            <div class="col-lg-3 text-center text-lg-start">
-                <div class="d-inline-flex align-items-center gap-3 mb-3">
-                    <img src="assets/images/nearby_image.png" alt="NearBy logo" class="footer-logo">
-                </div>
+        <div class="row g-4 align-items-start footer-top">
+            <div class="col-lg-3 col-md-6 text-center text-lg-start">
+                <div class="mb-3">
+    <a href="index.php" class="logo-text">NearBy</a>
+</div>
                 <p class="footer-copy mb-3">
                     Discover vetted rooms, apartments, and co-living spaces designed for students and young
                     professionals.
@@ -66,50 +66,51 @@
 
                 </div>
 
-                <div class="footer-social d-flex gap-2">
-                    <!-- GitHub -->
-                    <a class="social-link" href="https://github.com/sumitrathor1/nearby" target="_blank"
-                        rel="noopener noreferrer" aria-label="GitHub">
-                        <i class="bi bi-github"></i>
-                        <span class="visually-hidden">GitHub</span>
-                    </a>
+               <div class="footer-social d-flex gap-3">
 
-                    <!-- Email -->
-                    <a class="social-link" href="mailto:sumitrathor142272@gmail.com" target="_blank"
-                        rel="noopener noreferrer" aria-label="Email">
-                        <i class="bi bi-envelope-fill"></i>
-                        <span class="visually-hidden">Email</span>
-                    </a>
+    <!-- GitHub -->
+    <a class="social-link" href="https://github.com/sumitrathor1/nearby" target="_blank"
+        rel="noopener noreferrer" aria-label="GitHub">
+        <i class="bi bi-github"></i>
+        <span class="visually-hidden">GitHub</span>
+    </a>
 
-                    <!-- LinkedIn -->
-                    <a class="social-link" href="https://www.linkedin.com/in/sumitrathor" target="_blank"
-                        rel="noopener noreferrer" aria-label="LinkedIn">
-                        <i class="bi bi-linkedin"></i>
-                        <span class="visually-hidden">LinkedIn</span>
-                    </a>
+    <!-- Email -->
+    <a class="social-link" href="mailto:sumitrathor142272@gmail.com" target="_blank"
+        rel="noopener noreferrer" aria-label="Email">
+        <i class="bi bi-envelope-fill"></i>
+        <span class="visually-hidden">Email</span>
+    </a>
 
-                    <!-- Twitter/X -->
-                    <a class="social-link" href="https://twitter.com/nearbyhousing" target="_blank"
-                        rel="noopener noreferrer" aria-label="X (Twitter)">
-                        <i class="bi bi-twitter-x"></i>
-                        <span class="visually-hidden">X (Twitter)</span>
-                    </a>
+    <!-- LinkedIn -->
+    <a class="social-link" href="https://www.linkedin.com/in/sumitrathor" target="_blank"
+        rel="noopener noreferrer" aria-label="LinkedIn">
+        <i class="bi bi-linkedin"></i>
+        <span class="visually-hidden">LinkedIn</span>
+    </a>
 
-                    <a class="social-link" href="https://instagram.com/nearbyhousing" target="_blank"
-                        rel="noopener noreferrer" aria-label="Instagram">
-                        <i class="bi bi-instagram"></i>
-                        <span class="visually-hidden">Instagram</span>
-                    </a>
+    <!-- Twitter/X -->
+    <a class="social-link" href="https://twitter.com/nearbyhousing" target="_blank"
+        rel="noopener noreferrer" aria-label="Twitter">
+        <i class="bi bi-twitter-x"></i>
+        <span class="visually-hidden">Twitter</span>
+    </a>
 
-                    <a class="social-link" href="https://facebook.com/nearbyhousing" target="_blank"
-                        rel="noopener noreferrer" aria-label="Facebook">
-                        <i class="bi bi-facebook"></i>
-                        <span class="visually-hidden">Facebook</span>
-                    </a>
-                        <i class="bi bi-instagram"></i>
-                        <span class="visually-hidden">Instagram</span>
-                    </a>
-                </div>
+    <!-- Instagram -->
+    <a class="social-link" href="https://instagram.com/nearbyhousing" target="_blank"
+        rel="noopener noreferrer" aria-label="Instagram">
+        <i class="bi bi-instagram"></i>
+        <span class="visually-hidden">Instagram</span>
+    </a>
+
+    <!-- Facebook -->
+    <a class="social-link" href="https://facebook.com/nearbyhousing" target="_blank"
+        rel="noopener noreferrer" aria-label="Facebook">
+        <i class="bi bi-facebook"></i>
+        <span class="visually-hidden">Facebook</span>
+    </a>
+
+</div>
             </div>
         </div>
 
@@ -130,7 +131,7 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="assets/js/main.js"></script>
+<script type="module" src="assets/js/main.js"></script>
 <?php if (!empty($pageScripts)): ?>
         <?php foreach ($pageScripts as $scriptPath): ?>
                 <script src="<?= htmlspecialchars($scriptPath) ?>" type="module"></script>
@@ -138,48 +139,56 @@
 <?php endif; ?>
 
 <script>
-const toggleBtn = document.getElementById('dark-mode-toggle');
-const icon = document.getElementById('dark-mode-icon');
+document.addEventListener('DOMContentLoaded', function () {
 
-// Check local storage to remember preference
-if(localStorage.getItem('darkMode') === 'enabled'){
-    document.body.classList.add('dark-mode');
-    icon.classList.replace('bi-moon-fill', 'bi-sun-fill');
-}
+    const toggleBtn = document.getElementById('dark-mode-toggle');
+    const icon = document.getElementById('dark-mode-icon');
 
-toggleBtn.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
+    if (!toggleBtn || !icon) return;
 
-    // Change icon
-    if(document.body.classList.contains('dark-mode')){
-        icon.classList.replace('bi-sun-fill', 'bi-moon-fill');
-        localStorage.setItem('darkMode','enabled');
-    } else {
+    // Load saved preference
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        document.body.classList.add('dark-mode');
         icon.classList.replace('bi-moon-fill', 'bi-sun-fill');
-        localStorage.setItem('darkMode','disabled');
     }
+
+    toggleBtn.addEventListener('click', function () {
+        document.body.classList.toggle('dark-mode');
+
+        if (document.body.classList.contains('dark-mode')) {
+            icon.classList.replace('bi-moon-fill', 'bi-sun-fill');
+            localStorage.setItem('darkMode', 'enabled');
+        } else {
+            icon.classList.replace('bi-sun-fill', 'bi-moon-fill');
+            localStorage.setItem('darkMode', 'disabled');
+        }
+    });
+
 });
 </script>
 
 <!-- Back to Top Button Script -->
 <script>
-const backToTopBtn = document.getElementById('backToTop');
+document.addEventListener('DOMContentLoaded', function () {
 
-// Show/hide button based on scroll position
-window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 300) {
-        backToTopBtn.classList.add('show');
-    } else {
-        backToTopBtn.classList.remove('show');
-    }
-});
+    const backToTopBtn = document.getElementById('backToTop');
+    if (!backToTopBtn) return;
 
-// Smooth scroll to top when clicked
-backToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+    window.addEventListener('scroll', function () {
+        if (window.pageYOffset > 300) {
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
     });
+
+    backToTopBtn.addEventListener('click', function () {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
 });
 </script>
 

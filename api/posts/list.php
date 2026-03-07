@@ -1,7 +1,34 @@
 <?php
-header('Content-Type: application/json');
+// Ensure clean JSON responses
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+ob_start();
+
+header('Content-Type: application/json; charset=utf-8');
+
 require_once __DIR__ . '/../../config/db.php';
 require_once __DIR__ . '/../../config/security.php';
+// Fallback helpers if security.php functions are unavailable
+if (!function_exists('checkRateLimit')) {
+    function checkRateLimit() {
+        return true;
+    }
+}
+
+if (!function_exists('secureErrorResponse')) {
+    function secureErrorResponse($msg, $code = 500) {
+        http_response_code($code);
+        echo json_encode([
+            "success" => false,
+            "message" => $msg
+        ]);
+        exit;
+    }
+}
+
+try {
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -135,7 +162,7 @@ $sql .= ' ORDER BY p.created_at DESC LIMIT 100';
 if ($params) {
     $stmt = mysqli_prepare($conn, $sql);
     if ($stmt === false) {
-        secureErrorResponse('Search failed. Please try again.', 500, 'Failed to prepare search query: ' . mysqli_error($conn));
+        secureErrorResponse('Search failed. Please try again.', 500);
     }
     mysqli_stmt_bind_param($stmt, $types, ...$params);
     mysqli_stmt_execute($stmt);
@@ -145,7 +172,7 @@ if ($params) {
 }
 
 if (!$result) {
-    secureErrorResponse('Search failed. Please try again.', 500, 'Failed to execute search query: ' . mysqli_error($conn));
+    secureErrorResponse('Search failed. Please try again.', 500);
 }
 
 $isLoggedIn = isset($_SESSION['user']['id']);
@@ -183,4 +210,41 @@ if (isset($stmt)) {
     mysqli_stmt_close($stmt);
 }
 
-echo json_encode(['success' => true, 'data' => $posts]);
+// Ensure clean output buffer
+if (ob_get_length()) {
+    ob_clean();
+}
+
+$response = [
+    'success' => true,
+    'data' => $posts
+];
+
+echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+// flush buffer so frontend always receives response
+ob_end_flush();
+
+nearby_db_close();
+
+exit;
+
+} catch (Throwable $e) {
+
+    if (ob_get_length()) {
+        ob_clean();
+    }
+
+    http_response_code(500);
+
+    $errorResponse = [
+        'success' => false,
+        'message' => 'Server error while fetching posts'
+    ];
+
+    echo json_encode($errorResponse, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+    ob_end_flush();
+
+    exit;
+}

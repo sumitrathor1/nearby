@@ -125,3 +125,48 @@
         transition: none;
     }
 }
+/* =========================
+   Wishlist Button (#126)
+========================= */
+
+.wishlist-btn {
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wishlist-btn i {
+    color: #dc3545;
+}
+
+.wishlist-btn:hover {
+    background: #fff;
+}
+/* =========================
+   Seller Profile & Trust Indicators
+========================= */
+
+.seller-info {
+    font-size: 0.82rem;
+}
+
+.seller-info .badge {
+    font-size: 0.72rem;
+}
+
+/* ===== Post Your Item CTA Feature (#125) ===== */
+
+.post-item-cta {
+    font-weight: 600;
+    padding: 10px 22px;
+    border-radius: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-item-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}

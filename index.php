@@ -153,6 +153,35 @@ require_once __DIR__ . '/includes/header.php';
                         </div>
                     </div>
                 </li>
+                <li class="glass-card p-3">
+    <div class="d-flex align-items-center gap-3">
+        <span class="facility-icon"><i class="bi bi-shield-check"></i></span>
+        <div>
+            <p class="fw-semibold mb-1">Verified listings</p>
+            <p class="small text-muted mb-0">Rooms are verified by senior hosts to help juniors avoid unreliable listings and scams.</p>
+        </div>
+    </div>
+</li>
+
+<li class="glass-card p-3">
+    <div class="d-flex align-items-center gap-3">
+        <span class="facility-icon"><i class="bi bi-geo-alt"></i></span>
+        <div>
+            <p class="fw-semibold mb-1">Location-aware search</p>
+            <p class="small text-muted mb-0">Find rooms close to your college with smart filters for distance, rent, and facilities.</p>
+        </div>
+    </div>
+</li>
+
+<li class="glass-card p-3">
+    <div class="d-flex align-items-center gap-3">
+        <span class="facility-icon"><i class="bi bi-people"></i></span>
+        <div>
+            <p class="fw-semibold mb-1">Community guidance</p>
+            <p class="small text-muted mb-0">Seniors share trusted recommendations for food, transport, and local services.</p>
+        </div>
+    </div>
+</li>
             </ul>
         </div>
         <div class="col-lg-6">

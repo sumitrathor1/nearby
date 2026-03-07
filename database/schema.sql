@@ -109,3 +109,21 @@ CREATE TABLE IF NOT EXISTS products (
     INDEX idx_product_price (price),
     INDEX idx_product_location (location(100))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS reviews (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    post_id INT UNSIGNED NOT NULL,
+    user_id INT UNSIGNED NOT NULL,
+    rating TINYINT UNSIGNED NOT NULL CHECK (rating BETWEEN 1 AND 5),
+    review TEXT DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_reviews_post FOREIGN KEY (post_id) 
+        REFERENCES posts(id) ON DELETE CASCADE,
+
+    CONSTRAINT fk_reviews_user FOREIGN KEY (user_id) 
+        REFERENCES users(id) ON DELETE CASCADE,
+
+    CONSTRAINT unique_user_review UNIQUE (post_id, user_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
+
