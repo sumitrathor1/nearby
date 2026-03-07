@@ -63,8 +63,9 @@ require_once __DIR__ . '/includes/header.php';
         <p class="lead text-muted mb-4">Search verified accommodations, connect with senior owners, and settle into a comfortable, affordable space designed for student life.</p>
         <div class="d-flex flex-column flex-md-row gap-3">
             <a href="search.php" class="btn btn-primary btn-lg px-4">Start Searching</a>
-            <a href="register.php" class="btn btn-lg px-4" style="color: #319d65; border: 2px solid;
-">Join NearBy</a>
+            <a href="register.php" class="btn btn-outline-success btn-lg px-4">
+Join NearBy
+</a>
         </div>
     </div>
     <div class="hero-illustration p-4 mt-4 mt-lg-0 w-100">
@@ -189,9 +190,9 @@ require_once __DIR__ . '/includes/header.php';
                 <h3 class="h5 fw-semibold mb-3">Ready to experience NearBy?</h3>
                 <p class="text-muted">Create an account to explore verified accommodations, get local recommendations, and settle into your second home.</p>
                 <div class="d-flex flex-column flex-sm-row gap-3">
-                    <a class="btn btn-primary flex-fill" href="register.php">Create account</a>
-                    <a class="btn btn-outline-light flex-fill" href="login.php">I already have one</a>
-                </div>
+    <a class="btn btn-primary flex-fill" href="register.php">Create account</a>
+    <a class="btn btn-outline-success flex-fill fw-semibold" href="login.php">I already have one</a>
+</div>
             </div>
         </div>
     </div>
