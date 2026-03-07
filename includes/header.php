@@ -36,7 +36,9 @@ $pageScripts = $pageScripts ?? [];
 </head>
 <body>
 <div class="app-wrapper d-flex flex-column min-vh-100">
-    <nav class="navbar navbar-expand-lg glass-nav fixed-top shadow-sm">
+    <nav class="navbar navbar-expand-lg glass-nav fixed-top shadow-sm"
+     role="navigation"
+     aria-label="Main Navigation">
     <div class="container-fluid px-5">
 
         <!-- Logo -->
@@ -45,8 +47,13 @@ $pageScripts = $pageScripts ?? [];
         </a>
 
         <!-- Mobile Toggle -->
-        <button class="navbar-toggler border-0" type="button"
-            data-bs-toggle="collapse" data-bs-target="#primaryNav">
+        <button class="navbar-toggler border-0"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#primaryNav"
+        aria-controls="primaryNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation menu">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -56,7 +63,8 @@ $pageScripts = $pageScripts ?? [];
     <div class="d-flex align-items-center gap-4">
 
         <!-- Navigation Links -->
-        <ul class="navbar-nav align-items-center gap-lg-4">
+        <ul class="navbar-nav align-items-center gap-lg-4"
+    aria-label="Primary navigation links">
             <li class="nav-item">
                 <a class="nav-link text-white" href="index.php">Home</a>
             </li>
@@ -111,8 +119,9 @@ $pageScripts = $pageScripts ?? [];
 
             <!-- Dark Mode Toggle -->
             <button id="dark-mode-toggle"
-                class="btn btn-sm btn-outline-light"
-                title="Toggle Dark Mode">
+    class="btn btn-sm btn-outline-light"
+    title="Toggle Dark Mode"
+    aria-label="Toggle dark mode theme">
                 <i id="dark-mode-icon" class="bi bi-moon-fill"></i>
             </button>
 
