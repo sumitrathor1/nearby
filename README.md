@@ -75,142 +75,119 @@ When students move to a new city for education, they often face challenges such 
 The platform is designed **by students, for students**, keeping real-life needs in mind.
 
 ---
-✨ Features
-🏡 Accommodation Discovery
 
-Browse PGs, rooms, flats, and hostels
+## ✨ Features
 
-Student-focused listings near campuses
+### 🏡 Accommodation Discovery
+- Browse **PGs, rooms, flats, and hostels**
+- Student-focused listings near campuses
+- **Advanced filters** available:
+  - 📍 Location
+  - 💰 Rent range
+  - 🏠 Accommodation type
+  - 👥 Gender preference *(Male / Female / Family)*
+  - 🛠️ Facilities *(Wi-Fi, Food, Parking, Water, Electricity, CCTV, Power Backup)*
 
-Advanced filters:
+---
 
-Location
-
-Rent range
-
-Accommodation type
-
-Gender preference (Male / Female / Family)
-
-Facilities (Wi-Fi, Food, Parking, Water, Electricity, CCTV, Power Backup)
-
-🧑‍🤝‍🧑 Multi-Role User System
-
+### 🧑‍🤝‍🧑 Multi-Role User System
 Supports multiple user roles:
 
-Students
+- 🎓 **Students**
+- 🏠 **Property Owners**
+- 🛠️ **Local Service Providers**
 
-Property Owners
+Features include:
+- Dedicated dashboards for each role
+- Role-based access and functionality
 
-Local Service Providers
+---
 
-Dedicated dashboards for each role
+### 🏠 Property & Listing Management
+**Property owners can:**
+- ➕ Add new accommodation listings
+- ✏️ Edit and manage their listings
 
-Role-based access and functionality
+**Service providers can:**
+- ➕ Add and manage local service listings
 
-🏠 Property & Listing Management
+📡 Listings update **in real time** for users.
 
-Property owners can:
+---
 
-Add new accommodation listings
+### 🧺 Local Services Directory
+Discover essential local services such as:
 
-Edit and manage their listings
+- 🍱 Tiffin / Mess services
+- 🥛 Milk (Doodh) providers
+- 🔥 Gas suppliers
+- 🥬 Vegetable (Sabji) vendors
+- 🛒 Other daily-need services
 
-Service providers can:
+Everything accessible **from one platform**.
 
-Add and manage local service listings
+---
 
-Listings update in real time for users
-
-🧺 Local Services Directory
-
-Discover essential local services:
-
-Tiffin / Mess services
-
-Milk (Doodh) providers
-
-Gas suppliers
-
-Vegetable (Sabji) vendors
-
-Other daily-need services
-
-Everything accessible from one platform
-
-🤖 AI-Powered Chatbot Assistance
-
-Integrated AI chatbot (Gemini AI)
+### 🤖 AI-Powered Chatbot Assistance
+Integrated **AI chatbot powered by Gemini AI**.
 
 Available on:
+- 🏠 Home page
+- 🔎 Search page
+- 📊 User dashboards
 
-Home page
+Capabilities:
+- Accommodation and service guidance
+- Local help and suggestions
+- Student-friendly Q&A
 
-Search page
+Additional features:
+- 🔐 Login-based access control
+- 💾 Secure chat history storage
+- 🌐 Works on both local and live servers
 
-User dashboards
+---
 
-Provides:
-
-Accommodation and service guidance
-
-Local help and suggestions
-
-Student-friendly Q&A
-
-Login-based access control
-
-Secure chat history storage
-
-Works on both local and live servers
-
-📍 Local Guidance & Discovery
-
+### 📍 Local Guidance & Discovery
 Helps students find:
 
-Nearby food options
+- 🍽️ Nearby food options
+- 🚌 Transport information
+- 🏥 Hospitals and essential shops
 
-Transport information
+Acts as a **digital local guide for new students**.
 
-Hospitals and essential shops
+---
 
-Acts as a digital local guide for new students
+### 🔐 Authentication & Security
+- Secure login and authentication system
+- Role-based access control
 
-🔐 Authentication & Security
+**Guest users can:**
+- 👀 View listings
+- 🤖 View chatbot interface *(login required to interact)*
 
-Secure login and authentication system
+Includes clean session and backend handling.
 
-Role-based access control
+---
 
-Guest users can:
+### 📱 Responsive & Modern UI
+- Fully responsive across **all devices**
+- Clean, modern, and **student-friendly design**
+- ✨ Glassmorphism UI with a **light green theme**
 
-View listings
+---
 
-View chatbot interface (login required to interact)
+### 🌐 Map & Location Integration
+- 📍 Location-based discovery of rooms and services
+- 🗺️ Map API integration for easier navigation
 
-Clean session and backend handling
+---
 
-📱 Responsive & Modern UI
-
-Fully responsive across all devices
-
-Clean, modern, and student-friendly design
-
-Glassmorphism UI with a light green theme
-
-🌐 Map & Location Integration
-
-Location-based discovery of rooms and services
-
-Map API integration for better navigation
-
-⚡ Performance & Usability
-
-AJAX-based interactions for faster performance
-
-Smooth and intuitive user experience
-
-Minimal and easy-to-navigate interface
+### ⚡ Performance & Usability
+- 🚀 AJAX-based interactions for faster performance
+- Smooth and intuitive user experience
+- Minimal and easy-to-navigate interface
 
 
 ## 🌐 Live Project
@@ -316,36 +293,36 @@ Each role can create and manage their own listings.
 
 ---
 ## 📂 Project Folder Structure
-
+```bash
 nearby/
 │
-├── .github/              # GitHub workflows and configuration
-├── admin/                # Admin dashboard and management files
-├── api/                  # API endpoints (AJAX handlers, data fetch logic)
-├── assets/               # Static resources (CSS, JS, images)
-├── config/               # Application configuration files
-├── controllers/          # Business logic and request handling
-├── database/             # Database connection and schema files
-├── docs/                 # Additional project documentation
-├── includes/             # Reusable components (header, footer, modals)
-├── private/             # Internal application files
+├── 🐙 .github/                 # GitHub workflows, CI/CD, and repository configuration
+├── 🛠️ admin/                   # Admin dashboard and management tools
+├── 🔌 api/                     # API endpoints (AJAX handlers, data fetching logic)
+├── 🎨 assets/                  # Static resources (CSS styles, JavaScript, images)
+├── ⚙️ config/                  # Application configuration settings
+├── 🧠 controllers/             # Business logic and request processing
+├── 🗄️ database/                # Database connection, queries, and schema files
+├── 📚 docs/                    # Additional project documentation
+├── 🧩 includes/                # Reusable UI components (header, footer, modals)
+├── 🔒 private/                 # Internal application files (restricted access)
 │
-├── index.php             # Homepage
-├── search.php            # Accommodation search page
-├── details.php           # Listing details page
-├── login.php             # User login
-├── register.php          # User registration
-├── junior-dashboard.php  # Junior user dashboard
-├── senior-dashboard.php  # Senior user dashboard
-├── second-hand-products.php  # Marketplace page
-├── feedback.php          # Feedback form page
-├── contact.php           # Contact form page
-├── faq.php               # FAQ page
-├── privacy.php           # Privacy policy
-├── terms.php             # Terms of use
+├── 🏠 index.php                # Homepage / landing page
+├── 🔎 search.php               # Accommodation search interface
+├── 📄 details.php              # Detailed listing view
+├── 🔐 login.php                # User login page
+├── 📝 register.php             # User registration page
+├── 📊 junior-dashboard.php     # Dashboard for junior users
+├── 🧑‍💼 senior-dashboard.php   # Dashboard for senior users
+├── 🛒 second-hand-products.php # Marketplace for second-hand products
+├── 💬 feedback.php             # User feedback form
+├── 📞 contact.php              # Contact page for support
+├── ❓ faq.php                  # Frequently Asked Questions
+├── 🔏 privacy.php              # Privacy policy page
+├── 📜 terms.php                # Terms of use
 │
-└── README.md             # Project documentation
-
+└── 📘 README.md                # Project documentation and setup guide
+```
 
 ## 🚀 Future Enhancements
 
@@ -422,7 +399,7 @@ The project itself works correctly when run locally.
 3. Move the project folder into the `htdocs` directory
 4. Start **Apache** and **MySQL** from the XAMPP Control Panel
 5. Open the following URL in your browser:
-
+```bash
 http://localhost/nearby/
-
+```
 Running the project locally allows contributors to test features even if the live demo is temporarily unavailable.
